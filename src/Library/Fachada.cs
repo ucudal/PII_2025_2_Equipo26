@@ -154,7 +154,7 @@ public class Fachada
         return resultadoFinal;
     }
 
-public void AgregarNotaAInteraccion(int idCliente, int indiceInteraccion, string textoNota)
+    public void AgregarNotaAInteraccion(int idCliente, int indiceInteraccion, string textoNota)
     {
         var cliente = _repoClientes.Buscar(idCliente);
 
@@ -168,5 +168,22 @@ public void AgregarNotaAInteraccion(int idCliente, int indiceInteraccion, string
                 interaccionSeleccionada.NotaAdicional = new Nota(textoNota);
             }
         }
-    } 
+    }
+
+// NUEVA SECCIÓN: Gestión de Etiquetas
+    public void CrearEtiqueta(string nombre)
+    {
+        _repoEtiquetas.Crear(nombre);
+    }
+
+    public List<Etiqueta> VerTodasLasEtiquetas()
+    {
+        return _repoEtiquetas.ObtenerTodas();
+    }
+
+    public void EliminarEtiqueta(int idEtiqueta)
+    {
+        _repoEtiquetas.Eliminar(idEtiqueta);
+
+    }
 }
