@@ -28,6 +28,42 @@ public class RepoClientes
         return null;
     }
 
+    public void Modificar(int id, string nombre, string apellido, string telefono, string correo)
+    {
+        var cliente = Buscar(id);
+        if (cliente != null)
+        {
+            cliente.Nombre = nombre;
+            cliente.Apellido = apellido;
+            cliente.Telefono = telefono;
+            cliente.Correo = correo;
+        }
+    }
+    
+    public List<Cliente> BuscarPorTermino(string termino)
+    {
+        // 1. Creamos una lista vacía para guardar los clientes que coincidan.
+        var resultados = new List<Cliente>();
+    
+ 
+        var busqueda = termino.ToLower();
+
+
+        foreach (var cliente in _clientes)
+        {
+          
+            if (cliente.Nombre.ToLower().Contains(busqueda) ||
+                cliente.Apellido.ToLower().Contains(busqueda) ||
+                cliente.Telefono.Contains(busqueda) ||
+                cliente.Correo.ToLower().Contains(busqueda))
+            {
+               
+                resultados.Add(cliente);
+            }
+        }
+        
+        return resultados;
+    }
     public List<Cliente> ObtenerTodos()
     {
         return _clientes;
