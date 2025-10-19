@@ -37,7 +37,8 @@ public class RepoClientes
         return null;
     }
 
-    public void Modificar(int id, string nombre, string apellido, string telefono, string correo)
+
+    public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
     {
         var cliente = Buscar(id);
         if (cliente != null)
@@ -46,32 +47,27 @@ public class RepoClientes
             cliente.Apellido = apellido;
             cliente.Telefono = telefono;
             cliente.Correo = correo;
-            
+            cliente.Genero = genero; 
+            cliente.FechaNacimiento = fechaNacimiento; 
         }
     }
     
-    public List<Cliente> BuscarPorTermino(string termino)
+   public List<Cliente> BuscarPorTermino(string termino)
     {
-        // 1. Creamos una lista vacía para guardar los clientes que coincidan.
         var resultados = new List<Cliente>();
-    
- 
         var busqueda = termino.ToLower();
-
 
         foreach (var cliente in _clientes)
         {
-          
             if (cliente.Nombre.ToLower().Contains(busqueda) ||
                 cliente.Apellido.ToLower().Contains(busqueda) ||
                 cliente.Telefono.Contains(busqueda) ||
-                cliente.Correo.ToLower().Contains(busqueda))
+                cliente.Correo.ToLower().Contains(busqueda) ||
+                cliente.Genero.ToLower().Contains(busqueda)) 
             {
-               
                 resultados.Add(cliente);
             }
         }
-        
         return resultados;
     }
     public List<Cliente> ObtenerTodos()
