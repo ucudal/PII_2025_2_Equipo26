@@ -170,7 +170,7 @@ public class Fachada
         }
     }
 
-// NUEVA SECCIÓN: Gestión de Etiquetas
+    // NUEVA SECCIÓN: Gestión de Etiquetas
     public void CrearEtiqueta(string nombre)
     {
         _repoEtiquetas.Crear(nombre);
@@ -185,5 +185,32 @@ public class Fachada
     {
         _repoEtiquetas.Eliminar(idEtiqueta);
 
+    }
+
+    public void AgregarEtiquetaACliente(int idCliente, int idEtiqueta)
+    {
+
+        var cliente = _repoClientes.Buscar(idCliente);
+        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);
+
+
+        if (cliente != null && etiqueta != null)
+        {
+
+            if (!cliente.Etiquetas.Contains(etiqueta))
+            {
+                cliente.Etiquetas.Add(etiqueta);
+            }
+        }
+    }
+    public void QuitarEtiquetaDeCliente(int idCliente, int idEtiqueta)
+    {
+        var cliente = _repoClientes.Buscar(idCliente);
+        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);
+
+        if (cliente != null && etiqueta != null)
+        {
+            cliente.Etiquetas.Remove(etiqueta);
+        }
     }
 }
