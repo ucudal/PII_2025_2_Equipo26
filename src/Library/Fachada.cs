@@ -6,11 +6,12 @@ using System.Collections.Generic;
 public class Fachada
 {
     private RepoClientes _repoClientes = new();
+    private RepoEtiquetas _repoEtiquetas = new();
 
     // --- Clientes ---
-    public void CrearCliente(string nombre, string apellido, string telefono, string correo)
+    public void CrearCliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
     {
-        var clienteTemporal = new Cliente(0, nombre, apellido, telefono, correo);
+        var clienteTemporal = new Cliente(0, nombre, apellido, telefono, correo, genero, fechaNacimiento);
         _repoClientes.Agregar(clienteTemporal);
     }
 
@@ -18,9 +19,9 @@ public class Fachada
     {
         return _repoClientes.ObtenerTodos();
     }
-    public void ModificarCliente(int id, string nombre, string apellido, string telefono, string correo)
+    public void ModificarCliente(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
     {
-        _repoClientes.Modificar(id, nombre, apellido, telefono, correo);
+        _repoClientes.Modificar(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
     }
 
     public List<Cliente> BuscarClientes(string termino)
@@ -38,7 +39,6 @@ public class Fachada
     {
         var cliente = _repoClientes.Buscar(idCliente);
 
-        // Me aseguro que el cliente exista
         if (cliente != null)
         {
             var nuevaLlamada = new Llamada(fecha, tema, tipoLlamada);
@@ -79,12 +79,12 @@ public class Fachada
     }
 
 
-// --- Consultas ---
+    // --- Consultas ---
 
 
 
 
-public List<Interaccion> VerInteraccionesDeCliente(int idCliente)
+    public List<Interaccion> VerInteraccionesDeCliente(int idCliente)
     {
         var cliente = _repoClientes.Buscar(idCliente);
         if (cliente != null)
@@ -153,4 +153,20 @@ public List<Interaccion> VerInteraccionesDeCliente(int idCliente)
 
         return resultadoFinal;
     }
+
+public void AgregarNotaAInteraccion(int idCliente, int indiceInteraccion, string textoNota)
+    {
+        var cliente = _repoClientes.Buscar(idCliente);
+
+        if (cliente != null)
+        {
+            if (indiceInteraccion >= 0 && indiceInteraccion < cliente.Interacciones.Count)
+            {
+                var interaccionSeleccionada = cliente.Interacciones[indiceInteraccion];
+
+
+                interaccionSeleccionada.NotaAdicional = new Nota(textoNota);
+            }
+        }
+    } 
 }

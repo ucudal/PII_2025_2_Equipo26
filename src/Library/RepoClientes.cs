@@ -9,10 +9,19 @@ public class RepoClientes
 
     public void Agregar(Cliente cliente)
     {
-        // El repo le asigna el ID
-        var nuevoCliente = new Cliente(_nextId++, cliente.Nombre, cliente.Apellido, cliente.Telefono, cliente.Correo);
+ 
+        var nuevoCliente = new Cliente(
+            _nextId++, 
+            cliente.Nombre, 
+            cliente.Apellido, 
+            cliente.Telefono, 
+            cliente.Correo,
+            cliente.Genero, 
+            cliente.FechaNacimiento 
+        );
         _clientes.Add(nuevoCliente);
     }
+
 
     public Cliente Buscar(int id)
     {
@@ -37,6 +46,7 @@ public class RepoClientes
             cliente.Apellido = apellido;
             cliente.Telefono = telefono;
             cliente.Correo = correo;
+            
         }
     }
     
