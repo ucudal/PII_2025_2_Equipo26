@@ -1,430 +1,130 @@
-﻿namespace Library;
-
+﻿using Library;
 using System;
-using System.Collections.Generic;
 
-public class Fachada
+public class Program
 {
-    // --- Campos de AMBAS ramas ---
-    private RepoClientes _repoClientes = new();
-    private RepoEtiquetas _repoEtiquetas = new();
-    private RepoUsuarios _repoUsuarios = new();
-    private RepoVentas _repoVentas = new();
-    private int _proximoIdVenta = 1; // <--- Este faltaba (de main)
+    private static Fachada fachada = new Fachada();
 
-    // --- Clientes (Común) ---
-    public void CrearCliente(string nombre, string apellido, string telefono, string correo, 
-                           string genero, DateTime fechaNacimiento)
+    public static void Main(string[] args)
     {
-        var clienteTemporal = new Cliente(0, nombre, apellido, telefono, correo, 
-                                        genero, fechaNacimiento);
-        _repoClientes.Agregar(clienteTemporal);
+        Console.WriteLine("--- Iniciando Demo del CRM ---");
+
+        DemoGestionUsuarios();
+        DemoClientesYAsignacion();
+        DemoInteraccionesYVentas();
+        DemoReportesYDashboard();
+
+        Console.WriteLine("\n--- Fin de la Demo ---");
     }
 
-    public List<Cliente> VerTodosLosClientes()
+    private static void DemoGestionUsuarios()
     {
-        return _repoClientes.ObtenerTodos();
-    }
-    public void ModificarCliente(int id, string nombre, string apellido, string telefono, 
-                               string correo, string genero, DateTime fechaNacimiento)
-    {
-        _repoClientes.Modificar(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
+        Console.WriteLine("\n--- 1. Demo Gestión de Usuarios ---");
+        
+        fachada.CrearUsuario("admin_global", "pass123", RolUsuario.Administrador);
+        fachada.CrearUsuario("vendedor_juan", "pass456", RolUsuario.Vendedor);
+        fachada.CrearUsuario("vendedor_maria", "pass789", RolUsuario.Vendedor);
+        Console.WriteLine("Usuarios 'admin_global', 'vendedor_juan' y 'vendedor_maria' creados.");
+
+        int idMaria = 3; 
+        fachada.SuspenderUsuario(idMaria);
+        Console.WriteLine("Usuario 'vendedor_maria' (ID 3) suspendido.");
+
+        var usuarios = fachada.VerTodosLosUsuarios();
+        foreach (var u in usuarios)
+        {
+            Console.WriteLine($"  - [Usuario] ID: {u.Id}, Nombre: {u.NombreUsuario}, Rol: {u.Rol}, Estado: {u.Estado}");
+        }
     }
 
-    // --- Métodos de Búsqueda (Ambos) ---
-    public List<Cliente> BuscarClientes(string termino) // (de Anthony)
+    private static void DemoClientesYAsignacion()
     {
-        return _repoClientes.BuscarPorTermino(termino);
+        Console.WriteLine("\n--- 2. Demo Clientes y Asignación de Vendedor ---");
+        
+        fachada.CrearCliente("Cliente A", "Gomez", "099123456", "clienteA@mail.com", "Masculino", new DateTime(1990, 5, 15));
+        fachada.CrearCliente("Cliente B", "Perez", "098765432", "clienteB@mail.com", "Femenino", new DateTime(1985, 10, 20));
+        Console.WriteLine("Clientes 'Cliente A' (ID 1) y 'Cliente B' (ID 2) creados.");
+
+        int idVendedorJuan = 2; 
+        int idVendedorMaria = 3; 
+        int idClienteA = 1;
+        int idClienteB = 2;
+
+        Console.WriteLine($"Asignando Cliente A (ID {idClienteA}) a Vendedor Juan (ID {idVendedorJuan})...");
+        fachada.AsignarClienteVendedor(idClienteA, idVendedorJuan);
+
+        Console.WriteLine($"Intentando asignar Cliente B (ID {idClienteB}) a Vendedora Maria (ID {idVendedorMaria}, Suspendida)...");
+        fachada.AsignarClienteVendedor(idClienteB, idVendedorMaria); 
+
+        var clienteA = fachada.BuscarCliente(idClienteA);
+        var clienteB = fachada.BuscarCliente(idClienteB);
+        
+        Console.WriteLine($"  -> Vendedor de Cliente A: {clienteA.VendedorAsignado?.NombreUsuario ?? "N/A"}"); 
+        Console.WriteLine($"  -> Vendedor de Cliente B: {clienteB.VendedorAsignado?.NombreUsuario ?? "N/A"}"); 
     }
 
-    public Cliente BuscarCliente(int clienteId) // <--- Este faltaba (de main)
+    private static void DemoInteraccionesYVentas()
     {
-        return _repoClientes.Buscar(clienteId);
-    }
+        Console.WriteLine("\n--- 3. Demo Interacciones y Ventas (Fusión) ---");
+        int idClienteA = 1;
 
-    public void EliminarCliente(int id)
-    {
-        _repoClientes.Eliminar(id);
+        fachada.RegistrarLlamada(idClienteA, DateTime.Now.AddDays(-5), "Consulta inicial", "Entrante");
+        fachada.RegistrarCotizacion(idClienteA, "Cotización CRM", 2500, "Licencia Plus"); 
+        fachada.RegistrarReunion(idClienteA, DateTime.Now.AddDays(3), "Demo Producto", "Oficina Cliente"); 
+        Console.WriteLine("Interacciones (Llamada, Cotización, Reunión) registradas para Cliente A.");
+
+        Console.WriteLine("Registrando ventas...");
+        
+        fachada.RegistrarVenta("Consultoría", 400.50f, DateTime.Now.AddDays(-2));
+        
+        fachada.RegistrarVenta(idClienteA, "Licencia CRM", 2500f);
+
+        fachada.RegistrarVenta("Soporte", 150f, DateTime.Now.AddDays(-1));
+        
+        fachada.RegistrarVenta("Hardware Antiguo", 1000f, DateTime.Now.AddDays(-40));
+        
+        DateTime inicio = DateTime.Now.AddDays(-30);
+        DateTime fin = DateTime.Now;
+        float totalGlobal = fachada.CalcularTotalVentas(inicio, fin); 
+        
+        Console.WriteLine($"  -> Total de Ventas GLOBALES (últimos 30 días): ${totalGlobal:F2}"); 
+
+        var clienteA = fachada.BuscarCliente(idClienteA);
+        Console.WriteLine($"  -> Ventas registradas específicas para Cliente A: {clienteA.Ventas.Count}"); 
     }
     
-    // --- Método de Anthony ---
-    public void AsignarClienteVendedor(int idCliente, int idNuevoVendedor)
+    private static void DemoReportesYDashboard()
     {
-        Cliente cliente = _repoClientes.Buscar(idCliente);
-        Usuario nuevoVendedor = _repoUsuarios.Buscar(idNuevoVendedor);
+        Console.WriteLine("\n--- 4. Demo Reportes y Dashboard (Fusión) ---");
 
-        if (cliente == null || nuevoVendedor == null)
+        var resumen = fachada.ObtenerResumenDashboard(); 
+        
+        Console.WriteLine($"  [Dashboard: Clientes Totales] -> {resumen.TotalClientes}"); 
+        
+        Console.WriteLine("  [Dashboard: Interacciones Recientes (Top 5)]");
+        foreach (var inter in resumen.InteraccionesRecientes)
         {
-            return; 
-        }
-        if (nuevoVendedor.Rol != RolUsuario.Vendedor)
-        {
-            return;
-        }
-        if (nuevoVendedor.Estado == EstadoUsuario.Suspendido)
-        {
-            return;
+            Console.WriteLine($"    - {inter.Fecha.ToShortDateString()}: {inter.Tema}");
         }
         
-        cliente.AsignarVendedor(nuevoVendedor);
-    }
-
-    // --- Interacciones (Común) ---
-    public void RegistrarLlamada(int idCliente, DateTime fecha, string tema, string tipoLlamada)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-
-        if (cliente != null)
+        Console.WriteLine("  [Dashboard: Reuniones Próximas]");
+        if (resumen.ReunionesProximas.Count > 0)
         {
-            var nuevaLlamada = new Llamada(fecha, tema, tipoLlamada);
-            cliente.Interacciones.Add(nuevaLlamada);
-        }
-    }
-
-    public void RegistrarReunion(int idCliente, DateTime fecha, string tema, string lugar)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-        if (cliente != null)
-        {
-            var nuevaReunion = new Reunion(fecha, tema, lugar);
-            cliente.Interacciones.Add(nuevaReunion);
-        }
-    }
-
-    public void RegistrarMensaje(int idCliente, DateTime fecha, string tema, string remitente, string destinatario)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-        if (cliente != null)
-        {
-            var nuevoMensaje = new Mensaje(fecha, tema, remitente, destinatario);
-            cliente.Interacciones.Add(nuevoMensaje);
-        }
-    }
-
-    public void RegistrarCorreo(int idCliente, DateTime fecha, string tema, string remitente, string destinatario, string asunto)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-        if (cliente != null)
-        {
-            var nuevoCorreo = new Correo(fecha, tema, remitente, destinatario, asunto);
-            cliente.Interacciones.Add(nuevoCorreo);
-        }
-    }
-
-    // --- Método de Cotización (de main) ---
-    public void RegistrarCotizacion(int clienteId, string tema, double monto, string detalle) // <--- Este faltaba (de main)
-    {
-        Cliente clienteEncontrado = _repoClientes.Buscar(clienteId); 
-
-        if (clienteEncontrado != null)
-        {
-            Cotizacion nuevaCotizacion = new Cotizacion(tema, monto, detalle);
-            clienteEncontrado.Interacciones.Add(nuevaCotizacion); 
-        }
-    }
-
-    // --- Consultas (Común) ---
-    public List<Interaccion> VerInteraccionesDeCliente(int idCliente)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-        if (cliente != null)
-        {
-            return cliente.Interacciones;
-        }
-        return new List<Interaccion>();
-    }
-
-    public List<Interaccion> VerInteraccionesDeCliente(int idCliente, string tipoDeInteraccion)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-        if (cliente == null)
-        {
-            return new List<Interaccion>();
-        }
-
-        var interaccionesFiltradas = new List<Interaccion>();
-        string tipoBuscado = tipoDeInteraccion.ToLower();
-
-        foreach (var interaccion in cliente.Interacciones)
-        {
-            bool coincide = false;
-            if (tipoBuscado == "llamada" && interaccion is Llamada)
+            foreach (var reunion in resumen.ReunionesProximas)
             {
-                coincide = true;
-            }
-            else if (tipoBuscado == "reunion" && interaccion is Reunion)
-            {
-                coincide = true;
-            }
-            else if (tipoBuscado == "mensaje" && interaccion is Mensaje)
-            {
-                coincide = true;
-            }
-            else if (tipoBuscado == "correo" && interaccion is Correo)
-            {
-                coincide = true;
-            }
-
-            if (coincide)
-            {
-                interaccionesFiltradas.Add(interaccion);
+                Console.WriteLine($"    - {reunion.Fecha.ToShortDateString()}: {reunion.Tema} en {reunion.Lugar}");
             }
         }
-
-        return interaccionesFiltradas;
-    }
-
-    public List<Interaccion> VerInteraccionesDeCliente(int idCliente, string tipoDeInteraccion, DateTime fechaDesde)
-    {
-        var interaccionesFiltradasPorTipo = VerInteraccionesDeCliente(idCliente, tipoDeInteraccion);
-        var resultadoFinal = new List<Interaccion>();
-
-        foreach (var interaccion in interaccionesFiltradasPorTipo)
+        else
         {
-            if (interaccion.Fecha >= fechaDesde)
-            {
-                resultadoFinal.Add(interaccion);
-            }
+            Console.WriteLine("    - No hay reuniones próximas.");
         }
 
-        return resultadoFinal;
-    }
-
-    public void AgregarNotaAInteraccion(int idCliente, int indiceInteraccion, string textoNota)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-
-        if (cliente != null)
+        var inactivos = fachada.ObtenerClientesInactivos(30); 
+        Console.WriteLine($"\n  [Reporte: Clientes Inactivos (30 días)]");
+        foreach (var c in inactivos)
         {
-            if (indiceInteraccion >= 0 && indiceInteraccion < cliente.Interacciones.Count)
-            {
-                var interaccionSeleccionada = cliente.Interacciones[indiceInteraccion];
-                interaccionSeleccionada.NotaAdicional = new Nota(textoNota);
-            }
+            Console.WriteLine($"    - ID: {c.Id}, Nombre: {c.Nombre}"); 
         }
-    }
-
-    // --- Gestión de Etiquetas (Común) ---
-    public void CrearEtiqueta(string nombre)
-    {
-        _repoEtiquetas.Crear(nombre);
-    }
-
-    public List<Etiqueta> VerTodasLasEtiquetas()
-    {
-        return _repoEtiquetas.ObtenerTodas();
-    }
-
-    public void EliminarEtiqueta(int idEtiqueta)
-    {
-        _repoEtiquetas.Eliminar(idEtiqueta);
-    }
-
-    public void AgregarEtiquetaACliente(int idCliente, int idEtiqueta)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);
-
-        if (cliente != null && etiqueta != null)
-        {
-            if (!cliente.Etiquetas.Contains(etiqueta))
-            {
-                cliente.Etiquetas.Add(etiqueta);
-            }
-        }
-    }
-    
-    public void QuitarEtiquetaDeCliente(int idCliente, int idEtiqueta)
-    {
-        var cliente = _repoClientes.Buscar(idCliente);
-        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);
-
-        if (cliente != null && etiqueta != null)
-        {
-            cliente.Etiquetas.Remove(etiqueta);
-        }
-    }
-    
-    // --- Métodos de Gestión de Usuarios (de Anthony) ---
-    public void CrearUsuario(string nombreUsuario, string contrasena, RolUsuario rol)
-    {
-        _repoUsuarios.Agregar(nombreUsuario, contrasena, rol);
-    }
-
-    public void SuspenderUsuario(int idUsuario)
-    {
-        _repoUsuarios.Suspender(idUsuario);
-    }
-
-    public void EliminarUsuario(int idUsuario)
-    {
-        _repoUsuarios.Eliminar(idUsuario);
-    }
-
-    public List<Usuario> VerTodosLosUsuarios()
-    {
-        return _repoUsuarios.ObtenerTodos();
-    }
-    
-    // --- Métodos de Ventas (Ambos) ---
-    
-    // Método de Anthony (Venta Global)
-    public void RegistrarVenta(string producto, float importe, DateTime fecha)
-    {
-        _repoVentas.Agregar(producto, importe, fecha);
-    }
-    
-    // Método de Main (Venta para Cliente)
-    public void RegistrarVenta(int clienteId, string producto, float monto) // <--- Este faltaba (de main)
-    {
-        Cliente clienteEncontrado = _repoClientes.Buscar(clienteId);
-
-        if (clienteEncontrado != null)
-        {
-            Venta nuevaVenta = new Venta(_proximoIdVenta++, producto, monto, DateTime.Now);
-            clienteEncontrado.Ventas.Add(nuevaVenta); 
-        }
-    }
-    
-    // Método de Anthony
-    public float CalcularTotalVentas(DateTime fechaInicio, DateTime fechaFin)
-    {
-        var todasLasVentas = _repoVentas.ObtenerTodas();
-        float total = 0;
-
-        foreach (var venta in todasLasVentas)
-        {
-            if (venta.Fecha >= fechaInicio && venta.Fecha <= fechaFin)
-            {
-                total += venta.Importe;
-            }
-        }
-        
-        return total;
-    }
-    
-    // --- Métodos de Reportes (de Main) ---
-        
-    public List<Cliente> ObtenerClientesInactivos(int diasSinInteraccion) // <--- Este faltaba (de main)
-    {
-        List<Cliente> clientesInactivos = new List<Cliente>();
-        DateTime fechaLimite = DateTime.Now.AddDays(-diasSinInteraccion);
-
-        foreach (var cliente in _repoClientes.ObtenerTodos())
-        {
-            if (cliente.Interacciones.Count == 0)
-            {
-                clientesInactivos.Add(cliente);
-                continue;
-            }
-
-            DateTime fechaMasReciente = DateTime.MinValue;
-            foreach (var interaccion in cliente.Interacciones)
-            {
-                if (interaccion.Fecha > fechaMasReciente)
-                {
-                    fechaMasReciente = interaccion.Fecha;
-                }
-            }
-
-            if (fechaMasReciente < fechaLimite)
-            {
-                clientesInactivos.Add(cliente);
-            }
-        }
-
-        return clientesInactivos;
-    }
-    
-    public List<Cliente> ObtenerClientesSinRespuesta() // <--- Este faltaba (de main)
-    {
-        List<Cliente> clientesSinRespuesta = new List<Cliente>();
-
-        foreach (var cliente in _repoClientes.ObtenerTodos())
-        {
-            if (cliente.Interacciones.Count == 0)
-            {
-                continue;
-            }
-
-            Interaccion ultimaInteraccion = null;
-            DateTime fechaMasReciente = DateTime.MinValue;
-
-            foreach (var interaccion in cliente.Interacciones)
-            {
-                if (interaccion.Fecha > fechaMasReciente)
-                {
-                    fechaMasReciente = interaccion.Fecha;
-                    ultimaInteraccion = interaccion;
-                }
-            }
-
-            if (ultimaInteraccion is Llamada)
-            {
-                Llamada ultimaLlamada = ultimaInteraccion as Llamada;
-                if (ultimaLlamada.TipoLlamada == "Recibida")
-                {
-                    clientesSinRespuesta.Add(cliente);
-                }
-            }
-        }
-
-        return clientesSinRespuesta;
-    }
-    
-    // --- Dashboard (de Anthony) ---
-    public ResumenDashboard ObtenerResumenDashboard()
-    {
-        var todosLosClientes = _repoClientes.ObtenerTodos();
-        
-        int totalClientes = todosLosClientes.Count;
-
-        List<Interaccion> todasLasInteracciones = new List<Interaccion>();
-        foreach (Cliente cliente in todosLosClientes)
-        {
-            foreach (Interaccion interaccion in cliente.Interacciones)
-            {
-                todasLasInteracciones.Add(interaccion);
-            }
-        }
-
-        todasLasInteracciones.Sort((i1, i2) => i2.Fecha.CompareTo(i1.Fecha));
-
-        List<Interaccion> interaccionesRecientes = new List<Interaccion>();
-        int contadorMaximo = 5;
-        
-        for (int i = 0; i < todasLasInteracciones.Count; i++)
-        {
-            if (i >= contadorMaximo)
-            {
-                break; 
-            }
-            interaccionesRecientes.Add(todasLasInteracciones[i]);
-        }
-
-        List<Reunion> reunionesProximas = new List<Reunion>();
-        DateTime ahora = DateTime.Now;
-
-        foreach (Interaccion interaccion in todasLasInteracciones) 
-        {
-            if (interaccion is Reunion)
-            {
-                if (interaccion.Fecha > ahora)
-                {
-                    reunionesProximas.Add((Reunion)interaccion);
-                }
-            }
-        }
-
-        reunionesProximas.Sort((r1, r2) => r1.Fecha.CompareTo(r2.Fecha));
-        
-        var resumen = new ResumenDashboard
-        {
-            TotalClientes = totalClientes,
-            InteraccionesRecientes = interaccionesRecientes,
-            ReunionesProximas = reunionesProximas
-        };
-
-        return resumen;
     }
 }
