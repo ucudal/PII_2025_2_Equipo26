@@ -1,11 +1,11 @@
-﻿namespace Library;
+﻿using Library;
 
 using System;
 using System.Collections.Generic;
 
 public class RepoVentas
 {
-    private List<Venta> _ventas = new();
+    private List<Venta> _ventas = new List<Venta>();
     private int _nextId = 1;
 
     public Venta Agregar(string producto, float importe, DateTime fecha)

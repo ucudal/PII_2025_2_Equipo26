@@ -1,10 +1,10 @@
-namespace Library;
-
+using Library;
+using System;
 using System.Collections.Generic;
 
 public class RepoClientes
 {
-    private List<Cliente> _clientes = new();
+    private List<Cliente> _clientes = new List<Cliente>();
     private int _nextId = 1;
 
     public void Agregar(Cliente cliente)

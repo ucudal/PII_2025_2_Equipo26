@@ -1,6 +1,5 @@
-// EN: src/Library/Interaccion.cs
 
-namespace Library;
+using Library;
 
 using System;
 

@@ -1,5 +1,4 @@
-
-namespace Library;
+using Library;
 
 using System;
 

@@ -1,14 +1,14 @@
-namespace Library;
+using Library;
 
 using System;
 using System.Collections.Generic;
 
 public class Fachada
 {
-    private RepoClientes _repoClientes = new();
-    private RepoEtiquetas _repoEtiquetas = new();
-    private RepoUsuarios _repoUsuarios = new();
-    private RepoVentas _repoVentas = new();
+    private RepoClientes _repoClientes = new RepoClientes();
+    private RepoEtiquetas _repoEtiquetas = new RepoEtiquetas();
+    private RepoUsuarios _repoUsuarios = new RepoUsuarios();
+    private RepoVentas _repoVentas = new RepoVentas();
     private int _proximoIdVenta = 1;
     
     public void CrearCliente(string nombre, string apellido, string telefono, string correo, 

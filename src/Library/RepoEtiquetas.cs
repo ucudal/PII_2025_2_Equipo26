@@ -1,14 +1,10 @@
-namespace Library;
+using Library;
 
 using System.Collections.Generic;
 
-/// <summary>
-/// Repositorio encargado de gestionar todas las etiquetas del sistema.
-/// Sigue el principio Expert, ya que es el experto en almacenar y manejar etiquetas.
-/// </summary>
 public class RepoEtiquetas
 {
-    private List<Etiqueta> _etiquetas = new();
+    private List<Etiqueta> _etiquetas = new List<Etiqueta>();
     private int _nextId = 1;
     
     public void Crear(string nombre)

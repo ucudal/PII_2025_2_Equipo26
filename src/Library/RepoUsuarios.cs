@@ -1,10 +1,10 @@
-﻿namespace Library;
+﻿using Library;
 
 using System.Collections.Generic;
 
 public class RepoUsuarios
 {
-    private List<Usuario> _usuarios = new();
+    private List<Usuario> _usuarios = new List<Usuario>();
     private int _nextId = 1;
 
     public Usuario Agregar(string nombreUsuario, string contrasena, RolUsuario rol)
