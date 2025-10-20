@@ -7,6 +7,7 @@ public class Fachada
 {
     private RepoClientes _repoClientes = new();
     private RepoEtiquetas _repoEtiquetas = new();
+    private int _proximoIdVenta = 1;
 
     // --- Clientes ---
     public void CrearCliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
@@ -212,5 +213,112 @@ public class Fachada
         {
             cliente.Etiquetas.Remove(etiqueta);
         }
+    }
+    
+
+    public void RegistrarVenta(int clienteId, string producto, float monto)
+    {
+        Cliente clienteEncontrado = _repoClientes.Buscar(clienteId);
+
+        if (clienteEncontrado != null)
+        {
+            Venta nuevaVenta = new Venta(_proximoIdVenta++, producto, monto, DateTime.Now);
+            clienteEncontrado.Ventas.Add(nuevaVenta);
+        
+            Console.WriteLine($"Venta de '{producto}' por ${monto} registrada para el cliente: {clienteEncontrado.Nombre}");
+        }
+        else
+        {
+            Console.WriteLine($"Error: No se encontró un cliente con el ID {clienteId}. No se pudo registrar la venta.");
+        }
+    }
+    
+    public void RegistrarCotizacion(int clienteId, string tema, double monto, string detalle)
+    {
+        Cliente clienteEncontrado = _repoClientes.Buscar(clienteId); 
+
+        if (clienteEncontrado != null)
+        {
+            Cotizacion nuevaCotizacion = new Cotizacion(tema, monto, detalle);
+            clienteEncontrado.Interacciones.Add(nuevaCotizacion); 
+        
+            Console.WriteLine($"Cotización sobre '{tema}' registrada para el cliente: {clienteEncontrado.Nombre}");
+        }
+        else
+        {
+            Console.WriteLine($"Error: No se encontró un cliente con el ID {clienteId}. No se pudo registrar la cotización.");
+        }
+    }
+    
+    public List<Cliente> ObtenerClientesInactivos(int diasSinInteraccion)
+    {
+        List<Cliente> clientesInactivos = new List<Cliente>();
+        DateTime fechaLimite = DateTime.Now.AddDays(-diasSinInteraccion);
+
+        foreach (var cliente in _repoClientes.ObtenerTodos())
+        {
+            if (cliente.Interacciones.Count == 0)
+            {
+                clientesInactivos.Add(cliente);
+                continue;
+            }
+
+            DateTime fechaMasReciente = DateTime.MinValue;
+            foreach (var interaccion in cliente.Interacciones)
+            {
+                if (interaccion.Fecha > fechaMasReciente)
+                {
+                    fechaMasReciente = interaccion.Fecha;
+                }
+            }
+
+            if (fechaMasReciente < fechaLimite)
+            {
+                clientesInactivos.Add(cliente);
+            }
+        }
+
+        return clientesInactivos;
+    }
+
+    public Cliente BuscarCliente(int clienteId)
+    {
+        return _repoClientes.Buscar(clienteId);
+    }
+    
+    public List<Cliente> ObtenerClientesSinRespuesta()
+    {
+        List<Cliente> clientesSinRespuesta = new List<Cliente>();
+
+        foreach (var cliente in _repoClientes.ObtenerTodos())
+        {
+            if (cliente.Interacciones.Count == 0)
+            {
+                continue;
+            }
+
+            Interaccion ultimaInteraccion = null;
+            DateTime fechaMasReciente = DateTime.MinValue;
+
+            foreach (var interaccion in cliente.Interacciones)
+            {
+                if (interaccion.Fecha > fechaMasReciente)
+                {
+                    fechaMasReciente = interaccion.Fecha;
+                    ultimaInteraccion = interaccion;
+                }
+            }
+
+            if (ultimaInteraccion is Llamada)
+            {
+                Llamada ultimaLlamada = ultimaInteraccion as Llamada;
+                if (ultimaLlamada.TipoLlamada == "Recibida")
+                {
+                    clientesSinRespuesta.Add(cliente);
+                }
+            }
+        }
+
+        return clientesSinRespuesta;
     }
 }

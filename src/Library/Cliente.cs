@@ -33,4 +33,9 @@ public class Cliente
         Etiquetas = new List<Etiqueta>();
         Ventas = new List<Venta>();
     }
+    
+    public void AgregarVenta(Venta venta)
+    {
+        this.Ventas.Add(venta);
+    }
 }

@@ -1,3 +1,5 @@
+// EN: src/Library/Interaccion.cs
+
 namespace Library;
 
 using System;
@@ -8,10 +10,9 @@ public abstract class Interaccion
     public string Tema { get; set; }
     public Nota NotaAdicional { get; set; }
 
-    // Constructor
-    protected Interaccion(DateTime fecha, string tema)
+    public Interaccion(DateTime fecha, string tema)
     {
-        Fecha = fecha;
-        Tema = tema;
+        this.Fecha = fecha;
+        this.Tema = tema;
     }
 }
