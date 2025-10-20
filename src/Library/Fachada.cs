@@ -7,8 +7,10 @@ public class Fachada
 {
     private RepoClientes _repoClientes = new();
     private RepoEtiquetas _repoEtiquetas = new();
+    private RepoUsuarios _repoUsuarios = new();
+    private RepoVentas _repoVentas = new();
 
-    // --- Clientes ---
+    
     public void CrearCliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
     {
         var clienteTemporal = new Cliente(0, nombre, apellido, telefono, correo, genero, fechaNacimiento);
@@ -33,8 +35,29 @@ public class Fachada
     {
         _repoClientes.Eliminar(id);
     }
+    
+    public void AsignarClienteVendedor(int idCliente, int idNuevoVendedor)
+    {
+        Cliente cliente = _repoClientes.Buscar(idCliente);
+        Usuario nuevoVendedor = _repoUsuarios.Buscar(idNuevoVendedor);
 
-    // --- Interacciones ---
+        if (cliente == null || nuevoVendedor == null)
+        {
+            return; 
+        }
+        if (nuevoVendedor.Rol != RolUsuario.Vendedor)
+        {
+            return;
+        }
+        if (nuevoVendedor.Estado == EstadoUsuario.Suspendido)
+        {
+            return;
+        }
+        
+        cliente.AsignarVendedor(nuevoVendedor);
+    }
+
+    
     public void RegistrarLlamada(int idCliente, DateTime fecha, string tema, string tipoLlamada)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -79,11 +102,7 @@ public class Fachada
     }
 
 
-    // --- Consultas ---
-
-
-
-
+    
     public List<Interaccion> VerInteraccionesDeCliente(int idCliente)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -170,7 +189,7 @@ public class Fachada
         }
     }
 
-    // NUEVA SECCIÓN: Gestión de Etiquetas
+    
     public void CrearEtiqueta(string nombre)
     {
         _repoEtiquetas.Crear(nombre);
@@ -212,5 +231,104 @@ public class Fachada
         {
             cliente.Etiquetas.Remove(etiqueta);
         }
+    }
+    
+    
+    public void CrearUsuario(string nombreUsuario, string contrasena, RolUsuario rol)
+    {
+        _repoUsuarios.Agregar(nombreUsuario, contrasena, rol);
+    }
+
+    public void SuspenderUsuario(int idUsuario)
+    {
+        _repoUsuarios.Suspender(idUsuario);
+    }
+
+    public void EliminarUsuario(int idUsuario)
+    {
+        _repoUsuarios.Eliminar(idUsuario);
+    }
+
+    public List<Usuario> VerTodosLosUsuarios()
+    {
+        return _repoUsuarios.ObtenerTodos();
+    }
+    
+    
+    public void RegistrarVenta(string producto, float importe, DateTime fecha)
+    {
+        _repoVentas.Agregar(producto, importe, fecha);
+    }
+    
+    public float CalcularTotalVentas(DateTime fechaInicio, DateTime fechaFin)
+    {
+        var todasLasVentas = _repoVentas.ObtenerTodas();
+        float total = 0;
+
+        foreach (var venta in todasLasVentas)
+        {
+            if (venta.Fecha >= fechaInicio && venta.Fecha <= fechaFin)
+            {
+                total += venta.Importe;
+            }
+        }
+        
+        return total;
+    }
+    
+    
+    public ResumenDashboard ObtenerResumenDashboard()
+    {
+        var todosLosClientes = _repoClientes.ObtenerTodos();
+        
+        int totalClientes = todosLosClientes.Count;
+
+        List<Interaccion> todasLasInteracciones = new List<Interaccion>();
+        foreach (Cliente cliente in todosLosClientes)
+        {
+            foreach (Interaccion interaccion in cliente.Interacciones)
+            {
+                todasLasInteracciones.Add(interaccion);
+            }
+        }
+
+        todasLasInteracciones.Sort((i1, i2) => i2.Fecha.CompareTo(i1.Fecha));
+
+        List<Interaccion> interaccionesRecientes = new List<Interaccion>();
+        int contadorMaximo = 5;
+        
+        for (int i = 0; i < todasLasInteracciones.Count; i++)
+        {
+            if (i >= contadorMaximo)
+            {
+                break; 
+            }
+            interaccionesRecientes.Add(todasLasInteracciones[i]);
+        }
+
+        List<Reunion> reunionesProximas = new List<Reunion>();
+        DateTime ahora = DateTime.Now;
+
+        foreach (Interaccion interaccion in todasLasInteracciones) 
+        {
+            if (interaccion is Reunion)
+            {
+                if (interaccion.Fecha > ahora)
+                {
+                    reunionesProximas.Add((Reunion)interaccion);
+                }
+            }
+        }
+
+        reunionesProximas.Sort((r1, r2) => r1.Fecha.CompareTo(r2.Fecha));
+        
+        var resumen = new ResumenDashboard
+        {
+            TotalClientes = totalClientes,
+            InteraccionesRecientes = interaccionesRecientes,
+            ReunionesProximas = reunionesProximas
+        };
+
+        return resumen;
     }
 }
