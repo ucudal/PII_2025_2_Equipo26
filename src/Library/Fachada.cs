@@ -231,12 +231,18 @@ public class Fachada
     {
         _repoUsuarios.Suspender(idUsuario);
     }
-
+    public void ActivarUsuario(int idUsuario)
+    {
+        _repoUsuarios.Activar(idUsuario);
+    }
     public void EliminarUsuario(int idUsuario)
     {
         _repoUsuarios.Eliminar(idUsuario);
     }
-
+    public Usuario BuscarUsuario(int idUsuario)
+    {
+        return _repoUsuarios.Buscar(idUsuario);
+    }
     public List<Usuario> VerTodosLosUsuarios()
     {
         return _repoUsuarios.ObtenerTodos();
@@ -274,8 +280,6 @@ public class Fachada
         
         return total;
     }
-    
-    // --- Métodos Adicionales ---
     
     public void RegistrarCotizacion(int clienteId, string tema, double monto, string detalle)
     {

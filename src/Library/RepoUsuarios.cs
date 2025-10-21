@@ -34,7 +34,14 @@ public class RepoUsuarios
             usuario.Suspender(); 
         }
     }
-
+    public void Activar(int id)
+    {
+        var usuario = Buscar(id);
+        if (usuario != null)
+        {
+            usuario.Activar();
+        }
+    }
     public void Eliminar(int id)
     {
         var usuario = Buscar(id);
