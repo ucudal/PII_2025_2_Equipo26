@@ -4,11 +4,15 @@ using System.Collections.Generic;
 
 public class CRMPrinter
 {
+    // Esta función agarra un objeto Cliente y te devuelve un string
+    // con sus datos formateados (ID, Nombre, Apellido y Correo).
     public string GetTextoCliente(Cliente cliente)
     {
         return $"ID: {cliente.Id}, Nombre: {cliente.Nombre} {cliente.Apellido}, Email: {cliente.Correo}";
     }
-
+    // Esta función recibe una lista de Clientes y la recorre.
+    // Usa la función GetTextoCliente para cada uno y va armando un
+    // string grande con todos los clientes, separados por un salto de línea.
     public string GetTextoListaClientes(List<Cliente> clientes)
     {
         // 1. Empezamos con un string vacío
