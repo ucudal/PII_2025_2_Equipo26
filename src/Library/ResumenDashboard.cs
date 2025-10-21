@@ -15,4 +15,3 @@ public class ResumenDashboard
     // Una lista de las reuniones que están agendadas para el futuro.
     public List<Reunion> ReunionesProximas { get; set; }
 }
-}
