@@ -30,3 +30,5 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 * **Documentación Oficial de .NET:** Para consultas específicas sobre C# y las bibliotecas.
 * **Tutoriales de Git:** Diversos recursos online para entender mejor el flujo de trabajo con ramas y fusiones.
 * **Ayuda de Trello:** Para optimizar el uso del tablero y sus funcionalidades.
+
+<img width="3394" height="3845" alt="Diagrama UML protecto F-NAF-2025-10-20-192559" src="https://github.com/user-attachments/assets/20b4f79b-5133-481c-b782-fc0884ae7950" />
