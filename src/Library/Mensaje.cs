@@ -2,26 +2,36 @@ using System;
 
 namespace Library
 {
-    // Esta clase representa un mensaje de texto o chat (ej: SMS, WhatsApp).
-    // Es otro tipo específico de 'Interaccion', por lo tanto, hereda de ella.
+    /// <summary>
+    /// Representa una interacción de tipo Mensaje (SMS, Chat, etc.).
+    /// Hereda de <see cref="Interaccion"/> (Herencia).
+    /// </summary>
     public class Mensaje : Interaccion
     {
         // --- Propiedades Específicas de Mensaje ---
 
-        // Quién envía el mensaje (ej: número de teléfono o ID de usuario).
+        /// <summary>
+        /// Obtiene quién envía el mensaje (ej: número de teléfono o ID).
+        /// </summary>
         public string Remitente { get; private set; }
         
-        // Quién recibe el mensaje.
+        /// <summary>
+        /// Obtiene quién recibe el mensaje.
+        /// </summary>
         public string Destinatario { get; private set; }
 
         // --- Constructor ---
-        // Para crear un nuevo Mensaje, pide los datos base (fecha, tema)
-        // y los datos propios de esta clase.
+        
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="Mensaje"/>.
+        /// </summary>
+        /// <param name="fecha">La fecha y hora del mensaje.</param>
+        /// <param name="tema">El tema o resumen del mensaje.</param>
+        /// <param name="remitente">El remitente del mensaje.</param>
+        /// <param name="destinatario">El destinatario del mensaje.</param>
         public Mensaje(DateTime fecha, string tema, string remitente, string destinatario)
-            : base(fecha, tema) // <-- Llama al constructor de la clase 'Interaccion'.
+            : base(fecha, tema) // Llama al constructor de la clase base (Interaccion).
         {
-            // 'base' ya se encargó de 'fecha' y 'tema'.
-            // Asignamos las propiedades de Mensaje.
             this.Remitente = remitente;
             this.Destinatario = destinatario;
         }

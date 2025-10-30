@@ -1,30 +1,57 @@
 using Library;
 
-// Esta clase representa a un usuario del sistema (Admin o Vendedor).
+/// <summary>
+/// Representa a un usuario del sistema (Admin o Vendedor).
+/// Es el "Experto" (Expert) en su propia información y estado.
+/// </summary>
 public class Usuario
 {
     // --- Propiedades ---
 
-    // ID numérico único. 'private set' significa que no se puede
-    // cambiar después de que se crea el objeto.
+    /// <summary>
+    /// Obtiene el ID numérico único del usuario.
+    /// </summary>
+    /// <remarks>
+    /// No se puede cambiar después de que se crea el objeto (private set).
+    /// </remarks>
     public int Id { get; private set; }
     
-    // Nombre de login (ej: "jPerez").
+    /// <summary>
+    /// Obtiene o establece el nombre de login (ej: "jPerez").
+    /// </summary>
     public string NombreUsuario { get; set; }
     
-    // Contraseña. 'private set' significa que solo se puede cambiar
-    // usando un método de esta clase (ej: CambiarContrasena).
+    /// <summary>
+    /// Obtiene la contraseña del usuario.
+    /// </summary>
+    /// <remarks>
+    /// Solo se puede cambiar usando <see cref="CambiarContrasena(string)"/>.
+    /// </remarks>
     public string Contrasena { get; private set; } 
     
-    // El tipo de usuario (tomado del Enum 'RolUsuario').
+    /// <summary>
+    /// Obtiene o establece el tipo de usuario (tomado del Enum <see cref="RolUsuario"/>).
+    /// </summary>
     public RolUsuario Rol { get; set; }
     
-    // El estado actual (tomado del Enum 'EstadoUsuario').
-    // 'private set' para que solo se cambie con Activar/Suspender.
+    /// <summary>
+    /// Obtiene el estado actual (tomado del Enum <see cref="EstadoUsuario"/>).
+    /// </summary>
+    /// <remarks>
+    /// Solo se puede cambiar con <see cref="Activar()"/> o <see cref="Suspender()"/>.
+    /// </remarks>
     public EstadoUsuario Estado { get; private set; } 
 
     // --- Constructor ---
-    // Es la "receta" para crear un nuevo objeto Usuario.
+    
+    /// <summary>
+    /// Inicializa una nueva instancia de la clase <see cref="Usuario"/>.
+    /// Por defecto, un usuario siempre se crea como <see cref="EstadoUsuario.Activo"/>.
+    /// </summary>
+    /// <param name="id">El ID único del usuario.</param>
+    /// <param name="nombreUsuario">El nombre de login.</param>
+    /// <param name="contrasena">La contraseña.</param>
+    /// <param name="rol">El rol (Admin o Vendedor).</param>
     public Usuario(int id, string nombreUsuario, string contrasena, RolUsuario rol)
     {
         this.Id = id;
@@ -38,19 +65,26 @@ public class Usuario
     
     // --- Métodos (Comportamientos) ---
 
-    // Método público que cambia el estado interno a 'Suspendido'.
+    /// <summary>
+    /// Cambia el estado interno del usuario a <see cref="EstadoUsuario.Suspendido"/>.
+    /// </summary>
     public void Suspender()
     {
         this.Estado = EstadoUsuario.Suspendido;
     }
 
-    // Método público que cambia el estado interno a 'Activo'.
+    /// <summary>
+    /// Cambia el estado interno del usuario a <see cref="EstadoUsuario.Activo"/>.
+    /// </summary>
     public void Activar()
     {
         this.Estado = EstadoUsuario.Activo;
     }
     
-    // Método público que permite actualizar la contraseña.
+    /// <summary>
+    /// Permite actualizar la contraseña del usuario.
+    /// </summary>
+    /// <param name="nuevaContrasena">La nueva contraseña (sin encriptar).</param>
     public void CambiarContrasena(string nuevaContrasena)
     {
         // (Aquí se podría agregar lógica de validación,

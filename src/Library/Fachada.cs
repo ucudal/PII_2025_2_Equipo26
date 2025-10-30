@@ -2,25 +2,53 @@ using Library;
 using System;
 using System.Collections.Generic;
 
-// Esta clase implementa el patrón "Fachada".
-// Es el único punto de contacto entre la interfaz de usuario (el bot)
-// y toda la lógica de negocio (la biblioteca)
+/// <summary>
+/// Implementa el patrón "Fachada" (Facade).
+/// Es el único punto de entrada unificado para todas las operaciones de la lógica
+/// de negocio (la biblioteca o "core").
+/// Oculta la complejidad interna de los repositorios y la coordinación entre ellos.
+/// </summary>
 public class Fachada
 {
-    // --- Repositorios Internos ---
-    // La Fachada "guarda" (agrega) instancias de todos los repositorios.
-    // Son 'private' para que nadie fuera de esta clase pueda usarlos directamente.
+    // --- Repositorios Internos (Composición) ---
+    // La Fachada "se compone de" repositorios.
+    
+    /// <summary>
+    /// Repositorio para la gestión de clientes.
+    /// </summary>
     private RepoClientes _repoClientes = new RepoClientes();
+    
+    /// <summary>
+    /// Repositorio para la gestión de etiquetas.
+    /// </summary>
     private RepoEtiquetas _repoEtiquetas = new RepoEtiquetas();
+    
+    /// <summary>
+    /// Repositorio para la gestión de usuarios.
+    /// </summary>
     private RepoUsuarios _repoUsuarios = new RepoUsuarios();
+    
+    /// <summary>
+    /// Repositorio para la gestión de ventas generales.
+    /// </summary>
     private RepoVentas _repoVentas = new RepoVentas();
-    // Un contador simple para asignar IDs a las ventas.
+
+    /// <summary>
+    /// Contador simple para asignar IDs a las ventas.
+    /// </summary>
     private int _proximoIdVenta = 1;
     
     // --- Métodos de Clientes ---
 
-    // Recibe los datos de un cliente, crea el objeto y lo pasa
-    // al repositorio de clientes para que lo guarde.
+    /// <summary>
+    /// Crea un nuevo cliente y lo persiste en el repositorio.
+    /// </summary>
+    /// <param name="nombre">Nombre del cliente.</param>
+    /// <param name="apellido">Apellido del cliente.</param>
+    /// <param name="telefono">Teléfono del cliente.</param>
+    /// <param name="correo">Correo del cliente.</param>
+    /// <param name="genero">Género del cliente.</param>
+    /// <param name="fechaNacimiento">Fecha de nacimiento del cliente.</param>
     public void CrearCliente(string nombre, string apellido, string telefono, string correo, 
                            string genero, DateTime fechaNacimiento)
     {
@@ -30,25 +58,45 @@ public class Fachada
         _repoClientes.Agregar(clienteTemporal);
     }
     
-    // Pide al repositorio la lista completa de clientes.
+    /// <summary>
+    /// Obtiene una lista de todos los clientes registrados.
+    /// </summary>
+    /// <returns>Una <see cref="List{T}"/> de <see cref="Cliente"/>.</returns>
     public List<Cliente> VerTodosLosClientes()
     {
         return _repoClientes.ObtenerTodos();
     }
-    // Pasa los nuevos datos del cliente al repositorio para que los actualice.
+    
+    /// <summary>
+    /// Modifica los datos de un cliente existente.
+    /// </summary>
+    /// <param name="id">El ID del cliente a modificar.</param>
+    /// <param name="nombre">El nuevo nombre.</param>
+    /// <param name="apellido">El nuevo apellido.</param>
+    /// <param name="telefono">El nuevo teléfono.</param>
+    /// <param name="correo">El nuevo correo.</param>
+    /// <param name="genero">El nuevo género.</param>
+    /// <param name="fechaNacimiento">La nueva fecha de nacimiento.</param>
     public void ModificarCliente(int id, string nombre, string apellido, string telefono, 
                                string correo, string genero, DateTime fechaNacimiento)
     {
         _repoClientes.Modificar(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
     }
 
-    // Pide al repositorio que filtre los clientes según un término de búsqueda.
+    /// <summary>
+    /// Busca clientes cuyo nombre, apellido, teléfono, correo o género contengan el término.
+    /// </summary>
+    /// <param name="termino">El texto a buscar (ignora mayúsculas/minúsculas).</param>
+    /// <returns>Una lista de clientes que coinciden con la búsqueda.</returns>
     public List<Cliente> BuscarClientes(string termino)
     {
         return _repoClientes.BuscarPorTermino(termino);
     }
 
-    // Le dice al repositorio que elimine un cliente por su ID.
+    /// <summary>
+    /// Elimina un cliente del sistema usando su ID.
+    /// </summary>
+    /// <param name="id">El ID del cliente a eliminar.</param>
     public void EliminarCliente(int id)
     {
         _repoClientes.Eliminar(id);
@@ -56,9 +104,13 @@ public class Fachada
 
     // --- Métodos de Coordinación ---
 
-    // Este método es un buen ejemplo de Fachada: coordina dos repositorios.
-    // Busca un cliente (en RepoClientes) y un vendedor (en RepoUsuarios)
-    // y luego los asigna.
+    /// <summary>
+    /// Asigna un Vendedor (Usuario) a un Cliente.
+    /// Este método coordina múltiples repositorios y aplica lógica de negocio
+    /// (validaciones de rol y estado).
+    /// </summary>
+    /// <param name="idCliente">El ID del cliente que recibirá la asignación.</param>
+    /// <param name="idNuevoVendedor">El ID del usuario (Vendedor) a asignar.</param>
     public void AsignarClienteVendedor(int idCliente, int idNuevoVendedor)
     {
         // 1. Busca los objetos
@@ -85,7 +137,13 @@ public class Fachada
 
     // --- Métodos de Interacciones (Polimorfismo) ---
 
-    // Busca al cliente y le agrega una nueva 'Llamada' a su historial.
+    /// <summary>
+    /// Registra una nueva llamada en el historial de un cliente.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente.</param>
+    /// <param name="fecha">Fecha de la llamada.</param>
+    /// <param name="tema">Tema de la llamada.</param>
+    /// <param name="tipoLlamada">Tipo ("Entrante", "Saliente", etc.).</param>
     public void RegistrarLlamada(int idCliente, DateTime fecha, string tema, string tipoLlamada)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -98,7 +156,13 @@ public class Fachada
         }
     }
 
-    // Busca al cliente y le agrega una nueva 'Reunion'.
+    /// <summary>
+    /// Registra una nueva reunión en el historial de un cliente.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente.</param>
+    /// <param name="fecha">Fecha de la reunión.</param>
+    /// <param name="tema">Tema de la reunión.</param>
+    /// <param name="lugar">Lugar de la reunión (físico o virtual).</param>
     public void RegistrarReunion(int idCliente, DateTime fecha, string tema, string lugar)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -109,7 +173,14 @@ public class Fachada
         }
     }
 
-    // Busca al cliente y le agrega un nuevo 'Mensaje'.
+    /// <summary>
+    /// Registra un nuevo mensaje (SMS, chat) en el historial de un cliente.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente.</param>
+    /// <param name="fecha">Fecha del mensaje.</param>
+    /// <param name="tema">Tema del mensaje.</param>
+    /// <param name="remitente">Quién envió el mensaje.</param>
+    /// <param name="destinatario">Quién recibió el mensaje.</param>
     public void RegistrarMensaje(int idCliente, DateTime fecha, string tema, string remitente, string destinatario)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -120,7 +191,15 @@ public class Fachada
         }
     }
 
-    // Busca al cliente y le agrega un nuevo 'Correo'.
+    /// <summary>
+    /// Registra un nuevo correo en el historial de un cliente.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente.</param>
+    /// <param name="fecha">Fecha del correo.</param>
+    /// <param name="tema">Tema del correo.</param>
+    /// <param name="remitente">Remitente del correo.</param>
+    /// <param name="destinatario">Destinatario del correo.</param>
+    /// <param name="asunto">Asunto del correo.</param>
     public void RegistrarCorreo(int idCliente, DateTime fecha, string tema, string remitente, string destinatario, string asunto)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -131,7 +210,11 @@ public class Fachada
         }
     }
 
-    // Busca un cliente y devuelve su historial completo de interacciones.
+    /// <summary>
+    /// Obtiene el historial completo de interacciones de un cliente.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente a consultar.</param>
+    /// <returns>Una lista de <see cref="Interaccion"/>.</returns>
     public List<Interaccion> VerInteraccionesDeCliente(int idCliente)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -142,8 +225,12 @@ public class Fachada
         return new List<Interaccion>(); // Devuelve lista vacía si no encuentra al cliente.
     }
 
-    // Esto es una *sobrecarga* del método anterior (mismo nombre, distintos parámetros).
-    // Filtra las interacciones por tipo (ej: "llamada", "reunion").
+    /// <summary>
+    /// (Sobrecarga) Obtiene las interacciones de un cliente, filtradas por tipo.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente a consultar.</param>
+    /// <param name="tipoDeInteraccion">El tipo a filtrar (ej: "llamada", "reunion").</param>
+    /// <returns>Una lista filtrada de <see cref="Interaccion"/>.</returns>
     public List<Interaccion> VerInteraccionesDeCliente(int idCliente, string tipoDeInteraccion)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -185,11 +272,16 @@ public class Fachada
         return interaccionesFiltradas;
     }
 
-    // Otra *sobrecarga*. Primero filtra por tipo (reusando la función anterior)
-    // y luego filtra por fecha (solo las más nuevas que 'fechaDesde').
+    /// <summary>
+    /// (Sobrecarga) Obtiene las interacciones, filtradas por tipo y fecha.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente.</param>
+    /// <param name="tipoDeInteraccion">El tipo a filtrar.</param>
+    /// <param name="fechaDesde">La fecha de inicio (inclusive) para el filtro.</param>
+    /// <returns>Una lista doblemente filtrada de <see cref="Interaccion"/>.</returns>
     public List<Interaccion> VerInteraccionesDeCliente(int idCliente, string tipoDeInteraccion, DateTime fechaDesde)
     {
-        // 1. Llama a la función anterior
+        // 1. Llama a la función anterior (reúso de código)
         var interaccionesFiltradasPorTipo = VerInteraccionesDeCliente(idCliente, tipoDeInteraccion);
         var resultadoFinal = new List<Interaccion>();
 
@@ -205,8 +297,12 @@ public class Fachada
         return resultadoFinal;
     }
 
-    // Busca una interacción específica por su índice (posición en la lista)
-    // y le asigna una nueva nota.
+    /// <summary>
+    /// Agrega una nota de texto a una interacción específica, identificada por su índice.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente dueño de la interacción.</param>
+    /// <param name="indiceInteraccion">Posición (índice) de la interacción en la lista del cliente.</param>
+    /// <param name="textoNota">El texto a agregar.</param>
     public void AgregarNotaAInteraccion(int idCliente, int indiceInteraccion, string textoNota)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -224,25 +320,38 @@ public class Fachada
 
     // --- Métodos de Etiquetas ---
 
-    // Delega la creación de la etiqueta al repo correspondiente.
+    /// <summary>
+    /// Crea una nueva etiqueta global en el sistema.
+    /// </summary>
+    /// <param name="nombre">El nombre de la etiqueta (ej: "VIP").</param>
     public void CrearEtiqueta(string nombre)
     {
         _repoEtiquetas.Crear(nombre);
     }
 
-    // Devuelve todas las etiquetas que existen en el sistema.
+    /// <summary>
+    /// Obtiene todas las etiquetas disponibles en el sistema.
+    /// </summary>
+    /// <returns>Una lista de <see cref="Etiqueta"/>.</returns>
     public List<Etiqueta> VerTodasLasEtiquetas()
     {
         return _repoEtiquetas.ObtenerTodas();
     }
 
-    // Elimina una etiqueta del sistema central.
+    /// <summary>
+    /// Elimina una etiqueta del repositorio global de etiquetas.
+    /// </summary>
+    /// <param name="idEtiqueta">El ID de la etiqueta a eliminar.</param>
     public void EliminarEtiqueta(int idEtiqueta)
     {
         _repoEtiquetas.Eliminar(idEtiqueta);
     }
 
-    // Asocia una etiqueta existente a un cliente existente.
+    /// <summary>
+    /// Asocia una etiqueta existente a un cliente.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente.</param>
+    /// <param name="idEtiqueta">ID de la etiqueta.</param>
     public void AgregarEtiquetaACliente(int idCliente, int idEtiqueta)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -258,7 +367,11 @@ public class Fachada
         }
     }
 
-    // Quita la asociación entre un cliente y una etiqueta.
+    /// <summary>
+    /// Quita la asociación entre un cliente y una etiqueta.
+    /// </summary>
+    /// <param name="idCliente">ID del cliente.</param>
+    /// <param name="idEtiqueta">ID de la etiqueta.</param>
     public void QuitarEtiquetaDeCliente(int idCliente, int idEtiqueta)
     {
         var cliente = _repoClientes.Buscar(idCliente);
@@ -272,33 +385,58 @@ public class Fachada
 
     // --- Métodos de Usuarios ---
     
-    // Agrega un nuevo usuario (Vendedor o Admin) al sistema.
+    /// <summary>
+    /// Crea un nuevo usuario (Vendedor o Administrador) en el sistema.
+    /// </summary>
+    /// <param name="nombreUsuario">Nombre de login (ej: "jPerez").</param>
+    /// <param name="contrasena">Contraseña del usuario.</param>
+    /// <param name="rol">El rol (<see cref="RolUsuario.Administrador"/> o <see cref="RolUsuario.Vendedor"/>).</param>
     public void CrearUsuario(string nombreUsuario, string contrasena, RolUsuario rol)
     {
         _repoUsuarios.Agregar(nombreUsuario, contrasena, rol);
     }
 
-    // Cambia el estado del usuario a Suspendido.
+    /// <summary>
+    /// Cambia el estado de un usuario a <see cref="EstadoUsuario.Suspendido"/>.
+    /// </summary>
+    /// <param name="idUsuario">ID del usuario a suspender.</param>
     public void SuspenderUsuario(int idUsuario)
     {
         _repoUsuarios.Suspender(idUsuario);
     }
-    // Cambia el estado del usuario a Activo.
+    
+    /// <summary>
+    /// Cambia el estado de un usuario a <see cref="EstadoUsuario.Activo"/>.
+    /// </summary>
+    /// <param name="idUsuario">ID del usuario a activar.</param>
     public void ActivarUsuario(int idUsuario)
     {
         _repoUsuarios.Activar(idUsuario);
     }
-    // Elimina un usuario del sistema.
+    
+    /// <summary>
+    /// Elimina un usuario del sistema.
+    /// </summary>
+    /// <param name="idUsuario">ID del usuario a eliminar.</param>
     public void EliminarUsuario(int idUsuario)
     {
         _repoUsuarios.Eliminar(idUsuario);
     }
-    // Busca y devuelve un usuario por su ID.
+    
+    /// <summary>
+    /// Busca y devuelve un usuario por su ID.
+    /// </summary>
+    /// <param name="idUsuario">ID del usuario a buscar.</param>
+    /// <returns>El <see cref="Usuario"/> encontrado, o <c>null</c> si no existe.</returns>
     public Usuario BuscarUsuario(int idUsuario)
     {
         return _repoUsuarios.Buscar(idUsuario);
     }
-    // Devuelve la lista completa de usuarios.
+    
+    /// <summary>
+    /// Devuelve la lista completa de usuarios.
+    /// </summary>
+    /// <returns>Una <see cref="List{T}"/> de <see cref="Usuario"/>.</returns>
     public List<Usuario> VerTodosLosUsuarios()
     {
         return _repoUsuarios.ObtenerTodos();
@@ -306,13 +444,23 @@ public class Fachada
 
     // --- Métodos de Ventas y Reportes ---
     
-    // (Esta parece ser una venta general, no asignada a un cliente específico).
+    /// <summary>
+    /// Registra una venta general (no asignada a un cliente específico).
+    /// </summary>
+    /// <param name="producto">Descripción del producto/servicio.</param>
+    /// <param name="importe">Monto de la venta.</param>
+    /// <param name="fecha">Fecha de la venta.</param>
     public void RegistrarVenta(string producto, float importe, DateTime fecha)
     {
         _repoVentas.Agregar(producto, importe, fecha);
     }
 
-    // *Sobrecarga* que SÍ asigna la venta a un cliente.
+    /// <summary>
+    /// (Sobrecarga) Registra una venta y la asigna a un cliente específico.
+    /// </summary>
+    /// <param name="clienteId">ID del cliente que realizó la compra.</param>
+    /// <param name="producto">Descripción del producto/servicio.</param>
+    /// <param name="monto">Monto de la venta.</param>
     public void RegistrarVenta(int clienteId, string producto, float monto)
     {
         Cliente clienteEncontrado = _repoClientes.Buscar(clienteId);
@@ -321,13 +469,18 @@ public class Fachada
         {
             // Crea la venta usando el contador de ID y la fecha actual
             Venta nuevaVenta = new Venta(_proximoIdVenta++, producto, monto, DateTime.Now);
-            // La agrega al historial del cliente
+            // La agrega al historial del cliente (Principio Experto)
             clienteEncontrado.Ventas.Add(nuevaVenta); 
-            
         }
     }
 
-    // Calcula el total de dinero vendido en un rango de fechas.
+    /// <summary>
+    /// Calcula el monto total de ventas generales (no de clientes) 
+    /// dentro de un rango de fechas.
+    /// </summary>
+    /// <param name="fechaInicio">Fecha de inicio del período.</param>
+    /// <param name="fechaFin">Fecha de fin del período.</param>
+    /// <returns>La suma de los importes de las ventas en ese rango.</returns>
     public float CalcularTotalVentas(DateTime fechaInicio, DateTime fechaFin)
     {
         var todasLasVentas = _repoVentas.ObtenerTodas();
@@ -345,7 +498,14 @@ public class Fachada
         return total;
     }
 
-    // Registra una Cotización (que es un tipo de Interaccion) para un cliente.
+    /// <summary>
+    /// Registra una <see cref="Cotizacion"/> (que es una <see cref="Interaccion"/>) 
+    /// en el historial de un cliente.
+    /// </summary>
+    /// <param name="clienteId">ID del cliente.</param>
+    /// <param name="tema">Tema de la cotización.</param>
+    /// <param name="monto">Monto cotizado.</param>
+    /// <param name="detalle">Detalle de la cotización.</param>
     public void RegistrarCotizacion(int clienteId, string tema, double monto, string detalle)
     {
         Cliente clienteEncontrado = _repoClientes.Buscar(clienteId); 
@@ -357,7 +517,11 @@ public class Fachada
         }
     }
 
-    // Busca clientes que no han tenido contacto en 'diasSinInteraccion' días.
+    /// <summary>
+    /// Obtiene una lista de clientes que no han tenido interacciones recientes.
+    /// </summary>
+    /// <param name="diasSinInteraccion">El número de días hacia atrás para considerar "inactivo".</param>
+    /// <returns>Una lista de clientes inactivos.</returns>
     public List<Cliente> ObtenerClientesInactivos(int diasSinInteraccion)
     {
         List<Cliente> clientesInactivos = new List<Cliente>();
@@ -393,14 +557,21 @@ public class Fachada
         return clientesInactivos;
     }
 
-    // Un atajo simple para buscar un cliente (delegga al repo).
+    /// <summary>
+    /// Busca un cliente por su ID (Atajo para el repositorio).
+    /// </summary>
+    /// <param name="clienteId">ID del cliente a buscar.</param>
+    /// <returns>El <see cref="Cliente"/> encontrado, o <c>null</c>.</returns>
     public Cliente BuscarCliente(int clienteId)
     {
         return _repoClientes.Buscar(clienteId);
     }
 
-    // Reporte: Busca clientes cuya última interacción fue una llamada "Recibida".
-    // (Asume que una llamada recibida requiere una acción o respuesta).
+    /// <summary>
+    /// Reporte: Busca clientes cuya última interacción fue una llamada "Recibida".
+    /// (Asume que una llamada recibida requiere una acción o respuesta).
+    /// </summary>
+    /// <returns>Una lista de clientes que esperan una respuesta.</returns>
     public List<Cliente> ObtenerClientesSinRespuesta()
     {
         List<Cliente> clientesSinRespuesta = new List<Cliente>();
@@ -424,9 +595,9 @@ public class Fachada
                     ultimaInteraccion = interaccion;
                 }
             }
-
-            // Chequea si esa última interacción fue una Llamada
-            if (ultimaInteraccion is Llamada)
+            
+            // Si la última interacción no es nula y es una Llamada...
+            if (ultimaInteraccion != null && ultimaInteraccion is Llamada)
             {
                 // 'as' convierte el tipo de forma segura (da null si no puede)
                 Llamada ultimaLlamada = ultimaInteraccion as Llamada;
@@ -442,7 +613,10 @@ public class Fachada
     
     // --- Dashboard ---
     
-    // Recopila varias estadísticas para mostrar un resumen general.
+    /// <summary>
+    /// Recopila varias estadísticas para mostrar un resumen general del sistema.
+    /// </summary>
+    /// <returns>Un objeto <see cref="ResumenDashboard"/> con los datos compilados.</returns>
     public ResumenDashboard ObtenerResumenDashboard()
     {
         var todosLosClientes = _repoClientes.ObtenerTodos();
@@ -453,19 +627,11 @@ public class Fachada
         List<Interaccion> todasLasInteracciones = new List<Interaccion>();
         foreach (Cliente cliente in todosLosClientes)
         {
-            foreach (Interaccion interaccion in cliente.Interacciones)
-            {
-                todasLasInteracciones.Add(interaccion);
-                /*
-                foreach (Interaccion interaccion in cliente.Interacciones)
-                {
-                    todasLasInteracciones.Add(interaccion);
-                }
-                */
-            }
+            // Agrega todas las interacciones de este cliente a la lista grande
+            todasLasInteracciones.AddRange(cliente.Interacciones);
         }
 
-        // Ordena de más nueva a más vieja
+        // Ordena de más nueva a más vieja (descendente)
         todasLasInteracciones.Sort((i1, i2) => i2.Fecha.CompareTo(i1.Fecha));
 
         // Se queda solo con las 5 primeras (las más recientes)
@@ -491,12 +657,13 @@ public class Fachada
             {
                 if (interaccion.Fecha > ahora) // Y es en el futuro
                 {
+                    // Hacemos 'casting' explícito porque sabemos que es una Reunion
                     reunionesProximas.Add((Reunion)interaccion);
                 }
             }
         }
 
-        // Ordena las reuniones de más cercana a más lejana
+        // Ordena las reuniones de más cercana a más lejana (ascendente)
         reunionesProximas.Sort((r1, r2) => r1.Fecha.CompareTo(r2.Fecha));
 
         // 4. Arma el objeto de resumen y lo devuelve

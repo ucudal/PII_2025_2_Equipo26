@@ -2,22 +2,38 @@ using System;
 
 namespace Library
 {
+    /// <summary>
+    /// Representa una interacción de tipo Correo Electrónico.
+    /// Hereda de <see cref="Interaccion"/>, demostrando el principio de Herencia.
+    /// </summary>
     public class Correo : Interaccion
     {
-        // Esta clase representa un correo electrónico.
-        // Es un tipo específico de 'Interaccion', por lo tanto, hereda de ella.
+        /// <summary>
+        /// Obtiene el remitente del correo.
+        /// </summary>
         public string Remitente { get; private set; }
+        
+        /// <summary>
+        /// Obtiene el destinatario del correo.
+        /// </summary>
         public string Destinatario { get; private set; }
+        
+        /// <summary>
+        /// Obtiene el asunto del correo.
+        /// </summary>
         public string Asunto { get; private set; }
 
-        // --- Constructor ---
-        // Para crear un nuevo Correo, necesitamos los datos base (fecha, tema)
-        // y también los datos propios de esta clase (remitente, destinatario, asunto).
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="Correo"/>.
+        /// </summary>
+        /// <param name="fecha">La fecha y hora en que se envió/recibió el correo.</param>
+        /// <param name="tema">Un resumen o tema del correo.</param>
+        /// <param name="remitente">La dirección de correo del remitente.</param>
+        /// <param name="destinatario">La dirección de correo del destinatario.</param>
+        /// <param name="asunto">El asunto del correo.</param>
         public Correo(DateTime fecha, string tema, string remitente, string destinatario, string asunto)
-            : base(fecha, tema) // <-- Llama al constructor de la clase 'Interaccion' primero.
+            : base(fecha, tema) // Llama al constructor de la clase base (Interaccion).
         {
-            // 'base' ya se encargó de 'fecha' y 'tema'.
-            // Ahora asignamos las propiedades de Correo.
             this.Remitente = remitente;
             this.Destinatario = destinatario;
             this.Asunto = asunto;

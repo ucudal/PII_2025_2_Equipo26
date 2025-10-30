@@ -1,20 +1,27 @@
 using Library;
 
-// Esta clase representa una nota de texto simple.
-// Se usa para agregar detalles extra a una 'Interaccion'.
+/// <summary>
+/// Representa una nota de texto simple.
+/// Se usa (mediante Agregación) en <see cref="Interaccion"/> 
+/// para añadir detalles extra.
+/// </summary>
 public class Nota
 {
     // --- Propiedades ---
     
-    // El contenido de la nota.
+    /// <summary>
+    /// Obtiene o establece el contenido textual de la nota.
+    /// </summary>
     public string Texto { get; set; }
 
     // --- Constructor ---
-    // La "receta" para crear una Nota nueva.
-    // Obliga a que siempre le pases el texto al crearla.
+    
+    /// <summary>
+    /// Inicializa una nueva instancia de la clase <see cref="Nota"/>.
+    /// </summary>
+    /// <param name="texto">El contenido de la nota.</param>
     public Nota(string texto)
     {
         Texto = texto;
     }
 }
-

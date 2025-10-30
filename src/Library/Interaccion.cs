@@ -1,26 +1,40 @@
 using Library;
 using System;
 
-// Esta es una clase "abstracta". Sirve como plantilla base.
-// No se puede crear un objeto "Interaccion" directamente.
-// Define las cosas que TODAS las interacciones (Llamadas, Correos, etc.) deben tener.
+/// <summary>
+/// Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo, etc.).
+/// Define las propiedades comunes que toda interacción debe tener.
+/// No se puede instanciar directamente (es abstracta).
+/// </summary>
 public abstract class Interaccion
 {
     // --- Propiedades Comunes ---
 
-    // Guarda la fecha y hora en que ocurrió la interacción.
+    /// <summary>
+    /// Obtiene o establece la fecha y hora en que ocurrió la interacción.
+    /// </summary>
     public DateTime Fecha { get; set; }
-    // Un breve resumen o tema de qué se trató (ej: "Consulta de precios").
+    
+    /// <summary>
+    /// Obtiene o establece un breve resumen o tema de la interacción.
+    /// </summary>
     public string Tema { get; set; }
-    // Un objeto 'Nota' opcional para agregar más detalles o un recordatorio.
+    
+    /// <summary>
+    /// Obtiene o establece una <see cref="Nota"/> opcional para agregar más detalles.
+    /// (Ejemplo de Agregación).
+    /// </summary>
     public Nota NotaAdicional { get; set; }
 
     // --- Constructor Base ---
-    // Este constructor debe ser llamado por todas las clases que hereden de Interaccion
-    // (como Llamada, Reunion, Correo)
+
+    /// <summary>
+    /// Inicializa una nueva instancia de una clase derivada de <see cref="Interaccion"/>.
+    /// </summary>
+    /// <param name="fecha">La fecha y hora de la interacción.</param>
+    /// <param name="tema">El tema de la interacción.</param>
     public Interaccion(DateTime fecha, string tema)
     {
-        // 'this.Fecha' es la propiedad (arriba), 'fecha' es el valor que recibimos.
         this.Fecha = fecha;
         this.Tema = tema;
     }

@@ -1,98 +1,110 @@
 using Library;
-
 using System.Collections.Generic;
 
-// Esta clase es un "Repositorio" (Patrón Repository).
-// Su única responsabilidad es guardar y administrar la lista de Usuarios
-// (Vendedores y Administradores).
+/// <summary>
+/// Implementa el patrón "Repositorio" (Repository).
+/// Su única responsabilidad (SRP) es administrar la colección en memoria
+/// de objetos <see cref="Usuario"/> (Vendedores y Administradores).
+/// </summary>
 public class RepoUsuarios
 {
     // --- Campos Privados ---
 
-    // La lista interna donde se guardan los objetos Usuario.
+    /// <summary>
+    /// La lista interna donde se guardan los objetos Usuario.
+    /// </summary>
     private List<Usuario> _usuarios = new List<Usuario>();
     
-    // Un contador para asignar IDs únicos y automáticos.
+    /// <summary>
+    /// Un contador para asignar IDs únicos y automáticos.
+    /// </summary>
     private int _nextId = 1;
 
     // --- Métodos Públicos (Operaciones CRUD) ---
 
-    // Agrega un nuevo usuario a la lista (Create).
+    /// <summary>
+    /// Agrega un nuevo usuario a la lista (Create).
+    /// </summary>
+    /// <param name="nombreUsuario">El nombre de login del usuario.</param>
+    /// <param name="contrasena">La contraseña del usuario.</param>
+    /// <param name="rol">El rol del usuario (Admin o Vendedor).</param>
+    /// <returns>El <see cref="Usuario"/> recién creado (con su ID asignado).</returns>
     public Usuario Agregar(string nombreUsuario, string contrasena, RolUsuario rol)
     {
-        // 1. Crea el nuevo objeto Usuario usando el contador de ID.
         var nuevoUsuario = new Usuario(_nextId++, nombreUsuario, contrasena, rol);
-        
-        // 2. Lo añade a la lista interna.
         _usuarios.Add(nuevoUsuario);
-        
-        // 3. Devuelve el usuario recién creado (por si se necesita su ID).
         return nuevoUsuario;
     }
 
-    // Busca un usuario por su ID (Read).
+    /// <summary>
+    /// Busca un usuario por su ID (Read).
+    /// </summary>
+    /// <param name="id">El ID del usuario a buscar.</param>
+    /// <returns>El <see cref="Usuario"/> encontrado, o <c>null</c> si no existe.</returns>
     public Usuario Buscar(int id)
     {
-        // Recorre la lista de usuarios.
         foreach (var usuario in _usuarios)
         {
-            // Si encuentra el ID, lo devuelve.
             if (usuario.Id == id)
             {
                 return usuario;
             }
         }
-        // Si no lo encuentra, devuelve null.
         return null;
     }
 
-    // Cambia el estado de un usuario a 'Suspendido'.
+    /// <summary>
+    /// Cambia el estado de un usuario a 'Suspendido'.
+    /// Delega la acción al objeto Usuario (Principio Expert).
+    /// </summary>
+    /// <param name="id">El ID del usuario a suspender.</param>
     public void Suspender(int id)
     {
-        // 1. Busca al usuario.
         var usuario = Buscar(id);
         
-        // 2. Si existe...
         if (usuario != null)
         {
-            // 3. ...le "pide" al objeto Usuario que se suspenda a sí mismo.
-            //    (Esto es delegación de responsabilidad).
+            // Delegación de responsabilidad
             usuario.Suspender(); 
         }
     }
     
-    // Cambia el estado de un usuario a 'Activo'.
+    /// <summary>
+    /// Cambia el estado de un usuario a 'Activo'.
+    /// Delega la acción al objeto Usuario (Principio Expert).
+    /// </summary>
+    /// <param name="id">El ID del usuario a activar.</param>
     public void Activar(int id)
     {
-        // 1. Busca al usuario.
         var usuario = Buscar(id);
 
-        // 2. Si existe...
         if (usuario != null)
         {
-            // 3. ...le "pide" al objeto Usuario que se active a sí mismo.
+            // Delegación de responsabilidad
             usuario.Activar();
         }
     }
 
-    // Elimina un usuario de la lista (Delete).
+    /// <summary>
+    /// Elimina un usuario de la lista (Delete).
+    /// </summary>
+    /// <param name="id">El ID del usuario a eliminar.</param>
     public void Eliminar(int id)
     {
-        // 1. Busca al usuario.
         var usuario = Buscar(id);
         
-        // 2. Si existe...
         if (usuario != null)
         {
-            // 3. ...lo quita de la lista.
             _usuarios.Remove(usuario);
         }
     }
     
-    // Devuelve la lista completa de todos los usuarios (Read All).
+    /// <summary>
+    /// Devuelve la lista completa de todos los usuarios (Read All).
+    /// </summary>
+    /// <returns>Una <see cref="List{T}"/> de <see cref="Usuario"/>.</returns>
     public List<Usuario> ObtenerTodos()
     {
-        // Devuelve la referencia a la lista interna.
         return _usuarios;
     }
 }

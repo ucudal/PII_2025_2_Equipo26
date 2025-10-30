@@ -2,30 +2,37 @@ using Library;
 using System;
 using System.Collections.Generic;
 
-// Esta clase es un "Repositorio" (Patrón Repository).
-// Su única responsabilidad es guardar y administrar la lista de Clientes.
-// Funciona como la "base de datos" en memoria para los clientes.
+/// <summary>
+/// Implementa el patrón "Repositorio" (Repository).
+/// Su única responsabilidad (SRP) es administrar la colección en memoria
+/// de objetos <see cref="Cliente"/>.
+/// Abstrae la lógica de almacenamiento de datos (en este caso, una Lista).
+/// </summary>
 public class RepoClientes
 {
     // --- Campos Privados ---
 
-    // La lista real donde se guardan los objetos Cliente.
-    // Es 'private' para que nadie fuera de esta clase pueda modificarla directamente.
+    /// <summary>
+    /// La lista interna (privada) donde se guardan los objetos Cliente.
+    /// </summary>
     private List<Cliente> _clientes = new List<Cliente>();
     
-    // Un contador interno para asignar IDs únicos y automáticos.
+    /// <summary>
+    /// Un contador interno para asignar IDs únicos y automáticos.
+    /// </summary>
     private int _nextId = 1;
 
     // --- Métodos Públicos (Operaciones CRUD) ---
 
-    // Agrega un nuevo cliente a la lista (Create).
+    /// <summary>
+    /// Agrega un nuevo cliente a la lista (Operación Create).
+    /// Asigna un nuevo ID automático, ignorando el ID del objeto 'cliente' recibido.
+    /// </summary>
+    /// <param name="cliente">Un objeto Cliente (usado como plantilla, su ID será reemplazado).</param>
     public void Agregar(Cliente cliente)
     {
-        // Crea una *nueva* instancia de Cliente.
-        // Esto asegura que el ID sea asignado por el Repositorio
-        // usando el contador '_nextId'.
         var nuevoCliente = new Cliente(
-            _nextId++, // Asigna el ID actual y luego lo incrementa para el próximo.
+            _nextId++, // Asigna el ID actual y luego lo incrementa.
             cliente.Nombre, 
             cliente.Apellido, 
             cliente.Telefono, 
@@ -33,37 +40,42 @@ public class RepoClientes
             cliente.Genero, 
             cliente.FechaNacimiento 
         );
-        // Añade el cliente recién creado a la lista interna.
         _clientes.Add(nuevoCliente);
     }
 
-    // Busca un cliente por su ID (Read).
+    /// <summary>
+    /// Busca un cliente por su ID (Operación Read).
+    /// </summary>
+    /// <param name="id">El ID del cliente a buscar.</param>
+    /// <returns>El objeto <see cref="Cliente"/> si se encuentra; de lo contrario, <c>null</c>.</returns>
     public Cliente Buscar(int id)
     {
-        // Recorre la lista de clientes uno por uno.
         foreach (var cliente in _clientes)
         {
-            // Si el ID del cliente actual es igual al que buscamos...
             if (cliente.Id == id)
             {
-                // ...lo devuelve.
                 return cliente;
             }
         }
-        // Si termina de recorrer la lista y no lo encontró, devuelve null.
         return null;
     }
 
-    // Actualiza los datos de un cliente existente (Update).
+    /// <summary>
+    /// Actualiza los datos de un cliente existente (Operación Update).
+    /// </summary>
+    /// <param name="id">El ID del cliente a modificar.</param>
+    /// <param name="nombre">El nuevo nombre.</param>
+    /// <param name="apellido">El nuevo apellido.</param>
+    /// <param name="telefono">El nuevo teléfono.</param>
+    /// <param name="correo">El nuevo correo.</param>
+    /// <param name="genero">El nuevo género.</param>
+    /// <param name="fechaNacimiento">La nueva fecha de nacimiento.</param>
     public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
     {
-        // 1. Usa el método Buscar para encontrar al cliente.
         var cliente = Buscar(id);
         
-        // 2. Si el cliente existe (no es null)...
         if (cliente != null)
         {
-            // 3. ...actualiza todas sus propiedades con los nuevos valores.
             cliente.Nombre = nombre;
             cliente.Apellido = apellido;
             cliente.Telefono = telefono;
@@ -73,50 +85,49 @@ public class RepoClientes
         }
     }
     
-    // Busca clientes que coincidan con un 'termino' en varios de sus campos.
+    /// <summary>
+    /// Busca clientes que coincidan con un término en varios campos (Nombre, Apellido, Teléfono, Correo, Género).
+    /// </summary>
+    /// <param name="termino">El texto a buscar (ignora mayúsculas/minúsculas).</param>
+    /// <returns>Una <see cref="List{T}"/> de <see cref="Cliente"/> que coinciden.</returns>
     public List<Cliente> BuscarPorTermino(string termino)
     {
-        // Crea una lista nueva para guardar los resultados.
         var resultados = new List<Cliente>();
-        // Pasa el término a minúsculas para que la búsqueda no distinga mayúsculas.
         var busqueda = termino.ToLower();
 
-        // Recorre todos los clientes en la lista.
         foreach (var cliente in _clientes)
         {
-            // Compara el término de búsqueda (en minúsculas) con varias propiedades.
-            // 'Contains' chequea si el texto está *dentro* del campo.
             if (cliente.Nombre.ToLower().Contains(busqueda) ||
                 cliente.Apellido.ToLower().Contains(busqueda) ||
-                cliente.Telefono.Contains(busqueda) || // Teléfono no se pasa a minúsculas
+                cliente.Telefono.Contains(busqueda) ||
                 cliente.Correo.ToLower().Contains(busqueda) ||
                 cliente.Genero.ToLower().Contains(busqueda)) 
             {
-                // Si coincide en cualquier campo, lo agrega a la lista de resultados.
                 resultados.Add(cliente);
             }
         }
-        // Devuelve la lista de clientes que coincidieron.
         return resultados;
     }
     
-    // Devuelve la lista completa de todos los clientes (Read All).
+    /// <summary>
+    /// Devuelve la lista completa de todos los clientes (Operación Read All).
+    /// </summary>
+    /// <returns>Una <see cref="List{T}"/> con todos los <see cref="Cliente"/>.</returns>
     public List<Cliente> ObtenerTodos()
     {
-        // Devuelve la referencia a la lista interna.
         return _clientes;
     }
 
-    // Elimina un cliente de la lista por su ID (Delete).
+    /// <summary>
+    /// Elimina un cliente de la lista por su ID (Operación Delete).
+    /// </summary>
+    /// <param name="id">El ID del cliente a eliminar.</param>
     public void Eliminar(int id)
     {
-        // 1. Busca al cliente que se quiere borrar.
         var cliente = Buscar(id);
         
-        // 2. Si se encontró...
         if (cliente != null)
         {
-            // 3. ...se lo quita de la lista.
             _clientes.Remove(cliente);
         }
     }

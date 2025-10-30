@@ -1,11 +1,19 @@
 ﻿using Library;
 
-// Define un tipo de dato llamado 'EstadoUsuario' que solo
-// puede tener uno de los valores que listamos adentro.
+/// <summary>
+/// Define los posibles estados de un <see cref="Usuario"/> en el sistema.
+/// Una enumeración (enum) es un tipo de dato por valor que define un conjunto
+/// de constantes con nombre.
+/// </summary>
 public enum EstadoUsuario
 {
-    // El usuario está habilitado para usar el sistema.
+    /// <summary>
+    /// El usuario está habilitado para usar el sistema.
+    /// </summary>
     Activo,
-    // El usuario está bloqueado o deshabilitado temporalmente.
+    
+    /// <summary>
+    /// El usuario está bloqueado o deshabilitado temporalmente.
+    /// </summary>
     Suspendido
 }
