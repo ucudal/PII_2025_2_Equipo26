@@ -13,5 +13,5 @@ digraph "ResumenDashboard"
 <HR/>
 <TR><TD COLSPAN="2" CELLPADDING="1" CELLSPACING="0">&nbsp;</TD></TR>
 </TABLE>>
-,height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+,height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Clase modelo simple (a veces llamada DTO - Data Transfer Object). Su única responsabilidad es agrupar..."];
 }

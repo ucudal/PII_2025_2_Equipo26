@@ -91,6 +91,9 @@ $(function(){initNavTree('classRepoVentas.html','','classRepoVentas-members'); }
   <div class="headertitle"><div class="title">RepoVentas Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementa el patrón "Repositorio" (Repository). Su responsabilidad es manejar la lista de todas las ventas generales del sistema (aquellas que no están atadas a un cliente específico).  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Collaboration diagram for RepoVentas:</div>
 <div class="dyncontent">
@@ -100,11 +103,14 @@ Collaboration diagram for RepoVentas:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a62f8c20ef6784598db9a82536cc2e404" id="r_a62f8c20ef6784598db9a82536cc2e404"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVenta.html">Venta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62f8c20ef6784598db9a82536cc2e404">Agregar</a> (string producto, float importe, DateTime fecha)</td></tr>
+<tr class="memdesc:a62f8c20ef6784598db9a82536cc2e404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Agrega una nueva venta a la lista (Operación Create).  <br /></td></tr>
 <tr class="memitem:a754092e6a7e7ad0c8c50815252824d70" id="r_a754092e6a7e7ad0c8c50815252824d70"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classVenta.html">Venta</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a754092e6a7e7ad0c8c50815252824d70">ObtenerTodas</a> ()</td></tr>
+<tr class="memdesc:a754092e6a7e7ad0c8c50815252824d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve la lista completa de todas las ventas (Operación Read All).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="RepoVentas_8cs_source.html#l00006">6</a> of file <a class="el" href="RepoVentas_8cs_source.html">RepoVentas.cs</a>.</p>
+<div class="textblock"><p>Implementa el patrón "Repositorio" (Repository). Su responsabilidad es manejar la lista de todas las ventas generales del sistema (aquellas que no están atadas a un cliente específico). </p>
+
+<p class="definition">Definition at line <a class="el" href="RepoVentas_8cs_source.html#l00010">10</a> of file <a class="el" href="RepoVentas_8cs_source.html">RepoVentas.cs</a>.</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a62f8c20ef6784598db9a82536cc2e404" name="a62f8c20ef6784598db9a82536cc2e404"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a62f8c20ef6784598db9a82536cc2e404">&#9670;&#160;</a></span>Agregar()</h2>
@@ -130,7 +136,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="RepoVentas_8cs_source.html#l00011">11</a> of file <a class="el" href="RepoVentas_8cs_source.html">RepoVentas.cs</a>.</p>
+<p>Agrega una nueva venta a la lista (Operación Create). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">producto</td><td>Descripción del producto o servicio vendido.</td></tr>
+    <tr><td class="paramname">importe</td><td>El monto o valor total de la venta.</td></tr>
+    <tr><td class="paramname">fecha</td><td>La fecha y hora en que se registró la venta.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>La <a class="el" href="classVenta.html" title="Representa una Venta que se ha completado. Es un modelo de datos simple (a veces llamado POCO o DTO).">Venta</a> recién creada (con su ID asignado).</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="RepoVentas_8cs_source.html#l00033">33</a> of file <a class="el" href="RepoVentas_8cs_source.html">RepoVentas.cs</a>.</p>
 
 </div>
 </div>
@@ -149,7 +166,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="RepoVentas_8cs_source.html#l00018">18</a> of file <a class="el" href="RepoVentas_8cs_source.html">RepoVentas.cs</a>.</p>
+<p>Devuelve la lista completa de todas las ventas (Operación Read All). </p>
+<dl class="section return"><dt>Returns</dt><dd>Una List&lt;T&gt; de <a class="el" href="classVenta.html" title="Representa una Venta que se ha completado. Es un modelo de datos simple (a veces llamado POCO o DTO).">Venta</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="RepoVentas_8cs_source.html#l00044">44</a> of file <a class="el" href="RepoVentas_8cs_source.html">RepoVentas.cs</a>.</p>
 
 </div>
 </div>

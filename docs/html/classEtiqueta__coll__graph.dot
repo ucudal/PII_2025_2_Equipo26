@@ -12,5 +12,5 @@ digraph "Etiqueta"
 <HR/>
 <TR><TD VALIGN="top" CELLPADDING="1" CELLSPACING="0">+</TD><TD VALIGN="top" ALIGN="LEFT" CELLPADDING="1" CELLSPACING="0">Etiqueta()<BR ALIGN="LEFT"/></TD></TR>
 </TABLE>>
-,height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+,height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Representa una Etiqueta o \"Tag\" (ej: \"VIP\", \"Nuevo\", \"Inactivo\"). Sirve para clasificar o agrupar obj..."];
 }

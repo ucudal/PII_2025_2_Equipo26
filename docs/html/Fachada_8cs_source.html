@@ -92,445 +92,597 @@ $(function(){initNavTree('Fachada_8cs_source.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">using </span><a class="code hl_namespace" href="namespaceLibrary.html">Library</a>;</div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>System;</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">using </span>System.Collections.Generic;</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="foldopen" id="foldopen00006" data-start="{" data-end="};">
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="classFachada.html">    6</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="classFachada.html">Fachada</a></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoClientes.html">RepoClientes</a> _repoClientes = <span class="keyword">new</span> <a class="code hl_class" href="classRepoClientes.html">RepoClientes</a>();</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoEtiquetas.html">RepoEtiquetas</a> _repoEtiquetas = <span class="keyword">new</span> <a class="code hl_class" href="classRepoEtiquetas.html">RepoEtiquetas</a>();</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoUsuarios.html">RepoUsuarios</a> _repoUsuarios = <span class="keyword">new</span> <a class="code hl_class" href="classRepoUsuarios.html">RepoUsuarios</a>();</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoVentas.html">RepoVentas</a> _repoVentas = <span class="keyword">new</span> <a class="code hl_class" href="classRepoVentas.html">RepoVentas</a>();</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">private</span> <span class="keywordtype">int</span> _proximoIdVenta = 1;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> CrearCliente(<span class="keywordtype">string</span> nombre, <span class="keywordtype">string</span> apellido, <span class="keywordtype">string</span> telefono, <span class="keywordtype">string</span> correo, </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>                           <span class="keywordtype">string</span> genero, DateTime fechaNacimiento)</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        var clienteTemporal = <span class="keyword">new</span> <a class="code hl_class" href="classCliente.html">Cliente</a>(0, nombre, apellido, telefono, correo, </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>                                        genero, fechaNacimiento);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        _repoClientes.Agregar(clienteTemporal);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    }</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">public</span> List&lt;Cliente&gt; VerTodosLosClientes()</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordflow">return</span> _repoClientes.ObtenerTodos();</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    }</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> ModificarCliente(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> nombre, <span class="keywordtype">string</span> apellido, <span class="keywordtype">string</span> telefono, </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                               <span class="keywordtype">string</span> correo, <span class="keywordtype">string</span> genero, DateTime fechaNacimiento)</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        _repoClientes.Modificar(<span class="keywordtype">id</span>, nombre, apellido, telefono, correo, genero, fechaNacimiento);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    }</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">public</span> List&lt;Cliente&gt; BuscarClientes(<span class="keywordtype">string</span> termino)</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">return</span> _repoClientes.BuscarPorTermino(termino);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    }</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> EliminarCliente(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        _repoClientes.Eliminar(<span class="keywordtype">id</span>);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    }</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> AsignarClienteVendedor(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> idNuevoVendedor)</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <a class="code hl_class" href="classCliente.html">Cliente</a> cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <a class="code hl_class" href="classUsuario.html">Usuario</a> nuevoVendedor = _repoUsuarios.Buscar(idNuevoVendedor);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordflow">if</span> (cliente == <span class="keyword">null</span> || nuevoVendedor == <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordflow">return</span>; </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">if</span> (nuevoVendedor.Rol != RolUsuario.Vendedor)</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        }</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordflow">if</span> (nuevoVendedor.Estado == EstadoUsuario.Suspendido)</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        cliente.AsignarVendedor(nuevoVendedor);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    }</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> RegistrarLlamada(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> tipoLlamada)</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            var nuevaLlamada = <span class="keyword">new</span> <a class="code hl_class" href="classLlamada.html">Llamada</a>(fecha, tema, tipoLlamada);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            cliente.Interacciones.Add(nuevaLlamada);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> RegistrarReunion(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> lugar)</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        {</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            var nuevaReunion = <span class="keyword">new</span> <a class="code hl_class" href="classReunion.html">Reunion</a>(fecha, tema, lugar);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            cliente.Interacciones.Add(nuevaReunion);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        }</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> RegistrarMensaje(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> remitente, <span class="keywordtype">string</span> destinatario)</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    {</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            var nuevoMensaje = <span class="keyword">new</span> <a class="code hl_class" href="classLibrary_1_1Mensaje.html">Mensaje</a>(fecha, tema, remitente, destinatario);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            cliente.Interacciones.Add(nuevoMensaje);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        }</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    }</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> RegistrarCorreo(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> remitente, <span class="keywordtype">string</span> destinatario, <span class="keywordtype">string</span> asunto)</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    {</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        {</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            var nuevoCorreo = <span class="keyword">new</span> <a class="code hl_class" href="classLibrary_1_1Correo.html">Correo</a>(fecha, tema, remitente, destinatario, asunto);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            cliente.Interacciones.Add(nuevoCorreo);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        }</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    }</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keyword">public</span> List&lt;Interaccion&gt; VerInteraccionesDeCliente(<span class="keywordtype">int</span> idCliente)</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        {</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keywordflow">return</span> cliente.Interacciones;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    }</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keyword">public</span> List&lt;Interaccion&gt; VerInteraccionesDeCliente(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">string</span> tipoDeInteraccion)</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    {</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="keywordflow">if</span> (cliente == <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        }</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        var interaccionesFiltradas = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="keywordtype">string</span> tipoBuscado = tipoDeInteraccion.ToLower();</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> cliente.Interacciones)</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        {</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            <span class="keywordtype">bool</span> coincide = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;llamada&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classLlamada.html">Llamada</a>)</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            {</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                coincide = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            }</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;reunion&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classReunion.html">Reunion</a>)</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            {</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                coincide = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            }</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;mensaje&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classLibrary_1_1Mensaje.html">Mensaje</a>)</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            {</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                coincide = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            }</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;correo&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classLibrary_1_1Correo.html">Correo</a>)</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            {</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                coincide = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            }</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            <span class="keywordflow">if</span> (coincide)</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            {</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                interaccionesFiltradas.Add(interaccion);</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            }</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        }</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="keywordflow">return</span> interaccionesFiltradas;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    }</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keyword">public</span> List&lt;Interaccion&gt; VerInteraccionesDeCliente(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">string</span> tipoDeInteraccion, DateTime fechaDesde)</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    {</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        var interaccionesFiltradasPorTipo = VerInteraccionesDeCliente(idCliente, tipoDeInteraccion);</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        var resultadoFinal = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> interaccionesFiltradasPorTipo)</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        {</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            <span class="keywordflow">if</span> (interaccion.Fecha &gt;= fechaDesde)</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            {</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                resultadoFinal.Add(interaccion);</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            }</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        }</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="keywordflow">return</span> resultadoFinal;</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    }</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> AgregarNotaAInteraccion(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> indiceInteraccion, <span class="keywordtype">string</span> textoNota)</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    {</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        {</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            <span class="keywordflow">if</span> (indiceInteraccion &gt;= 0 &amp;&amp; indiceInteraccion &lt; cliente.Interacciones.Count)</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            {</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                var interaccionSeleccionada = cliente.Interacciones[indiceInteraccion];</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                interaccionSeleccionada.NotaAdicional = <span class="keyword">new</span> <a class="code hl_class" href="classNota.html">Nota</a>(textoNota);</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>            }</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        }</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    }</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    </div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> CrearEtiqueta(<span class="keywordtype">string</span> nombre)</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    {</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        _repoEtiquetas.Crear(nombre);</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    }</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keyword">public</span> List&lt;Etiqueta&gt; VerTodasLasEtiquetas()</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    {</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="keywordflow">return</span> _repoEtiquetas.ObtenerTodas();</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    }</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> EliminarEtiqueta(<span class="keywordtype">int</span> idEtiqueta)</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    {</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        _repoEtiquetas.Eliminar(idEtiqueta);</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    }</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> AgregarEtiquetaACliente(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> idEtiqueta)</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    {</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span> &amp;&amp; etiqueta != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        {</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>            <span class="keywordflow">if</span> (!cliente.Etiquetas.Contains(etiqueta))</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>            {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                cliente.Etiquetas.Add(etiqueta);</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            }</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        }</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    }</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    </div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> QuitarEtiquetaDeCliente(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> idEtiqueta)</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    {</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span> &amp;&amp; etiqueta != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        {</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            cliente.Etiquetas.Remove(etiqueta);</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        }</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    }</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    </div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> CrearUsuario(<span class="keywordtype">string</span> nombreUsuario, <span class="keywordtype">string</span> contrasena, RolUsuario rol)</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    {</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        _repoUsuarios.Agregar(nombreUsuario, contrasena, rol);</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    }</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> SuspenderUsuario(<span class="keywordtype">int</span> idUsuario)</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    {</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        _repoUsuarios.Suspender(idUsuario);</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    }</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> ActivarUsuario(<span class="keywordtype">int</span> idUsuario)</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    {</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        _repoUsuarios.Activar(idUsuario);</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    }</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> EliminarUsuario(<span class="keywordtype">int</span> idUsuario)</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    {</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        _repoUsuarios.Eliminar(idUsuario);</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    }</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keyword">public</span> <a class="code hl_class" href="classUsuario.html">Usuario</a> BuscarUsuario(<span class="keywordtype">int</span> idUsuario)</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    {</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <span class="keywordflow">return</span> _repoUsuarios.Buscar(idUsuario);</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    }</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keyword">public</span> List&lt;Usuario&gt; VerTodosLosUsuarios()</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    {</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="keywordflow">return</span> _repoUsuarios.ObtenerTodos();</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    }</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    </div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> RegistrarVenta(<span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> importe, DateTime fecha)</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    {</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        _repoVentas.Agregar(producto, importe, fecha);</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    }</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    </div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> RegistrarVenta(<span class="keywordtype">int</span> clienteId, <span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> monto)</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    {</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        <a class="code hl_class" href="classCliente.html">Cliente</a> clienteEncontrado = _repoClientes.Buscar(clienteId);</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        <span class="keywordflow">if</span> (clienteEncontrado != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        {</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            <a class="code hl_class" href="classVenta.html">Venta</a> nuevaVenta = <span class="keyword">new</span> <a class="code hl_class" href="classVenta.html">Venta</a>(_proximoIdVenta++, producto, monto, DateTime.Now);</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            clienteEncontrado.Ventas.Add(nuevaVenta); </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        }</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    }</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keyword">public</span> <span class="keywordtype">float</span> CalcularTotalVentas(DateTime fechaInicio, DateTime fechaFin)</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    {</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        var todasLasVentas = _repoVentas.ObtenerTodas();</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keywordtype">float</span> total = 0;</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        <span class="keywordflow">foreach</span> (var venta <span class="keywordflow">in</span> todasLasVentas)</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        {</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            <span class="keywordflow">if</span> (venta.Fecha &gt;= fechaInicio &amp;&amp; venta.Fecha &lt;= fechaFin)</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            {</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                total += venta.Importe;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>            }</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        }</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        <span class="keywordflow">return</span> total;</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    }</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    </div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    <span class="keyword">public</span> <span class="keywordtype">void</span> RegistrarCotizacion(<span class="keywordtype">int</span> clienteId, <span class="keywordtype">string</span> tema, <span class="keywordtype">double</span> monto, <span class="keywordtype">string</span> detalle)</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    {</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <a class="code hl_class" href="classCliente.html">Cliente</a> clienteEncontrado = _repoClientes.Buscar(clienteId); </div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        <span class="keywordflow">if</span> (clienteEncontrado != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        {</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            <a class="code hl_class" href="classCotizacion.html">Cotizacion</a> nuevaCotizacion = <span class="keyword">new</span> <a class="code hl_class" href="classCotizacion.html">Cotizacion</a>(tema, monto, detalle);</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>            clienteEncontrado.Interacciones.Add(nuevaCotizacion); </div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        }</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    }</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    </div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    <span class="keyword">public</span> List&lt;Cliente&gt; ObtenerClientesInactivos(<span class="keywordtype">int</span> diasSinInteraccion)</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    {</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        List&lt;Cliente&gt; clientesInactivos = <span class="keyword">new</span> List&lt;Cliente&gt;();</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        DateTime fechaLimite = DateTime.Now.AddDays(-diasSinInteraccion);</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        <span class="keywordflow">foreach</span> (var cliente <span class="keywordflow">in</span> _repoClientes.ObtenerTodos())</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        {</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>            <span class="keywordflow">if</span> (cliente.Interacciones.Count == 0)</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            {</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                clientesInactivos.Add(cliente);</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>            }</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>            DateTime fechaMasReciente = DateTime.MinValue;</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>            <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> cliente.Interacciones)</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>            {</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                <span class="keywordflow">if</span> (interaccion.Fecha &gt; fechaMasReciente)</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                {</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                    fechaMasReciente = interaccion.Fecha;</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                }</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>            }</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            <span class="keywordflow">if</span> (fechaMasReciente &lt; fechaLimite)</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            {</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                clientesInactivos.Add(cliente);</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            }</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        }</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        <span class="keywordflow">return</span> clientesInactivos;</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    }</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keyword">public</span> <a class="code hl_class" href="classCliente.html">Cliente</a> BuscarCliente(<span class="keywordtype">int</span> clienteId)</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    {</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        <span class="keywordflow">return</span> _repoClientes.Buscar(clienteId);</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    }</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    </div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keyword">public</span> List&lt;Cliente&gt; ObtenerClientesSinRespuesta()</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    {</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        List&lt;Cliente&gt; clientesSinRespuesta = <span class="keyword">new</span> List&lt;Cliente&gt;();</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        <span class="keywordflow">foreach</span> (var cliente <span class="keywordflow">in</span> _repoClientes.ObtenerTodos())</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        {</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>            <span class="keywordflow">if</span> (cliente.Interacciones.Count == 0)</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>            {</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>            }</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span> </div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>            <a class="code hl_class" href="classInteraccion.html">Interaccion</a> ultimaInteraccion = <span class="keyword">null</span>;</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>            DateTime fechaMasReciente = DateTime.MinValue;</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> </div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>            <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> cliente.Interacciones)</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>            {</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>                <span class="keywordflow">if</span> (interaccion.Fecha &gt; fechaMasReciente)</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                {</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>                    fechaMasReciente = interaccion.Fecha;</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>                    ultimaInteraccion = interaccion;</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>                }</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>            }</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span> </div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            <span class="keywordflow">if</span> (ultimaInteraccion is <a class="code hl_class" href="classLlamada.html">Llamada</a>)</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            {</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                <a class="code hl_class" href="classLlamada.html">Llamada</a> ultimaLlamada = ultimaInteraccion as <a class="code hl_class" href="classLlamada.html">Llamada</a>;</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>                <span class="keywordflow">if</span> (ultimaLlamada.TipoLlamada == <span class="stringliteral">&quot;Recibida&quot;</span>)</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>                {</div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>                    clientesSinRespuesta.Add(cliente);</div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>                }</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>            }</div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        }</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        <span class="keywordflow">return</span> clientesSinRespuesta;</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    }</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    </div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    <span class="comment">// --- Dashboard ---</span></div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keyword">public</span> <a class="code hl_class" href="classResumenDashboard.html">ResumenDashboard</a> ObtenerResumenDashboard()</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    {</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        var todosLosClientes = _repoClientes.ObtenerTodos();</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        </div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        <span class="keywordtype">int</span> totalClientes = todosLosClientes.Count;</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        List&lt;Interaccion&gt; todasLasInteracciones = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        <span class="keywordflow">foreach</span> (<a class="code hl_class" href="classCliente.html">Cliente</a> cliente <span class="keywordflow">in</span> todosLosClientes)</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        {</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>            <span class="keywordflow">foreach</span> (<a class="code hl_class" href="classInteraccion.html">Interaccion</a> interaccion <span class="keywordflow">in</span> cliente.Interacciones)</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>            {</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>                todasLasInteracciones.Add(interaccion);</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            }</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        }</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        todasLasInteracciones.Sort((i1, i2) =&gt; i2.Fecha.CompareTo(i1.Fecha));</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span> </div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        List&lt;Interaccion&gt; interaccionesRecientes = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>        <span class="keywordtype">int</span> contadorMaximo = 5;</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        </div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; todasLasInteracciones.Count; i++)</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        {</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>            <span class="keywordflow">if</span> (i &gt;= contadorMaximo)</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>            {</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>                <span class="keywordflow">break</span>; </div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>            }</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>            interaccionesRecientes.Add(todasLasInteracciones[i]);</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        }</div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span> </div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        List&lt;Reunion&gt; reunionesProximas = <span class="keyword">new</span> List&lt;Reunion&gt;();</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>        DateTime ahora = DateTime.Now;</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        <span class="keywordflow">foreach</span> (<a class="code hl_class" href="classInteraccion.html">Interaccion</a> interaccion <span class="keywordflow">in</span> todasLasInteracciones) </div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        {</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>            <span class="keywordflow">if</span> (interaccion is <a class="code hl_class" href="classReunion.html">Reunion</a>)</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>            {</div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>                <span class="keywordflow">if</span> (interaccion.Fecha &gt; ahora)</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>                {</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>                    reunionesProximas.Add((<a class="code hl_class" href="classReunion.html">Reunion</a>)interaccion);</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>                }</div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>            }</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        }</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span> </div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>        reunionesProximas.Sort((r1, r2) =&gt; r1.Fecha.CompareTo(r2.Fecha));</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        </div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>        var resumen = <span class="keyword">new</span> <a class="code hl_class" href="classResumenDashboard.html">ResumenDashboard</a></div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>        {</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>            TotalClientes = totalClientes,</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>            InteraccionesRecientes = interaccionesRecientes,</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>            ReunionesProximas = reunionesProximas</div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        };</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>        <span class="keywordflow">return</span> resumen;</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>    }</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>}</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">using </span>System;</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>System.Collections.Generic;</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span></div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classFachada.html">   11</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="classFachada.html">Fachada</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="comment">// --- Repositorios Internos (Composición) ---</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="comment">// La Fachada &quot;se compone de&quot; repositorios.</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoClientes.html">RepoClientes</a> _repoClientes = <span class="keyword">new</span> <a class="code hl_class" href="classRepoClientes.html">RepoClientes</a>();</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoEtiquetas.html">RepoEtiquetas</a> _repoEtiquetas = <span class="keyword">new</span> <a class="code hl_class" href="classRepoEtiquetas.html">RepoEtiquetas</a>();</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoUsuarios.html">RepoUsuarios</a> _repoUsuarios = <span class="keyword">new</span> <a class="code hl_class" href="classRepoUsuarios.html">RepoUsuarios</a>();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">private</span> <a class="code hl_class" href="classRepoVentas.html">RepoVentas</a> _repoVentas = <span class="keyword">new</span> <a class="code hl_class" href="classRepoVentas.html">RepoVentas</a>();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">private</span> <span class="keywordtype">int</span> _proximoIdVenta = 1;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="comment">// --- Métodos de Clientes ---</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classFachada.html#a61362e8b2cabd0bbb6e47b5fb1656cb4">   52</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a61362e8b2cabd0bbb6e47b5fb1656cb4">CrearCliente</a>(<span class="keywordtype">string</span> nombre, <span class="keywordtype">string</span> apellido, <span class="keywordtype">string</span> telefono, <span class="keywordtype">string</span> correo, </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                           <span class="keywordtype">string</span> genero, DateTime fechaNacimiento)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="comment">// (Pasa 0 como ID temporal, asumiendo que el Repo lo ajustará)</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        var clienteTemporal = <span class="keyword">new</span> <a class="code hl_class" href="classCliente.html">Cliente</a>(0, nombre, apellido, telefono, correo, </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                                        genero, fechaNacimiento);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        _repoClientes.Agregar(clienteTemporal);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    }</div>
 </div>
-<div class="ttc" id="aclassCliente_html"><div class="ttname"><a href="classCliente.html">Cliente</a></div><div class="ttdef"><b>Definition</b> <a href="Cliente_8cs_source.html#l00006">Cliente.cs:7</a></div></div>
-<div class="ttc" id="aclassCotizacion_html"><div class="ttname"><a href="classCotizacion.html">Cotizacion</a></div><div class="ttdef"><b>Definition</b> <a href="Cotizacion_8cs_source.html#l00005">Cotizacion.cs:6</a></div></div>
-<div class="ttc" id="aclassFachada_html"><div class="ttname"><a href="classFachada.html">Fachada</a></div><div class="ttdef"><b>Definition</b> <a href="#l00006">Fachada.cs:7</a></div></div>
-<div class="ttc" id="aclassInteraccion_html"><div class="ttname"><a href="classInteraccion.html">Interaccion</a></div><div class="ttdef"><b>Definition</b> <a href="Interaccion_8cs_source.html#l00006">Interaccion.cs:7</a></div></div>
-<div class="ttc" id="aclassLibrary_1_1Correo_html"><div class="ttname"><a href="classLibrary_1_1Correo.html">Library.Correo</a></div><div class="ttdef"><b>Definition</b> <a href="Correo_8cs_source.html#l00005">Correo.cs:6</a></div></div>
-<div class="ttc" id="aclassLibrary_1_1Mensaje_html"><div class="ttname"><a href="classLibrary_1_1Mensaje.html">Library.Mensaje</a></div><div class="ttdef"><b>Definition</b> <a href="Mensaje_8cs_source.html#l00005">Mensaje.cs:6</a></div></div>
-<div class="ttc" id="aclassLlamada_html"><div class="ttname"><a href="classLlamada.html">Llamada</a></div><div class="ttdef"><b>Definition</b> <a href="Llamada_8cs_source.html#l00005">Llamada.cs:6</a></div></div>
-<div class="ttc" id="aclassNota_html"><div class="ttname"><a href="classNota.html">Nota</a></div><div class="ttdef"><b>Definition</b> <a href="Nota_8cs_source.html#l00003">Nota.cs:4</a></div></div>
-<div class="ttc" id="aclassRepoClientes_html"><div class="ttname"><a href="classRepoClientes.html">RepoClientes</a></div><div class="ttdef"><b>Definition</b> <a href="RepoClientes_8cs_source.html#l00005">RepoClientes.cs:6</a></div></div>
-<div class="ttc" id="aclassRepoEtiquetas_html"><div class="ttname"><a href="classRepoEtiquetas.html">RepoEtiquetas</a></div><div class="ttdef"><b>Definition</b> <a href="RepoEtiquetas_8cs_source.html#l00005">RepoEtiquetas.cs:6</a></div></div>
-<div class="ttc" id="aclassRepoUsuarios_html"><div class="ttname"><a href="classRepoUsuarios.html">RepoUsuarios</a></div><div class="ttdef"><b>Definition</b> <a href="RepoUsuarios_8cs_source.html#l00005">RepoUsuarios.cs:6</a></div></div>
-<div class="ttc" id="aclassRepoVentas_html"><div class="ttname"><a href="classRepoVentas.html">RepoVentas</a></div><div class="ttdef"><b>Definition</b> <a href="RepoVentas_8cs_source.html#l00006">RepoVentas.cs:7</a></div></div>
-<div class="ttc" id="aclassResumenDashboard_html"><div class="ttname"><a href="classResumenDashboard.html">ResumenDashboard</a></div><div class="ttdef"><b>Definition</b> <a href="ResumenDashboard_8cs_source.html#l00005">ResumenDashboard.cs:6</a></div></div>
-<div class="ttc" id="aclassReunion_html"><div class="ttname"><a href="classReunion.html">Reunion</a></div><div class="ttdef"><b>Definition</b> <a href="Reunion_8cs_source.html#l00005">Reunion.cs:6</a></div></div>
-<div class="ttc" id="aclassUsuario_html"><div class="ttname"><a href="classUsuario.html">Usuario</a></div><div class="ttdef"><b>Definition</b> <a href="Usuario_8cs_source.html#l00003">Usuario.cs:4</a></div></div>
-<div class="ttc" id="aclassVenta_html"><div class="ttname"><a href="classVenta.html">Venta</a></div><div class="ttdef"><b>Definition</b> <a href="Venta_8cs_source.html#l00005">Venta.cs:6</a></div></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    </div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classFachada.html#a98ba862d93da6604d726634779101b6d">   65</a></span>    <span class="keyword">public</span> List&lt;Cliente&gt; <a class="code hl_function" href="classFachada.html#a98ba862d93da6604d726634779101b6d">VerTodosLosClientes</a>()</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">return</span> _repoClientes.ObtenerTodos();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
+</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    </div>
+<div class="foldopen" id="foldopen00080" data-start="{" data-end="}">
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classFachada.html#a591434bfd2b64809ac380c57846dce76">   80</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a591434bfd2b64809ac380c57846dce76">ModificarCliente</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> nombre, <span class="keywordtype">string</span> apellido, <span class="keywordtype">string</span> telefono, </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                               <span class="keywordtype">string</span> correo, <span class="keywordtype">string</span> genero, DateTime fechaNacimiento)</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    {</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        _repoClientes.Modificar(<span class="keywordtype">id</span>, nombre, apellido, telefono, correo, genero, fechaNacimiento);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    }</div>
+</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span></div>
+<div class="foldopen" id="foldopen00091" data-start="{" data-end="}">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classFachada.html#a2d20818538aefdd4784c51ec1baf54e7">   91</a></span>    <span class="keyword">public</span> List&lt;Cliente&gt; <a class="code hl_function" href="classFachada.html#a2d20818538aefdd4784c51ec1baf54e7">BuscarClientes</a>(<span class="keywordtype">string</span> termino)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keywordflow">return</span> _repoClientes.BuscarPorTermino(termino);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    }</div>
+</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span></div>
+<div class="foldopen" id="foldopen00100" data-start="{" data-end="}">
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classFachada.html#a932294ff34d4f1878120a5e805ff64c1">  100</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a932294ff34d4f1878120a5e805ff64c1">EliminarCliente</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        _repoClientes.Eliminar(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    }</div>
+</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="comment">// --- Métodos de Coordinación ---</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span></div>
+<div class="foldopen" id="foldopen00114" data-start="{" data-end="}">
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classFachada.html#aea91102bc4782a7e33694a587db47f25">  114</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#aea91102bc4782a7e33694a587db47f25">AsignarClienteVendedor</a>(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> idNuevoVendedor)</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="comment">// 1. Busca los objetos</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <a class="code hl_class" href="classCliente.html">Cliente</a> cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <a class="code hl_class" href="classUsuario.html">Usuario</a> nuevoVendedor = _repoUsuarios.Buscar(idNuevoVendedor);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="comment">// 2. Aplica reglas de negocio (Validaciones)</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordflow">if</span> (cliente == <span class="keyword">null</span> || nuevoVendedor == <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        {</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordflow">return</span>; <span class="comment">// Si uno no existe, no hace nada.</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordflow">if</span> (nuevoVendedor.<a class="code hl_property" href="classUsuario.html#a089bc82a5bf05222d1e7f2085b476d1b">Rol</a> != RolUsuario.Vendedor)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        {</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            <span class="keywordflow">return</span>; <span class="comment">// Solo se puede asignar a vendedores.</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="keywordflow">if</span> (nuevoVendedor.<a class="code hl_property" href="classUsuario.html#a1ef1d463bda38bb2be4eb5f2b507ac26">Estado</a> == EstadoUsuario.Suspendido)</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        {</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            <span class="keywordflow">return</span>; <span class="comment">// El vendedor no puede estar suspendido.</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="comment">// 3. Ejecuta la acción en el objeto (Principio Experto)</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        cliente.<a class="code hl_function" href="classCliente.html#a1ded1c1126227687614ed6b956d09ba5">AsignarVendedor</a>(nuevoVendedor);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    }</div>
+</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="comment">// --- Métodos de Interacciones (Polimorfismo) ---</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span></div>
+<div class="foldopen" id="foldopen00147" data-start="{" data-end="}">
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="classFachada.html#ae478aa9cfd7de229420eab4b075f94d1">  147</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#ae478aa9cfd7de229420eab4b075f94d1">RegistrarLlamada</a>(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> tipoLlamada)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        {</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            <span class="comment">// Crea el objeto específico (Llamada hereda de Interaccion)</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            var nuevaLlamada = <span class="keyword">new</span> <a class="code hl_class" href="classLlamada.html">Llamada</a>(fecha, tema, tipoLlamada);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            cliente.Interacciones.Add(nuevaLlamada);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    }</div>
+</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span></div>
+<div class="foldopen" id="foldopen00166" data-start="{" data-end="}">
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classFachada.html#a7b38d001e9686312afe09ad03134a577">  166</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a7b38d001e9686312afe09ad03134a577">RegistrarReunion</a>(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> lugar)</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        {</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            var nuevaReunion = <span class="keyword">new</span> <a class="code hl_class" href="classReunion.html">Reunion</a>(fecha, tema, lugar);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            cliente.Interacciones.Add(nuevaReunion);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        }</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    }</div>
+</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span></div>
+<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="classFachada.html#a8e9c0d25178292e090d95091070efde2">  184</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a8e9c0d25178292e090d95091070efde2">RegistrarMensaje</a>(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> remitente, <span class="keywordtype">string</span> destinatario)</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        {</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            var nuevoMensaje = <span class="keyword">new</span> <a class="code hl_class" href="classLibrary_1_1Mensaje.html">Mensaje</a>(fecha, tema, remitente, destinatario);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>            cliente.Interacciones.Add(nuevoMensaje);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    }</div>
+</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span></div>
+<div class="foldopen" id="foldopen00203" data-start="{" data-end="}">
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno"><a class="line" href="classFachada.html#a9a29e4b8257aa2ad5e2647128959bc39">  203</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a9a29e4b8257aa2ad5e2647128959bc39">RegistrarCorreo</a>(<span class="keywordtype">int</span> idCliente, DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> remitente, <span class="keywordtype">string</span> destinatario, <span class="keywordtype">string</span> asunto)</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        {</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>            var nuevoCorreo = <span class="keyword">new</span> <a class="code hl_class" href="classLibrary_1_1Correo.html">Correo</a>(fecha, tema, remitente, destinatario, asunto);</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            cliente.Interacciones.Add(nuevoCorreo);</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        }</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    }</div>
+</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span></div>
+<div class="foldopen" id="foldopen00218" data-start="{" data-end="}">
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="classFachada.html#a3d72b4428a494221e1b414ead6e68b43">  218</a></span>    <span class="keyword">public</span> List&lt;Interaccion&gt; <a class="code hl_function" href="classFachada.html#a3d72b4428a494221e1b414ead6e68b43">VerInteraccionesDeCliente</a>(<span class="keywordtype">int</span> idCliente)</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    {</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        {</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            <span class="keywordflow">return</span> cliente.Interacciones;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        }</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> List&lt;Interaccion&gt;(); <span class="comment">// Devuelve lista vacía si no encuentra al cliente.</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    }</div>
+</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span></div>
+<div class="foldopen" id="foldopen00234" data-start="{" data-end="}">
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="classFachada.html#a51eac6508365b35263a1a381a9a2dca7">  234</a></span>    <span class="keyword">public</span> List&lt;Interaccion&gt; <a class="code hl_function" href="classFachada.html#a51eac6508365b35263a1a381a9a2dca7">VerInteraccionesDeCliente</a>(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">string</span> tipoDeInteraccion)</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    {</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keywordflow">if</span> (cliente == <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        {</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        }</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        var interaccionesFiltradas = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <span class="keywordtype">string</span> tipoBuscado = tipoDeInteraccion.ToLower(); <span class="comment">// Normaliza a minúsculas</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> cliente.Interacciones)</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        {</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keywordtype">bool</span> coincide = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            <span class="comment">// Usa &#39;is&#39; para chequear el tipo de objeto (Polimorfismo)</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;llamada&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classLlamada.html">Llamada</a>)</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            {</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                coincide = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            }</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;reunion&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classReunion.html">Reunion</a>)</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>            {</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                coincide = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            }</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;mensaje&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classLibrary_1_1Mensaje.html">Mensaje</a>)</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                coincide = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            }</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (tipoBuscado == <span class="stringliteral">&quot;correo&quot;</span> &amp;&amp; interaccion is <a class="code hl_class" href="classLibrary_1_1Correo.html">Correo</a>)</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            {</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                coincide = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            }</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>            <span class="keywordflow">if</span> (coincide)</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>            {</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                interaccionesFiltradas.Add(interaccion);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>            }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        }</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="keywordflow">return</span> interaccionesFiltradas;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    }</div>
+</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span></div>
+<div class="foldopen" id="foldopen00282" data-start="{" data-end="}">
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno"><a class="line" href="classFachada.html#aea53b3c9009f807a533041453769880a">  282</a></span>    <span class="keyword">public</span> List&lt;Interaccion&gt; <a class="code hl_function" href="classFachada.html#aea53b3c9009f807a533041453769880a">VerInteraccionesDeCliente</a>(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">string</span> tipoDeInteraccion, DateTime fechaDesde)</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    {</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        <span class="comment">// 1. Llama a la función anterior (reúso de código)</span></div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        var interaccionesFiltradasPorTipo = <a class="code hl_function" href="classFachada.html#a3d72b4428a494221e1b414ead6e68b43">VerInteraccionesDeCliente</a>(idCliente, tipoDeInteraccion);</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        var resultadoFinal = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        <span class="comment">// 2. Aplica el segundo filtro</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> interaccionesFiltradasPorTipo)</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        {</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>            <span class="keywordflow">if</span> (interaccion.Fecha &gt;= fechaDesde)</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>            {</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                resultadoFinal.Add(interaccion);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        }</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        <span class="keywordflow">return</span> resultadoFinal;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    }</div>
+</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span></div>
+<div class="foldopen" id="foldopen00306" data-start="{" data-end="}">
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno"><a class="line" href="classFachada.html#a76499b6a4ba3580619faf22fd75fa66f">  306</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a76499b6a4ba3580619faf22fd75fa66f">AgregarNotaAInteraccion</a>(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> indiceInteraccion, <span class="keywordtype">string</span> textoNota)</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    {</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        {</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>            <span class="comment">// Valida que el índice esté dentro de los límites de la lista</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>            <span class="keywordflow">if</span> (indiceInteraccion &gt;= 0 &amp;&amp; indiceInteraccion &lt; cliente.Interacciones.Count)</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>            {</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                var interaccionSeleccionada = cliente.Interacciones[indiceInteraccion];</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                interaccionSeleccionada.NotaAdicional = <span class="keyword">new</span> <a class="code hl_class" href="classNota.html">Nota</a>(textoNota);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            }</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        }</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    }</div>
+</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> </div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    <span class="comment">// --- Métodos de Etiquetas ---</span></div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span></div>
+<div class="foldopen" id="foldopen00327" data-start="{" data-end="}">
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno"><a class="line" href="classFachada.html#a70f996a7028e4080ee740ae98ac3f064">  327</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a70f996a7028e4080ee740ae98ac3f064">CrearEtiqueta</a>(<span class="keywordtype">string</span> nombre)</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    {</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        _repoEtiquetas.Crear(nombre);</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    }</div>
+</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span></div>
+<div class="foldopen" id="foldopen00336" data-start="{" data-end="}">
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno"><a class="line" href="classFachada.html#a8821ea091927bd44bc9a7432f0af0a4b">  336</a></span>    <span class="keyword">public</span> List&lt;Etiqueta&gt; <a class="code hl_function" href="classFachada.html#a8821ea091927bd44bc9a7432f0af0a4b">VerTodasLasEtiquetas</a>()</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    {</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        <span class="keywordflow">return</span> _repoEtiquetas.ObtenerTodas();</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    }</div>
+</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span></div>
+<div class="foldopen" id="foldopen00345" data-start="{" data-end="}">
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno"><a class="line" href="classFachada.html#a01e5c340259b0c4f5686a9bce995bddd">  345</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a01e5c340259b0c4f5686a9bce995bddd">EliminarEtiqueta</a>(<span class="keywordtype">int</span> idEtiqueta)</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    {</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>        _repoEtiquetas.Eliminar(idEtiqueta);</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>    }</div>
+</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span></div>
+<div class="foldopen" id="foldopen00355" data-start="{" data-end="}">
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno"><a class="line" href="classFachada.html#af580152fb261d1c06bd99c0a5d196433">  355</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#af580152fb261d1c06bd99c0a5d196433">AgregarEtiquetaACliente</a>(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> idEtiqueta)</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    {</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span> &amp;&amp; etiqueta != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>        {</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>            <span class="comment">// Evita agregar la misma etiqueta dos veces</span></div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>            <span class="keywordflow">if</span> (!cliente.Etiquetas.Contains(etiqueta))</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>            {</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>                cliente.Etiquetas.Add(etiqueta);</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>            }</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        }</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    }</div>
+</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span></div>
+<div class="foldopen" id="foldopen00375" data-start="{" data-end="}">
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno"><a class="line" href="classFachada.html#af97b885ab41c8d475090dcd28e121f4d">  375</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#af97b885ab41c8d475090dcd28e121f4d">QuitarEtiquetaDeCliente</a>(<span class="keywordtype">int</span> idCliente, <span class="keywordtype">int</span> idEtiqueta)</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    {</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        var cliente = _repoClientes.Buscar(idCliente);</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        var etiqueta = _repoEtiquetas.Buscar(idEtiqueta);</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        <span class="keywordflow">if</span> (cliente != <span class="keyword">null</span> &amp;&amp; etiqueta != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        {</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>            cliente.Etiquetas.Remove(etiqueta);</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        }</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>    }</div>
+</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span> </div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    <span class="comment">// --- Métodos de Usuarios ---</span></div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    </div>
+<div class="foldopen" id="foldopen00394" data-start="{" data-end="}">
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno"><a class="line" href="classFachada.html#abe31c3a8512975ee075a2013fa86932f">  394</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#abe31c3a8512975ee075a2013fa86932f">CrearUsuario</a>(<span class="keywordtype">string</span> nombreUsuario, <span class="keywordtype">string</span> contrasena, RolUsuario rol)</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    {</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        _repoUsuarios.Agregar(nombreUsuario, contrasena, rol);</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>    }</div>
+</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span></div>
+<div class="foldopen" id="foldopen00403" data-start="{" data-end="}">
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno"><a class="line" href="classFachada.html#af5ed65345329b63c1d04e92ebe3cbcff">  403</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#af5ed65345329b63c1d04e92ebe3cbcff">SuspenderUsuario</a>(<span class="keywordtype">int</span> idUsuario)</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    {</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>        _repoUsuarios.Suspender(idUsuario);</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    }</div>
+</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    </div>
+<div class="foldopen" id="foldopen00412" data-start="{" data-end="}">
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno"><a class="line" href="classFachada.html#a50eb8203b32636963be33238a3e019eb">  412</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a50eb8203b32636963be33238a3e019eb">ActivarUsuario</a>(<span class="keywordtype">int</span> idUsuario)</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>    {</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>        _repoUsuarios.Activar(idUsuario);</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    }</div>
+</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    </div>
+<div class="foldopen" id="foldopen00421" data-start="{" data-end="}">
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno"><a class="line" href="classFachada.html#acb2a8219d2a3e709c3ff3944429f2da5">  421</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#acb2a8219d2a3e709c3ff3944429f2da5">EliminarUsuario</a>(<span class="keywordtype">int</span> idUsuario)</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    {</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>        _repoUsuarios.Eliminar(idUsuario);</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    }</div>
+</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>    </div>
+<div class="foldopen" id="foldopen00431" data-start="{" data-end="}">
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno"><a class="line" href="classFachada.html#a5ece07e5276ae7426bf58be83939fd97">  431</a></span>    <span class="keyword">public</span> <a class="code hl_class" href="classUsuario.html">Usuario</a> <a class="code hl_function" href="classFachada.html#a5ece07e5276ae7426bf58be83939fd97">BuscarUsuario</a>(<span class="keywordtype">int</span> idUsuario)</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>    {</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>        <span class="keywordflow">return</span> _repoUsuarios.Buscar(idUsuario);</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>    }</div>
+</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>    </div>
+<div class="foldopen" id="foldopen00440" data-start="{" data-end="}">
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno"><a class="line" href="classFachada.html#ac044ded02aa12eb7a500489ae7804a4a">  440</a></span>    <span class="keyword">public</span> List&lt;Usuario&gt; <a class="code hl_function" href="classFachada.html#ac044ded02aa12eb7a500489ae7804a4a">VerTodosLosUsuarios</a>()</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>    {</div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>        <span class="keywordflow">return</span> _repoUsuarios.ObtenerTodos();</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>    }</div>
+</div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span> </div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>    <span class="comment">// --- Métodos de Ventas y Reportes ---</span></div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>    </div>
+<div class="foldopen" id="foldopen00453" data-start="{" data-end="}">
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno"><a class="line" href="classFachada.html#a1294870cc94d65d9682a6ca7896eaa16">  453</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a1294870cc94d65d9682a6ca7896eaa16">RegistrarVenta</a>(<span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> importe, DateTime fecha)</div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>    {</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>        _repoVentas.Agregar(producto, importe, fecha);</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>    }</div>
+</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span></div>
+<div class="foldopen" id="foldopen00464" data-start="{" data-end="}">
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno"><a class="line" href="classFachada.html#a590963971fdd1a164d3572eabd9b7ec8">  464</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#a590963971fdd1a164d3572eabd9b7ec8">RegistrarVenta</a>(<span class="keywordtype">int</span> clienteId, <span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> monto)</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>    {</div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>        <a class="code hl_class" href="classCliente.html">Cliente</a> clienteEncontrado = _repoClientes.Buscar(clienteId);</div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span> </div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>        <span class="keywordflow">if</span> (clienteEncontrado != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>        {</div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span>            <span class="comment">// Crea la venta usando el contador de ID y la fecha actual</span></div>
+<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>            <a class="code hl_class" href="classVenta.html">Venta</a> nuevaVenta = <span class="keyword">new</span> <a class="code hl_class" href="classVenta.html">Venta</a>(_proximoIdVenta++, producto, monto, DateTime.Now);</div>
+<div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>            <span class="comment">// La agrega al historial del cliente (Principio Experto)</span></div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>            clienteEncontrado.<a class="code hl_property" href="classCliente.html#ae6e33980d6df5ccbb9d6296fffee448c">Ventas</a>.Add(nuevaVenta); </div>
+<div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span>        }</div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>    }</div>
+</div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span></div>
+<div class="foldopen" id="foldopen00484" data-start="{" data-end="}">
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno"><a class="line" href="classFachada.html#aaff48ad033b52d9657da4c7195b78260">  484</a></span>    <span class="keyword">public</span> <span class="keywordtype">float</span> <a class="code hl_function" href="classFachada.html#aaff48ad033b52d9657da4c7195b78260">CalcularTotalVentas</a>(DateTime fechaInicio, DateTime fechaFin)</div>
+<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>    {</div>
+<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>        var todasLasVentas = _repoVentas.ObtenerTodas();</div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>        <span class="keywordtype">float</span> total = 0;</div>
+<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span> </div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>        <span class="keywordflow">foreach</span> (var venta <span class="keywordflow">in</span> todasLasVentas)</div>
+<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>        {</div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>            <span class="comment">// Filtra por fecha</span></div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>            <span class="keywordflow">if</span> (venta.Fecha &gt;= fechaInicio &amp;&amp; venta.Fecha &lt;= fechaFin)</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>            {</div>
+<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>                total += venta.Importe;</div>
+<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>            }</div>
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>        }</div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>        </div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>        <span class="keywordflow">return</span> total;</div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>    }</div>
+</div>
+<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span></div>
+<div class="foldopen" id="foldopen00509" data-start="{" data-end="}">
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno"><a class="line" href="classFachada.html#ac6118642a5d9b2b8d373ea5b053a6b0a">  509</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classFachada.html#ac6118642a5d9b2b8d373ea5b053a6b0a">RegistrarCotizacion</a>(<span class="keywordtype">int</span> clienteId, <span class="keywordtype">string</span> tema, <span class="keywordtype">double</span> monto, <span class="keywordtype">string</span> detalle)</div>
+<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>    {</div>
+<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>        <a class="code hl_class" href="classCliente.html">Cliente</a> clienteEncontrado = _repoClientes.Buscar(clienteId); </div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span> </div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>        <span class="keywordflow">if</span> (clienteEncontrado != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>        {</div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>            <a class="code hl_class" href="classCotizacion.html">Cotizacion</a> nuevaCotizacion = <span class="keyword">new</span> <a class="code hl_class" href="classCotizacion.html">Cotizacion</a>(tema, monto, detalle);</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>            clienteEncontrado.<a class="code hl_property" href="classCliente.html#a4d66827b1b31ff04137e5e6b2a943744">Interacciones</a>.Add(nuevaCotizacion); </div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>        }</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>    }</div>
+</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span></div>
+<div class="foldopen" id="foldopen00525" data-start="{" data-end="}">
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno"><a class="line" href="classFachada.html#a39dd6ca662d817bc7a853514bb42349c">  525</a></span>    <span class="keyword">public</span> List&lt;Cliente&gt; <a class="code hl_function" href="classFachada.html#a39dd6ca662d817bc7a853514bb42349c">ObtenerClientesInactivos</a>(<span class="keywordtype">int</span> diasSinInteraccion)</div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span>    {</div>
+<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span>        List&lt;Cliente&gt; clientesInactivos = <span class="keyword">new</span> List&lt;Cliente&gt;();</div>
+<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>        <span class="comment">// Calcula la fecha límite (ej: hoy - 30 días)</span></div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span>        DateTime fechaLimite = DateTime.Now.AddDays(-diasSinInteraccion);</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span> </div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>        <span class="keywordflow">foreach</span> (var cliente <span class="keywordflow">in</span> _repoClientes.ObtenerTodos())</div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>        {</div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>            <span class="comment">// Si no tiene interacciones, está inactivo.</span></div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>            <span class="keywordflow">if</span> (cliente.Interacciones.Count == 0)</div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>            {</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>                clientesInactivos.Add(cliente);</div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>                <span class="keywordflow">continue</span>; <span class="comment">// Salta al siguiente cliente</span></div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>            }</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span> </div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span>            <span class="comment">// Busca la fecha de la última interacción</span></div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>            DateTime fechaMasReciente = DateTime.MinValue;</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>            <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> cliente.Interacciones)</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>            {</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>                <span class="keywordflow">if</span> (interaccion.Fecha &gt; fechaMasReciente)</div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>                {</div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>                    fechaMasReciente = interaccion.Fecha;</div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>                }</div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>            }</div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span> </div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>            <span class="comment">// Si la última interacción es más vieja que la fecha límite, está inactivo.</span></div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>            <span class="keywordflow">if</span> (fechaMasReciente &lt; fechaLimite)</div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>            {</div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>                clientesInactivos.Add(cliente);</div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>            }</div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>        }</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span> </div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>        <span class="keywordflow">return</span> clientesInactivos;</div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>    }</div>
+</div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span></div>
+<div class="foldopen" id="foldopen00565" data-start="{" data-end="}">
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno"><a class="line" href="classFachada.html#aefc4117191c9cacece6ea5028b59e03d">  565</a></span>    <span class="keyword">public</span> <a class="code hl_class" href="classCliente.html">Cliente</a> <a class="code hl_function" href="classFachada.html#aefc4117191c9cacece6ea5028b59e03d">BuscarCliente</a>(<span class="keywordtype">int</span> clienteId)</div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    {</div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>        <span class="keywordflow">return</span> _repoClientes.Buscar(clienteId);</div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>    }</div>
+</div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span></div>
+<div class="foldopen" id="foldopen00575" data-start="{" data-end="}">
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno"><a class="line" href="classFachada.html#aa64b1862c4a4e063a55bf1f30bbd2293">  575</a></span>    <span class="keyword">public</span> List&lt;Cliente&gt; <a class="code hl_function" href="classFachada.html#aa64b1862c4a4e063a55bf1f30bbd2293">ObtenerClientesSinRespuesta</a>()</div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>    {</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>        List&lt;Cliente&gt; clientesSinRespuesta = <span class="keyword">new</span> List&lt;Cliente&gt;();</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span> </div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>        <span class="keywordflow">foreach</span> (var cliente <span class="keywordflow">in</span> _repoClientes.ObtenerTodos())</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>        {</div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>            <span class="keywordflow">if</span> (cliente.Interacciones.Count == 0)</div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>            {</div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>                <span class="keywordflow">continue</span>; <span class="comment">// Si no hay interacciones, no aplica.</span></div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>            }</div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span> </div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>            <span class="comment">// Busca la última interacción (la más reciente)</span></div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>            <a class="code hl_class" href="classInteraccion.html">Interaccion</a> ultimaInteraccion = <span class="keyword">null</span>;</div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>            DateTime fechaMasReciente = DateTime.MinValue;</div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span> </div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>            <span class="keywordflow">foreach</span> (var interaccion <span class="keywordflow">in</span> cliente.Interacciones)</div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>            {</div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>                <span class="keywordflow">if</span> (interaccion.Fecha &gt; fechaMasReciente)</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>                {</div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>                    fechaMasReciente = interaccion.Fecha;</div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>                    ultimaInteraccion = interaccion;</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>                }</div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>            }</div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>            </div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>            <span class="comment">// Si la última interacción no es nula y es una Llamada...</span></div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>            <span class="keywordflow">if</span> (ultimaInteraccion != <span class="keyword">null</span> &amp;&amp; ultimaInteraccion is <a class="code hl_class" href="classLlamada.html">Llamada</a>)</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>            {</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>                <span class="comment">// &#39;as&#39; convierte el tipo de forma segura (da null si no puede)</span></div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>                <a class="code hl_class" href="classLlamada.html">Llamada</a> ultimaLlamada = ultimaInteraccion as <a class="code hl_class" href="classLlamada.html">Llamada</a>;</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>                <span class="keywordflow">if</span> (ultimaLlamada.<a class="code hl_property" href="classLlamada.html#ae55290642bafa3ce61e5205ffd340711">TipoLlamada</a> == <span class="stringliteral">&quot;Recibida&quot;</span>)</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>                {</div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>                    clientesSinRespuesta.Add(cliente);</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>                }</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>            }</div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>        }</div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span> </div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>        <span class="keywordflow">return</span> clientesSinRespuesta;</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    }</div>
+</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>    </div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>    <span class="comment">// --- Dashboard ---</span></div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>    </div>
+<div class="foldopen" id="foldopen00620" data-start="{" data-end="}">
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno"><a class="line" href="classFachada.html#a1a4c8d02ccf754d4c74cb1129de1013b">  620</a></span>    <span class="keyword">public</span> <a class="code hl_class" href="classResumenDashboard.html">ResumenDashboard</a> <a class="code hl_function" href="classFachada.html#a1a4c8d02ccf754d4c74cb1129de1013b">ObtenerResumenDashboard</a>()</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>    {</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        var todosLosClientes = _repoClientes.ObtenerTodos();</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        <span class="comment">// 1. Total de clientes</span></div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>        <span class="keywordtype">int</span> totalClientes = todosLosClientes.Count;</div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span> </div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>        <span class="comment">// 2. Busca todas las interacciones de todos los clientes</span></div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>        List&lt;Interaccion&gt; todasLasInteracciones = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>        <span class="keywordflow">foreach</span> (<a class="code hl_class" href="classCliente.html">Cliente</a> cliente <span class="keywordflow">in</span> todosLosClientes)</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>        {</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>            <span class="comment">// Agrega todas las interacciones de este cliente a la lista grande</span></div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>            todasLasInteracciones.AddRange(cliente.Interacciones);</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>        }</div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span> </div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>        <span class="comment">// Ordena de más nueva a más vieja (descendente)</span></div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>        todasLasInteracciones.Sort((i1, i2) =&gt; i2.Fecha.CompareTo(i1.Fecha));</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span> </div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>        <span class="comment">// Se queda solo con las 5 primeras (las más recientes)</span></div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>        List&lt;Interaccion&gt; interaccionesRecientes = <span class="keyword">new</span> List&lt;Interaccion&gt;();</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>        <span class="keywordtype">int</span> contadorMaximo = 5;</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>        </div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; todasLasInteracciones.Count; i++)</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>        {</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            <span class="keywordflow">if</span> (i &gt;= contadorMaximo)</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>            {</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>                <span class="keywordflow">break</span>; <span class="comment">// Para de agregar si ya tiene 5</span></div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>            }</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>            interaccionesRecientes.Add(todasLasInteracciones[i]);</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>        }</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span> </div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>        <span class="comment">// 3. Busca reuniones que todavía no pasaron</span></div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>        List&lt;Reunion&gt; reunionesProximas = <span class="keyword">new</span> List&lt;Reunion&gt;();</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>        DateTime ahora = DateTime.Now;</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span> </div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>        <span class="keywordflow">foreach</span> (<a class="code hl_class" href="classInteraccion.html">Interaccion</a> interaccion <span class="keywordflow">in</span> todasLasInteracciones) <span class="comment">// Reusa la lista total</span></div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>        {</div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>            <span class="keywordflow">if</span> (interaccion is <a class="code hl_class" href="classReunion.html">Reunion</a>) <span class="comment">// Si es una reunión</span></div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>            {</div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>                <span class="keywordflow">if</span> (interaccion.Fecha &gt; ahora) <span class="comment">// Y es en el futuro</span></div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>                {</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>                    <span class="comment">// Hacemos &#39;casting&#39; explícito porque sabemos que es una Reunion</span></div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>                    reunionesProximas.Add((<a class="code hl_class" href="classReunion.html">Reunion</a>)interaccion);</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>                }</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>            }</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>        }</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span> </div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>        <span class="comment">// Ordena las reuniones de más cercana a más lejana (ascendente)</span></div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>        reunionesProximas.Sort((r1, r2) =&gt; r1.Fecha.CompareTo(r2.Fecha));</div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span> </div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        <span class="comment">// 4. Arma el objeto de resumen y lo devuelve</span></div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>        var resumen = <span class="keyword">new</span> <a class="code hl_class" href="classResumenDashboard.html">ResumenDashboard</a></div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>        {</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>            TotalClientes = totalClientes,</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>            InteraccionesRecientes = interaccionesRecientes,</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>            ReunionesProximas = reunionesProximas</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>        };</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span> </div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>        <span class="keywordflow">return</span> resumen;</div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>    }</div>
+</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>}</div>
+</div>
+<div class="ttc" id="aclassCliente_html"><div class="ttname"><a href="classCliente.html">Cliente</a></div><div class="ttdoc">Representa a un cliente en el sistema. Esta clase es un &quot;Experto en Información&quot; (Patrón Expert) sobr...</div><div class="ttdef"><b>Definition</b> <a href="Cliente_8cs_source.html#l00010">Cliente.cs:11</a></div></div>
+<div class="ttc" id="aclassCliente_html_a1ded1c1126227687614ed6b956d09ba5"><div class="ttname"><a href="classCliente.html#a1ded1c1126227687614ed6b956d09ba5">Cliente.AsignarVendedor</a></div><div class="ttdeci">void AsignarVendedor(Usuario nuevoVendedor)</div><div class="ttdoc">Asigna un nuevo vendedor a este cliente. La lógica de validación (rol y estado) se delega a la Fachad...</div><div class="ttdef"><b>Definition</b> <a href="Cliente_8cs_source.html#l00110">Cliente.cs:110</a></div></div>
+<div class="ttc" id="aclassCliente_html_a4d66827b1b31ff04137e5e6b2a943744"><div class="ttname"><a href="classCliente.html#a4d66827b1b31ff04137e5e6b2a943744">Cliente.Interacciones</a></div><div class="ttdeci">List&lt; Interaccion &gt; Interacciones</div><div class="ttdoc">Obtiene o establece la lista de interacciones (llamadas, reuniones, etc.) asociadas a este cliente.</div><div class="ttdef"><b>Definition</b> <a href="Cliente_8cs_source.html#l00061">Cliente.cs:61</a></div></div>
+<div class="ttc" id="aclassCliente_html_ae6e33980d6df5ccbb9d6296fffee448c"><div class="ttname"><a href="classCliente.html#ae6e33980d6df5ccbb9d6296fffee448c">Cliente.Ventas</a></div><div class="ttdeci">List&lt; Venta &gt; Ventas</div><div class="ttdoc">Obtiene el historial de ventas cerradas con este cliente.</div><div class="ttdef"><b>Definition</b> <a href="Cliente_8cs_source.html#l00071">Cliente.cs:71</a></div></div>
+<div class="ttc" id="aclassCotizacion_html"><div class="ttname"><a href="classCotizacion.html">Cotizacion</a></div><div class="ttdoc">Representa una cotización enviada a un cliente. Hereda de Interaccion, demostrando el principio de He...</div><div class="ttdef"><b>Definition</b> <a href="Cotizacion_8cs_source.html#l00008">Cotizacion.cs:9</a></div></div>
+<div class="ttc" id="aclassFachada_html"><div class="ttname"><a href="classFachada.html">Fachada</a></div><div class="ttdoc">Implementa el patrón &quot;Fachada&quot; (Facade). Es el único punto de entrada unificado para todas las operac...</div><div class="ttdef"><b>Definition</b> <a href="#l00011">Fachada.cs:12</a></div></div>
+<div class="ttc" id="aclassFachada_html_a01e5c340259b0c4f5686a9bce995bddd"><div class="ttname"><a href="classFachada.html#a01e5c340259b0c4f5686a9bce995bddd">Fachada.EliminarEtiqueta</a></div><div class="ttdeci">void EliminarEtiqueta(int idEtiqueta)</div><div class="ttdoc">Elimina una etiqueta del repositorio global de etiquetas.</div><div class="ttdef"><b>Definition</b> <a href="#l00345">Fachada.cs:345</a></div></div>
+<div class="ttc" id="aclassFachada_html_a1294870cc94d65d9682a6ca7896eaa16"><div class="ttname"><a href="classFachada.html#a1294870cc94d65d9682a6ca7896eaa16">Fachada.RegistrarVenta</a></div><div class="ttdeci">void RegistrarVenta(string producto, float importe, DateTime fecha)</div><div class="ttdoc">Registra una venta general (no asignada a un cliente específico).</div><div class="ttdef"><b>Definition</b> <a href="#l00453">Fachada.cs:453</a></div></div>
+<div class="ttc" id="aclassFachada_html_a1a4c8d02ccf754d4c74cb1129de1013b"><div class="ttname"><a href="classFachada.html#a1a4c8d02ccf754d4c74cb1129de1013b">Fachada.ObtenerResumenDashboard</a></div><div class="ttdeci">ResumenDashboard ObtenerResumenDashboard()</div><div class="ttdoc">Recopila varias estadísticas para mostrar un resumen general del sistema.</div><div class="ttdef"><b>Definition</b> <a href="#l00620">Fachada.cs:620</a></div></div>
+<div class="ttc" id="aclassFachada_html_a2d20818538aefdd4784c51ec1baf54e7"><div class="ttname"><a href="classFachada.html#a2d20818538aefdd4784c51ec1baf54e7">Fachada.BuscarClientes</a></div><div class="ttdeci">List&lt; Cliente &gt; BuscarClientes(string termino)</div><div class="ttdoc">Busca clientes cuyo nombre, apellido, teléfono, correo o género contengan el término.</div><div class="ttdef"><b>Definition</b> <a href="#l00091">Fachada.cs:91</a></div></div>
+<div class="ttc" id="aclassFachada_html_a39dd6ca662d817bc7a853514bb42349c"><div class="ttname"><a href="classFachada.html#a39dd6ca662d817bc7a853514bb42349c">Fachada.ObtenerClientesInactivos</a></div><div class="ttdeci">List&lt; Cliente &gt; ObtenerClientesInactivos(int diasSinInteraccion)</div><div class="ttdoc">Obtiene una lista de clientes que no han tenido interacciones recientes.</div><div class="ttdef"><b>Definition</b> <a href="#l00525">Fachada.cs:525</a></div></div>
+<div class="ttc" id="aclassFachada_html_a3d72b4428a494221e1b414ead6e68b43"><div class="ttname"><a href="classFachada.html#a3d72b4428a494221e1b414ead6e68b43">Fachada.VerInteraccionesDeCliente</a></div><div class="ttdeci">List&lt; Interaccion &gt; VerInteraccionesDeCliente(int idCliente)</div><div class="ttdoc">Obtiene el historial completo de interacciones de un cliente.</div><div class="ttdef"><b>Definition</b> <a href="#l00218">Fachada.cs:218</a></div></div>
+<div class="ttc" id="aclassFachada_html_a50eb8203b32636963be33238a3e019eb"><div class="ttname"><a href="classFachada.html#a50eb8203b32636963be33238a3e019eb">Fachada.ActivarUsuario</a></div><div class="ttdeci">void ActivarUsuario(int idUsuario)</div><div class="ttdoc">Cambia el estado de un usuario a EstadoUsuario.Activo.</div><div class="ttdef"><b>Definition</b> <a href="#l00412">Fachada.cs:412</a></div></div>
+<div class="ttc" id="aclassFachada_html_a51eac6508365b35263a1a381a9a2dca7"><div class="ttname"><a href="classFachada.html#a51eac6508365b35263a1a381a9a2dca7">Fachada.VerInteraccionesDeCliente</a></div><div class="ttdeci">List&lt; Interaccion &gt; VerInteraccionesDeCliente(int idCliente, string tipoDeInteraccion)</div><div class="ttdoc">(Sobrecarga) Obtiene las interacciones de un cliente, filtradas por tipo.</div><div class="ttdef"><b>Definition</b> <a href="#l00234">Fachada.cs:234</a></div></div>
+<div class="ttc" id="aclassFachada_html_a590963971fdd1a164d3572eabd9b7ec8"><div class="ttname"><a href="classFachada.html#a590963971fdd1a164d3572eabd9b7ec8">Fachada.RegistrarVenta</a></div><div class="ttdeci">void RegistrarVenta(int clienteId, string producto, float monto)</div><div class="ttdoc">(Sobrecarga) Registra una venta y la asigna a un cliente específico.</div><div class="ttdef"><b>Definition</b> <a href="#l00464">Fachada.cs:464</a></div></div>
+<div class="ttc" id="aclassFachada_html_a591434bfd2b64809ac380c57846dce76"><div class="ttname"><a href="classFachada.html#a591434bfd2b64809ac380c57846dce76">Fachada.ModificarCliente</a></div><div class="ttdeci">void ModificarCliente(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)</div><div class="ttdoc">Modifica los datos de un cliente existente.</div><div class="ttdef"><b>Definition</b> <a href="#l00080">Fachada.cs:80</a></div></div>
+<div class="ttc" id="aclassFachada_html_a5ece07e5276ae7426bf58be83939fd97"><div class="ttname"><a href="classFachada.html#a5ece07e5276ae7426bf58be83939fd97">Fachada.BuscarUsuario</a></div><div class="ttdeci">Usuario BuscarUsuario(int idUsuario)</div><div class="ttdoc">Busca y devuelve un usuario por su ID.</div><div class="ttdef"><b>Definition</b> <a href="#l00431">Fachada.cs:431</a></div></div>
+<div class="ttc" id="aclassFachada_html_a61362e8b2cabd0bbb6e47b5fb1656cb4"><div class="ttname"><a href="classFachada.html#a61362e8b2cabd0bbb6e47b5fb1656cb4">Fachada.CrearCliente</a></div><div class="ttdeci">void CrearCliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)</div><div class="ttdoc">Crea un nuevo cliente y lo persiste en el repositorio.</div><div class="ttdef"><b>Definition</b> <a href="#l00052">Fachada.cs:52</a></div></div>
+<div class="ttc" id="aclassFachada_html_a70f996a7028e4080ee740ae98ac3f064"><div class="ttname"><a href="classFachada.html#a70f996a7028e4080ee740ae98ac3f064">Fachada.CrearEtiqueta</a></div><div class="ttdeci">void CrearEtiqueta(string nombre)</div><div class="ttdoc">Crea una nueva etiqueta global en el sistema.</div><div class="ttdef"><b>Definition</b> <a href="#l00327">Fachada.cs:327</a></div></div>
+<div class="ttc" id="aclassFachada_html_a76499b6a4ba3580619faf22fd75fa66f"><div class="ttname"><a href="classFachada.html#a76499b6a4ba3580619faf22fd75fa66f">Fachada.AgregarNotaAInteraccion</a></div><div class="ttdeci">void AgregarNotaAInteraccion(int idCliente, int indiceInteraccion, string textoNota)</div><div class="ttdoc">Agrega una nota de texto a una interacción específica, identificada por su índice.</div><div class="ttdef"><b>Definition</b> <a href="#l00306">Fachada.cs:306</a></div></div>
+<div class="ttc" id="aclassFachada_html_a7b38d001e9686312afe09ad03134a577"><div class="ttname"><a href="classFachada.html#a7b38d001e9686312afe09ad03134a577">Fachada.RegistrarReunion</a></div><div class="ttdeci">void RegistrarReunion(int idCliente, DateTime fecha, string tema, string lugar)</div><div class="ttdoc">Registra una nueva reunión en el historial de un cliente.</div><div class="ttdef"><b>Definition</b> <a href="#l00166">Fachada.cs:166</a></div></div>
+<div class="ttc" id="aclassFachada_html_a8821ea091927bd44bc9a7432f0af0a4b"><div class="ttname"><a href="classFachada.html#a8821ea091927bd44bc9a7432f0af0a4b">Fachada.VerTodasLasEtiquetas</a></div><div class="ttdeci">List&lt; Etiqueta &gt; VerTodasLasEtiquetas()</div><div class="ttdoc">Obtiene todas las etiquetas disponibles en el sistema.</div><div class="ttdef"><b>Definition</b> <a href="#l00336">Fachada.cs:336</a></div></div>
+<div class="ttc" id="aclassFachada_html_a8e9c0d25178292e090d95091070efde2"><div class="ttname"><a href="classFachada.html#a8e9c0d25178292e090d95091070efde2">Fachada.RegistrarMensaje</a></div><div class="ttdeci">void RegistrarMensaje(int idCliente, DateTime fecha, string tema, string remitente, string destinatario)</div><div class="ttdoc">Registra un nuevo mensaje (SMS, chat) en el historial de un cliente.</div><div class="ttdef"><b>Definition</b> <a href="#l00184">Fachada.cs:184</a></div></div>
+<div class="ttc" id="aclassFachada_html_a932294ff34d4f1878120a5e805ff64c1"><div class="ttname"><a href="classFachada.html#a932294ff34d4f1878120a5e805ff64c1">Fachada.EliminarCliente</a></div><div class="ttdeci">void EliminarCliente(int id)</div><div class="ttdoc">Elimina un cliente del sistema usando su ID.</div><div class="ttdef"><b>Definition</b> <a href="#l00100">Fachada.cs:100</a></div></div>
+<div class="ttc" id="aclassFachada_html_a98ba862d93da6604d726634779101b6d"><div class="ttname"><a href="classFachada.html#a98ba862d93da6604d726634779101b6d">Fachada.VerTodosLosClientes</a></div><div class="ttdeci">List&lt; Cliente &gt; VerTodosLosClientes()</div><div class="ttdoc">Obtiene una lista de todos los clientes registrados.</div><div class="ttdef"><b>Definition</b> <a href="#l00065">Fachada.cs:65</a></div></div>
+<div class="ttc" id="aclassFachada_html_a9a29e4b8257aa2ad5e2647128959bc39"><div class="ttname"><a href="classFachada.html#a9a29e4b8257aa2ad5e2647128959bc39">Fachada.RegistrarCorreo</a></div><div class="ttdeci">void RegistrarCorreo(int idCliente, DateTime fecha, string tema, string remitente, string destinatario, string asunto)</div><div class="ttdoc">Registra un nuevo correo en el historial de un cliente.</div><div class="ttdef"><b>Definition</b> <a href="#l00203">Fachada.cs:203</a></div></div>
+<div class="ttc" id="aclassFachada_html_aa64b1862c4a4e063a55bf1f30bbd2293"><div class="ttname"><a href="classFachada.html#aa64b1862c4a4e063a55bf1f30bbd2293">Fachada.ObtenerClientesSinRespuesta</a></div><div class="ttdeci">List&lt; Cliente &gt; ObtenerClientesSinRespuesta()</div><div class="ttdoc">Reporte: Busca clientes cuya última interacción fue una llamada &quot;Recibida&quot;. (Asume que una llamada re...</div><div class="ttdef"><b>Definition</b> <a href="#l00575">Fachada.cs:575</a></div></div>
+<div class="ttc" id="aclassFachada_html_aaff48ad033b52d9657da4c7195b78260"><div class="ttname"><a href="classFachada.html#aaff48ad033b52d9657da4c7195b78260">Fachada.CalcularTotalVentas</a></div><div class="ttdeci">float CalcularTotalVentas(DateTime fechaInicio, DateTime fechaFin)</div><div class="ttdoc">Calcula el monto total de ventas generales (no de clientes) dentro de un rango de fechas.</div><div class="ttdef"><b>Definition</b> <a href="#l00484">Fachada.cs:484</a></div></div>
+<div class="ttc" id="aclassFachada_html_abe31c3a8512975ee075a2013fa86932f"><div class="ttname"><a href="classFachada.html#abe31c3a8512975ee075a2013fa86932f">Fachada.CrearUsuario</a></div><div class="ttdeci">void CrearUsuario(string nombreUsuario, string contrasena, RolUsuario rol)</div><div class="ttdoc">Crea un nuevo usuario (Vendedor o Administrador) en el sistema.</div><div class="ttdef"><b>Definition</b> <a href="#l00394">Fachada.cs:394</a></div></div>
+<div class="ttc" id="aclassFachada_html_ac044ded02aa12eb7a500489ae7804a4a"><div class="ttname"><a href="classFachada.html#ac044ded02aa12eb7a500489ae7804a4a">Fachada.VerTodosLosUsuarios</a></div><div class="ttdeci">List&lt; Usuario &gt; VerTodosLosUsuarios()</div><div class="ttdoc">Devuelve la lista completa de usuarios.</div><div class="ttdef"><b>Definition</b> <a href="#l00440">Fachada.cs:440</a></div></div>
+<div class="ttc" id="aclassFachada_html_ac6118642a5d9b2b8d373ea5b053a6b0a"><div class="ttname"><a href="classFachada.html#ac6118642a5d9b2b8d373ea5b053a6b0a">Fachada.RegistrarCotizacion</a></div><div class="ttdeci">void RegistrarCotizacion(int clienteId, string tema, double monto, string detalle)</div><div class="ttdoc">Registra una Cotizacion (que es una Interaccion) en el historial de un cliente.</div><div class="ttdef"><b>Definition</b> <a href="#l00509">Fachada.cs:509</a></div></div>
+<div class="ttc" id="aclassFachada_html_acb2a8219d2a3e709c3ff3944429f2da5"><div class="ttname"><a href="classFachada.html#acb2a8219d2a3e709c3ff3944429f2da5">Fachada.EliminarUsuario</a></div><div class="ttdeci">void EliminarUsuario(int idUsuario)</div><div class="ttdoc">Elimina un usuario del sistema.</div><div class="ttdef"><b>Definition</b> <a href="#l00421">Fachada.cs:421</a></div></div>
+<div class="ttc" id="aclassFachada_html_ae478aa9cfd7de229420eab4b075f94d1"><div class="ttname"><a href="classFachada.html#ae478aa9cfd7de229420eab4b075f94d1">Fachada.RegistrarLlamada</a></div><div class="ttdeci">void RegistrarLlamada(int idCliente, DateTime fecha, string tema, string tipoLlamada)</div><div class="ttdoc">Registra una nueva llamada en el historial de un cliente.</div><div class="ttdef"><b>Definition</b> <a href="#l00147">Fachada.cs:147</a></div></div>
+<div class="ttc" id="aclassFachada_html_aea53b3c9009f807a533041453769880a"><div class="ttname"><a href="classFachada.html#aea53b3c9009f807a533041453769880a">Fachada.VerInteraccionesDeCliente</a></div><div class="ttdeci">List&lt; Interaccion &gt; VerInteraccionesDeCliente(int idCliente, string tipoDeInteraccion, DateTime fechaDesde)</div><div class="ttdoc">(Sobrecarga) Obtiene las interacciones, filtradas por tipo y fecha.</div><div class="ttdef"><b>Definition</b> <a href="#l00282">Fachada.cs:282</a></div></div>
+<div class="ttc" id="aclassFachada_html_aea91102bc4782a7e33694a587db47f25"><div class="ttname"><a href="classFachada.html#aea91102bc4782a7e33694a587db47f25">Fachada.AsignarClienteVendedor</a></div><div class="ttdeci">void AsignarClienteVendedor(int idCliente, int idNuevoVendedor)</div><div class="ttdoc">Asigna un Vendedor (Usuario) a un Cliente. Este método coordina múltiples repositorios y aplica lógic...</div><div class="ttdef"><b>Definition</b> <a href="#l00114">Fachada.cs:114</a></div></div>
+<div class="ttc" id="aclassFachada_html_aefc4117191c9cacece6ea5028b59e03d"><div class="ttname"><a href="classFachada.html#aefc4117191c9cacece6ea5028b59e03d">Fachada.BuscarCliente</a></div><div class="ttdeci">Cliente BuscarCliente(int clienteId)</div><div class="ttdoc">Busca un cliente por su ID (Atajo para el repositorio).</div><div class="ttdef"><b>Definition</b> <a href="#l00565">Fachada.cs:565</a></div></div>
+<div class="ttc" id="aclassFachada_html_af580152fb261d1c06bd99c0a5d196433"><div class="ttname"><a href="classFachada.html#af580152fb261d1c06bd99c0a5d196433">Fachada.AgregarEtiquetaACliente</a></div><div class="ttdeci">void AgregarEtiquetaACliente(int idCliente, int idEtiqueta)</div><div class="ttdoc">Asocia una etiqueta existente a un cliente.</div><div class="ttdef"><b>Definition</b> <a href="#l00355">Fachada.cs:355</a></div></div>
+<div class="ttc" id="aclassFachada_html_af5ed65345329b63c1d04e92ebe3cbcff"><div class="ttname"><a href="classFachada.html#af5ed65345329b63c1d04e92ebe3cbcff">Fachada.SuspenderUsuario</a></div><div class="ttdeci">void SuspenderUsuario(int idUsuario)</div><div class="ttdoc">Cambia el estado de un usuario a EstadoUsuario.Suspendido.</div><div class="ttdef"><b>Definition</b> <a href="#l00403">Fachada.cs:403</a></div></div>
+<div class="ttc" id="aclassFachada_html_af97b885ab41c8d475090dcd28e121f4d"><div class="ttname"><a href="classFachada.html#af97b885ab41c8d475090dcd28e121f4d">Fachada.QuitarEtiquetaDeCliente</a></div><div class="ttdeci">void QuitarEtiquetaDeCliente(int idCliente, int idEtiqueta)</div><div class="ttdoc">Quita la asociación entre un cliente y una etiqueta.</div><div class="ttdef"><b>Definition</b> <a href="#l00375">Fachada.cs:375</a></div></div>
+<div class="ttc" id="aclassInteraccion_html"><div class="ttname"><a href="classInteraccion.html">Interaccion</a></div><div class="ttdoc">Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...</div><div class="ttdef"><b>Definition</b> <a href="Interaccion_8cs_source.html#l00009">Interaccion.cs:10</a></div></div>
+<div class="ttc" id="aclassLibrary_1_1Correo_html"><div class="ttname"><a href="classLibrary_1_1Correo.html">Library.Correo</a></div><div class="ttdoc">Representa una interacción de tipo Correo Electrónico. Hereda de Interaccion, demostrando el principi...</div><div class="ttdef"><b>Definition</b> <a href="Correo_8cs_source.html#l00009">Correo.cs:10</a></div></div>
+<div class="ttc" id="aclassLibrary_1_1Mensaje_html"><div class="ttname"><a href="classLibrary_1_1Mensaje.html">Library.Mensaje</a></div><div class="ttdoc">Representa una interacción de tipo Mensaje (SMS, Chat, etc.). Hereda de Interaccion (Herencia).</div><div class="ttdef"><b>Definition</b> <a href="Mensaje_8cs_source.html#l00009">Mensaje.cs:10</a></div></div>
+<div class="ttc" id="aclassLlamada_html"><div class="ttname"><a href="classLlamada.html">Llamada</a></div><div class="ttdoc">Representa una interacción de tipo Llamada Telefónica. Hereda de Interaccion (Herencia).</div><div class="ttdef"><b>Definition</b> <a href="Llamada_8cs_source.html#l00008">Llamada.cs:9</a></div></div>
+<div class="ttc" id="aclassLlamada_html_ae55290642bafa3ce61e5205ffd340711"><div class="ttname"><a href="classLlamada.html#ae55290642bafa3ce61e5205ffd340711">Llamada.TipoLlamada</a></div><div class="ttdeci">string TipoLlamada</div><div class="ttdoc">Obtiene o establece el tipo de llamada (ej: &quot;Entrante&quot;, &quot;Saliente&quot;, &quot;Perdida&quot;).</div><div class="ttdef"><b>Definition</b> <a href="Llamada_8cs_source.html#l00015">Llamada.cs:15</a></div></div>
+<div class="ttc" id="aclassNota_html"><div class="ttname"><a href="classNota.html">Nota</a></div><div class="ttdoc">Representa una nota de texto simple. Se usa (mediante Agregación) en Interaccion para añadir detalles...</div><div class="ttdef"><b>Definition</b> <a href="Nota_8cs_source.html#l00008">Nota.cs:9</a></div></div>
+<div class="ttc" id="aclassRepoClientes_html"><div class="ttname"><a href="classRepoClientes.html">RepoClientes</a></div><div class="ttdoc">Implementa el patrón &quot;Repositorio&quot; (Repository). Su única responsabilidad (SRP) es administrar la col...</div><div class="ttdef"><b>Definition</b> <a href="RepoClientes_8cs_source.html#l00011">RepoClientes.cs:12</a></div></div>
+<div class="ttc" id="aclassRepoEtiquetas_html"><div class="ttname"><a href="classRepoEtiquetas.html">RepoEtiquetas</a></div><div class="ttdoc">Implementa el patrón &quot;Repositorio&quot; (Repository). Su única responsabilidad (SRP) es administrar la col...</div><div class="ttdef"><b>Definition</b> <a href="RepoEtiquetas_8cs_source.html#l00009">RepoEtiquetas.cs:10</a></div></div>
+<div class="ttc" id="aclassRepoUsuarios_html"><div class="ttname"><a href="classRepoUsuarios.html">RepoUsuarios</a></div><div class="ttdoc">Implementa el patrón &quot;Repositorio&quot; (Repository). Su única responsabilidad (SRP) es administrar la col...</div><div class="ttdef"><b>Definition</b> <a href="RepoUsuarios_8cs_source.html#l00009">RepoUsuarios.cs:10</a></div></div>
+<div class="ttc" id="aclassRepoVentas_html"><div class="ttname"><a href="classRepoVentas.html">RepoVentas</a></div><div class="ttdoc">Implementa el patrón &quot;Repositorio&quot; (Repository). Su responsabilidad es manejar la lista de todas las ...</div><div class="ttdef"><b>Definition</b> <a href="RepoVentas_8cs_source.html#l00010">RepoVentas.cs:11</a></div></div>
+<div class="ttc" id="aclassResumenDashboard_html"><div class="ttname"><a href="classResumenDashboard.html">ResumenDashboard</a></div><div class="ttdoc">Clase modelo simple (a veces llamada DTO - Data Transfer Object). Su única responsabilidad es agrupar...</div><div class="ttdef"><b>Definition</b> <a href="ResumenDashboard_8cs_source.html#l00009">ResumenDashboard.cs:10</a></div></div>
+<div class="ttc" id="aclassReunion_html"><div class="ttname"><a href="classReunion.html">Reunion</a></div><div class="ttdoc">Representa una reunión presencial o virtual. Es un tipo específico de Interaccion (Herencia).</div><div class="ttdef"><b>Definition</b> <a href="Reunion_8cs_source.html#l00008">Reunion.cs:9</a></div></div>
+<div class="ttc" id="aclassUsuario_html"><div class="ttname"><a href="classUsuario.html">Usuario</a></div><div class="ttdoc">Representa a un usuario del sistema (Admin o Vendedor). Es el &quot;Experto&quot; (Expert) en su propia informa...</div><div class="ttdef"><b>Definition</b> <a href="Usuario_8cs_source.html#l00007">Usuario.cs:8</a></div></div>
+<div class="ttc" id="aclassUsuario_html_a089bc82a5bf05222d1e7f2085b476d1b"><div class="ttname"><a href="classUsuario.html#a089bc82a5bf05222d1e7f2085b476d1b">Usuario.Rol</a></div><div class="ttdeci">RolUsuario Rol</div><div class="ttdoc">Obtiene o establece el tipo de usuario (tomado del Enum RolUsuario).</div><div class="ttdef"><b>Definition</b> <a href="Usuario_8cs_source.html#l00035">Usuario.cs:35</a></div></div>
+<div class="ttc" id="aclassUsuario_html_a1ef1d463bda38bb2be4eb5f2b507ac26"><div class="ttname"><a href="classUsuario.html#a1ef1d463bda38bb2be4eb5f2b507ac26">Usuario.Estado</a></div><div class="ttdeci">EstadoUsuario Estado</div><div class="ttdoc">Obtiene el estado actual (tomado del Enum EstadoUsuario).</div><div class="ttdef"><b>Definition</b> <a href="Usuario_8cs_source.html#l00043">Usuario.cs:43</a></div></div>
+<div class="ttc" id="aclassVenta_html"><div class="ttname"><a href="classVenta.html">Venta</a></div><div class="ttdoc">Representa una Venta que se ha completado. Es un modelo de datos simple (a veces llamado POCO o DTO).</div><div class="ttdef"><b>Definition</b> <a href="Venta_8cs_source.html#l00008">Venta.cs:9</a></div></div>
 <div class="ttc" id="anamespaceLibrary_html"><div class="ttname"><a href="namespaceLibrary.html">Library</a></div><div class="ttdef"><b>Definition</b> <a href="Correo_8cs_source.html#l00003">Correo.cs:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

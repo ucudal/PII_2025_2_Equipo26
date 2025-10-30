@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['nota_0',['Nota',['../classNota.html',1,'']]],
-  ['notas_20del_20equipo_20✏️_1',['Notas del Equipo ✏️',['../C:/Users/antoj/OneDrive/Desktop/Repos git/PII_2025_2_Equipo26/README.md#autotoc_md4',1,'']]]
+  ['mensaje_0',['Mensaje',['../classLibrary_1_1Mensaje.html',1,'Library.Mensaje'],['../classLibrary_1_1Mensaje.html#a8448def801e2df123c825d0994a4c800',1,'Library.Mensaje.Mensaje()']]],
+  ['modificar_1',['Modificar',['../classRepoClientes.html#a7e0da5a501f3a58bec1fc5863137f9ca',1,'RepoClientes']]],
+  ['modificarcliente_2',['ModificarCliente',['../classFachada.html#a591434bfd2b64809ac380c57846dce76',1,'Fachada']]],
+  ['monto_3',['Monto',['../classCotizacion.html#a10baefac6e1ba4c6f81a02b9500ed191',1,'Cotizacion']]]
 ];

@@ -1,0 +1,12 @@
+digraph "CRMPrinter.GetTextoCliente"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="CRMPrinter.GetTextoCliente",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Genera una representación de texto de una sola línea para un cliente."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="CRMPrinter.GetTextoLista\lClientes",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classCRMPrinter.html#aa9b996b6117347659b9f6763dc89b9b4",tooltip="Genera una representación de texto multilinea para una lista de clientes."];
+}

@@ -91,6 +91,9 @@ $(function(){initNavTree('classRepoEtiquetas.html','','classRepoEtiquetas-member
   <div class="headertitle"><div class="title">RepoEtiquetas Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementa el patrón "Repositorio" (Repository). Su única responsabilidad (SRP) es administrar la colección en memoria de objetos <a class="el" href="classEtiqueta.html" title="Representa una Etiqueta o &quot;Tag&quot; (ej: &quot;VIP&quot;, &quot;Nuevo&quot;, &quot;Inactivo&quot;). Sirve para clasificar o agrupar obj...">Etiqueta</a>.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Collaboration diagram for RepoEtiquetas:</div>
 <div class="dyncontent">
@@ -100,13 +103,18 @@ Collaboration diagram for RepoEtiquetas:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a32f817d52c0c4ea6b978324311f23698" id="r_a32f817d52c0c4ea6b978324311f23698"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32f817d52c0c4ea6b978324311f23698">Crear</a> (string nombre)</td></tr>
+<tr class="memdesc:a32f817d52c0c4ea6b978324311f23698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una nueva etiqueta con un nombre y la agrega a la lista (Create).  <br /></td></tr>
 <tr class="memitem:af57ada34ccc2d89133b52681eab6598c" id="r_af57ada34ccc2d89133b52681eab6598c"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classEtiqueta.html">Etiqueta</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af57ada34ccc2d89133b52681eab6598c">ObtenerTodas</a> ()</td></tr>
+<tr class="memdesc:af57ada34ccc2d89133b52681eab6598c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve la lista completa de todas las etiquetas (Read All).  <br /></td></tr>
 <tr class="memitem:a5fe76fdf7baa30fd8981e851f952da3f" id="r_a5fe76fdf7baa30fd8981e851f952da3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEtiqueta.html">Etiqueta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fe76fdf7baa30fd8981e851f952da3f">Buscar</a> (int id)</td></tr>
+<tr class="memdesc:a5fe76fdf7baa30fd8981e851f952da3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca una etiqueta específica por su ID (Read).  <br /></td></tr>
 <tr class="memitem:a1b57ce741c6a6ebebcac8a67e88a86d3" id="r_a1b57ce741c6a6ebebcac8a67e88a86d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b57ce741c6a6ebebcac8a67e88a86d3">Eliminar</a> (int id)</td></tr>
+<tr class="memdesc:a1b57ce741c6a6ebebcac8a67e88a86d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elimina una etiqueta de la lista (Delete).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00005">5</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
+<div class="textblock"><p>Implementa el patrón "Repositorio" (Repository). Su única responsabilidad (SRP) es administrar la colección en memoria de objetos <a class="el" href="classEtiqueta.html" title="Representa una Etiqueta o &quot;Tag&quot; (ej: &quot;VIP&quot;, &quot;Nuevo&quot;, &quot;Inactivo&quot;). Sirve para clasificar o agrupar obj...">Etiqueta</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00009">9</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a5fe76fdf7baa30fd8981e851f952da3f" name="a5fe76fdf7baa30fd8981e851f952da3f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5fe76fdf7baa30fd8981e851f952da3f">&#9670;&#160;</a></span>Buscar()</h2>
@@ -123,7 +131,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00024">24</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
+<p>Busca una etiqueta específica por su ID (Read). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>El ID de la etiqueta a buscar.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>La <a class="el" href="classEtiqueta.html" title="Representa una Etiqueta o &quot;Tag&quot; (ej: &quot;VIP&quot;, &quot;Nuevo&quot;, &quot;Inactivo&quot;). Sirve para clasificar o agrupar obj...">Etiqueta</a> encontrada, o <code>null</code> si no existe.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00051">51</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
 
 </div>
 </div>
@@ -142,7 +164,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00010">10</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
+<p>Crea una nueva etiqueta con un nombre y la agrega a la lista (Create). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nombre</td><td>El nombre de la nueva etiqueta.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00029">29</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
 
 </div>
 </div>
@@ -161,7 +191,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00036">36</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
+<p>Elimina una etiqueta de la lista (Delete). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>El ID de la etiqueta a eliminar.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00067">67</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
 
 </div>
 </div>
@@ -180,7 +223,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00018">18</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
+<p>Devuelve la lista completa de todas las etiquetas (Read All). </p>
+<dl class="section return"><dt>Returns</dt><dd>Una List&lt;T&gt; de <a class="el" href="classEtiqueta.html" title="Representa una Etiqueta o &quot;Tag&quot; (ej: &quot;VIP&quot;, &quot;Nuevo&quot;, &quot;Inactivo&quot;). Sirve para clasificar o agrupar obj...">Etiqueta</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="RepoEtiquetas_8cs_source.html#l00041">41</a> of file <a class="el" href="RepoEtiquetas_8cs_source.html">RepoEtiquetas.cs</a>.</p>
 
 </div>
 </div>

@@ -91,6 +91,9 @@ $(function(){initNavTree('classFachada.html','','classFachada-members'); });
   <div class="headertitle"><div class="title">Fachada Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementa el patrón "Fachada" (Facade). Es el único punto de entrada unificado para todas las operaciones de la lógica de negocio (la biblioteca o "core"). Oculta la complejidad interna de los repositorios y la coordinación entre ellos.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Collaboration diagram for Fachada:</div>
 <div class="dyncontent">
@@ -100,42 +103,76 @@ Collaboration diagram for Fachada:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a61362e8b2cabd0bbb6e47b5fb1656cb4" id="r_a61362e8b2cabd0bbb6e47b5fb1656cb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61362e8b2cabd0bbb6e47b5fb1656cb4">CrearCliente</a> (string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)</td></tr>
+<tr class="memdesc:a61362e8b2cabd0bbb6e47b5fb1656cb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea un nuevo cliente y lo persiste en el repositorio.  <br /></td></tr>
 <tr class="memitem:a98ba862d93da6604d726634779101b6d" id="r_a98ba862d93da6604d726634779101b6d"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classCliente.html">Cliente</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98ba862d93da6604d726634779101b6d">VerTodosLosClientes</a> ()</td></tr>
+<tr class="memdesc:a98ba862d93da6604d726634779101b6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene una lista de todos los clientes registrados.  <br /></td></tr>
 <tr class="memitem:a591434bfd2b64809ac380c57846dce76" id="r_a591434bfd2b64809ac380c57846dce76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a591434bfd2b64809ac380c57846dce76">ModificarCliente</a> (int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)</td></tr>
+<tr class="memdesc:a591434bfd2b64809ac380c57846dce76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifica los datos de un cliente existente.  <br /></td></tr>
 <tr class="memitem:a2d20818538aefdd4784c51ec1baf54e7" id="r_a2d20818538aefdd4784c51ec1baf54e7"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classCliente.html">Cliente</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d20818538aefdd4784c51ec1baf54e7">BuscarClientes</a> (string termino)</td></tr>
+<tr class="memdesc:a2d20818538aefdd4784c51ec1baf54e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca clientes cuyo nombre, apellido, teléfono, correo o género contengan el término.  <br /></td></tr>
 <tr class="memitem:a932294ff34d4f1878120a5e805ff64c1" id="r_a932294ff34d4f1878120a5e805ff64c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a932294ff34d4f1878120a5e805ff64c1">EliminarCliente</a> (int id)</td></tr>
+<tr class="memdesc:a932294ff34d4f1878120a5e805ff64c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elimina un cliente del sistema usando su ID.  <br /></td></tr>
 <tr class="memitem:aea91102bc4782a7e33694a587db47f25" id="r_aea91102bc4782a7e33694a587db47f25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea91102bc4782a7e33694a587db47f25">AsignarClienteVendedor</a> (int idCliente, int idNuevoVendedor)</td></tr>
+<tr class="memdesc:aea91102bc4782a7e33694a587db47f25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asigna un Vendedor (<a class="el" href="classUsuario.html" title="Representa a un usuario del sistema (Admin o Vendedor). Es el &quot;Experto&quot; (Expert) en su propia informa...">Usuario</a>) a un <a class="el" href="classCliente.html" title="Representa a un cliente en el sistema. Esta clase es un &quot;Experto en Información&quot; (Patrón Expert) sobr...">Cliente</a>. Este método coordina múltiples repositorios y aplica lógica de negocio (validaciones de rol y estado).  <br /></td></tr>
 <tr class="memitem:ae478aa9cfd7de229420eab4b075f94d1" id="r_ae478aa9cfd7de229420eab4b075f94d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae478aa9cfd7de229420eab4b075f94d1">RegistrarLlamada</a> (int idCliente, DateTime fecha, string tema, string tipoLlamada)</td></tr>
+<tr class="memdesc:ae478aa9cfd7de229420eab4b075f94d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra una nueva llamada en el historial de un cliente.  <br /></td></tr>
 <tr class="memitem:a7b38d001e9686312afe09ad03134a577" id="r_a7b38d001e9686312afe09ad03134a577"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b38d001e9686312afe09ad03134a577">RegistrarReunion</a> (int idCliente, DateTime fecha, string tema, string lugar)</td></tr>
+<tr class="memdesc:a7b38d001e9686312afe09ad03134a577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra una nueva reunión en el historial de un cliente.  <br /></td></tr>
 <tr class="memitem:a8e9c0d25178292e090d95091070efde2" id="r_a8e9c0d25178292e090d95091070efde2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e9c0d25178292e090d95091070efde2">RegistrarMensaje</a> (int idCliente, DateTime fecha, string tema, string remitente, string destinatario)</td></tr>
+<tr class="memdesc:a8e9c0d25178292e090d95091070efde2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra un nuevo mensaje (SMS, chat) en el historial de un cliente.  <br /></td></tr>
 <tr class="memitem:a9a29e4b8257aa2ad5e2647128959bc39" id="r_a9a29e4b8257aa2ad5e2647128959bc39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a29e4b8257aa2ad5e2647128959bc39">RegistrarCorreo</a> (int idCliente, DateTime fecha, string tema, string remitente, string destinatario, string asunto)</td></tr>
+<tr class="memdesc:a9a29e4b8257aa2ad5e2647128959bc39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra un nuevo correo en el historial de un cliente.  <br /></td></tr>
 <tr class="memitem:a3d72b4428a494221e1b414ead6e68b43" id="r_a3d72b4428a494221e1b414ead6e68b43"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classInteraccion.html">Interaccion</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d72b4428a494221e1b414ead6e68b43">VerInteraccionesDeCliente</a> (int idCliente)</td></tr>
+<tr class="memdesc:a3d72b4428a494221e1b414ead6e68b43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el historial completo de interacciones de un cliente.  <br /></td></tr>
 <tr class="memitem:a51eac6508365b35263a1a381a9a2dca7" id="r_a51eac6508365b35263a1a381a9a2dca7"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classInteraccion.html">Interaccion</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51eac6508365b35263a1a381a9a2dca7">VerInteraccionesDeCliente</a> (int idCliente, string tipoDeInteraccion)</td></tr>
+<tr class="memdesc:a51eac6508365b35263a1a381a9a2dca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Sobrecarga) Obtiene las interacciones de un cliente, filtradas por tipo.  <br /></td></tr>
 <tr class="memitem:aea53b3c9009f807a533041453769880a" id="r_aea53b3c9009f807a533041453769880a"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classInteraccion.html">Interaccion</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea53b3c9009f807a533041453769880a">VerInteraccionesDeCliente</a> (int idCliente, string tipoDeInteraccion, DateTime fechaDesde)</td></tr>
+<tr class="memdesc:aea53b3c9009f807a533041453769880a"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Sobrecarga) Obtiene las interacciones, filtradas por tipo y fecha.  <br /></td></tr>
 <tr class="memitem:a76499b6a4ba3580619faf22fd75fa66f" id="r_a76499b6a4ba3580619faf22fd75fa66f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76499b6a4ba3580619faf22fd75fa66f">AgregarNotaAInteraccion</a> (int idCliente, int indiceInteraccion, string textoNota)</td></tr>
+<tr class="memdesc:a76499b6a4ba3580619faf22fd75fa66f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Agrega una nota de texto a una interacción específica, identificada por su índice.  <br /></td></tr>
 <tr class="memitem:a70f996a7028e4080ee740ae98ac3f064" id="r_a70f996a7028e4080ee740ae98ac3f064"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70f996a7028e4080ee740ae98ac3f064">CrearEtiqueta</a> (string nombre)</td></tr>
+<tr class="memdesc:a70f996a7028e4080ee740ae98ac3f064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una nueva etiqueta global en el sistema.  <br /></td></tr>
 <tr class="memitem:a8821ea091927bd44bc9a7432f0af0a4b" id="r_a8821ea091927bd44bc9a7432f0af0a4b"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classEtiqueta.html">Etiqueta</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8821ea091927bd44bc9a7432f0af0a4b">VerTodasLasEtiquetas</a> ()</td></tr>
+<tr class="memdesc:a8821ea091927bd44bc9a7432f0af0a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene todas las etiquetas disponibles en el sistema.  <br /></td></tr>
 <tr class="memitem:a01e5c340259b0c4f5686a9bce995bddd" id="r_a01e5c340259b0c4f5686a9bce995bddd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01e5c340259b0c4f5686a9bce995bddd">EliminarEtiqueta</a> (int idEtiqueta)</td></tr>
+<tr class="memdesc:a01e5c340259b0c4f5686a9bce995bddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elimina una etiqueta del repositorio global de etiquetas.  <br /></td></tr>
 <tr class="memitem:af580152fb261d1c06bd99c0a5d196433" id="r_af580152fb261d1c06bd99c0a5d196433"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af580152fb261d1c06bd99c0a5d196433">AgregarEtiquetaACliente</a> (int idCliente, int idEtiqueta)</td></tr>
+<tr class="memdesc:af580152fb261d1c06bd99c0a5d196433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asocia una etiqueta existente a un cliente.  <br /></td></tr>
 <tr class="memitem:af97b885ab41c8d475090dcd28e121f4d" id="r_af97b885ab41c8d475090dcd28e121f4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af97b885ab41c8d475090dcd28e121f4d">QuitarEtiquetaDeCliente</a> (int idCliente, int idEtiqueta)</td></tr>
+<tr class="memdesc:af97b885ab41c8d475090dcd28e121f4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quita la asociación entre un cliente y una etiqueta.  <br /></td></tr>
 <tr class="memitem:abe31c3a8512975ee075a2013fa86932f" id="r_abe31c3a8512975ee075a2013fa86932f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe31c3a8512975ee075a2013fa86932f">CrearUsuario</a> (string nombreUsuario, string contrasena, RolUsuario rol)</td></tr>
+<tr class="memdesc:abe31c3a8512975ee075a2013fa86932f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea un nuevo usuario (Vendedor o Administrador) en el sistema.  <br /></td></tr>
 <tr class="memitem:af5ed65345329b63c1d04e92ebe3cbcff" id="r_af5ed65345329b63c1d04e92ebe3cbcff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5ed65345329b63c1d04e92ebe3cbcff">SuspenderUsuario</a> (int idUsuario)</td></tr>
+<tr class="memdesc:af5ed65345329b63c1d04e92ebe3cbcff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cambia el estado de un usuario a EstadoUsuario.Suspendido.  <br /></td></tr>
 <tr class="memitem:a50eb8203b32636963be33238a3e019eb" id="r_a50eb8203b32636963be33238a3e019eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50eb8203b32636963be33238a3e019eb">ActivarUsuario</a> (int idUsuario)</td></tr>
+<tr class="memdesc:a50eb8203b32636963be33238a3e019eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cambia el estado de un usuario a EstadoUsuario.Activo.  <br /></td></tr>
 <tr class="memitem:acb2a8219d2a3e709c3ff3944429f2da5" id="r_acb2a8219d2a3e709c3ff3944429f2da5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb2a8219d2a3e709c3ff3944429f2da5">EliminarUsuario</a> (int idUsuario)</td></tr>
+<tr class="memdesc:acb2a8219d2a3e709c3ff3944429f2da5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elimina un usuario del sistema.  <br /></td></tr>
 <tr class="memitem:a5ece07e5276ae7426bf58be83939fd97" id="r_a5ece07e5276ae7426bf58be83939fd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUsuario.html">Usuario</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ece07e5276ae7426bf58be83939fd97">BuscarUsuario</a> (int idUsuario)</td></tr>
+<tr class="memdesc:a5ece07e5276ae7426bf58be83939fd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca y devuelve un usuario por su ID.  <br /></td></tr>
 <tr class="memitem:ac044ded02aa12eb7a500489ae7804a4a" id="r_ac044ded02aa12eb7a500489ae7804a4a"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classUsuario.html">Usuario</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac044ded02aa12eb7a500489ae7804a4a">VerTodosLosUsuarios</a> ()</td></tr>
+<tr class="memdesc:ac044ded02aa12eb7a500489ae7804a4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve la lista completa de usuarios.  <br /></td></tr>
 <tr class="memitem:a1294870cc94d65d9682a6ca7896eaa16" id="r_a1294870cc94d65d9682a6ca7896eaa16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1294870cc94d65d9682a6ca7896eaa16">RegistrarVenta</a> (string producto, float importe, DateTime fecha)</td></tr>
+<tr class="memdesc:a1294870cc94d65d9682a6ca7896eaa16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra una venta general (no asignada a un cliente específico).  <br /></td></tr>
 <tr class="memitem:a590963971fdd1a164d3572eabd9b7ec8" id="r_a590963971fdd1a164d3572eabd9b7ec8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a590963971fdd1a164d3572eabd9b7ec8">RegistrarVenta</a> (int clienteId, string producto, float monto)</td></tr>
+<tr class="memdesc:a590963971fdd1a164d3572eabd9b7ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Sobrecarga) Registra una venta y la asigna a un cliente específico.  <br /></td></tr>
 <tr class="memitem:aaff48ad033b52d9657da4c7195b78260" id="r_aaff48ad033b52d9657da4c7195b78260"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaff48ad033b52d9657da4c7195b78260">CalcularTotalVentas</a> (DateTime fechaInicio, DateTime fechaFin)</td></tr>
+<tr class="memdesc:aaff48ad033b52d9657da4c7195b78260"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula el monto total de ventas generales (no de clientes) dentro de un rango de fechas.  <br /></td></tr>
 <tr class="memitem:ac6118642a5d9b2b8d373ea5b053a6b0a" id="r_ac6118642a5d9b2b8d373ea5b053a6b0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6118642a5d9b2b8d373ea5b053a6b0a">RegistrarCotizacion</a> (int clienteId, string tema, double monto, string detalle)</td></tr>
+<tr class="memdesc:ac6118642a5d9b2b8d373ea5b053a6b0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra una <a class="el" href="classCotizacion.html" title="Representa una cotización enviada a un cliente. Hereda de Interaccion, demostrando el principio de He...">Cotizacion</a> (que es una <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>) en el historial de un cliente.  <br /></td></tr>
 <tr class="memitem:a39dd6ca662d817bc7a853514bb42349c" id="r_a39dd6ca662d817bc7a853514bb42349c"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classCliente.html">Cliente</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39dd6ca662d817bc7a853514bb42349c">ObtenerClientesInactivos</a> (int diasSinInteraccion)</td></tr>
+<tr class="memdesc:a39dd6ca662d817bc7a853514bb42349c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene una lista de clientes que no han tenido interacciones recientes.  <br /></td></tr>
 <tr class="memitem:aefc4117191c9cacece6ea5028b59e03d" id="r_aefc4117191c9cacece6ea5028b59e03d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classCliente.html">Cliente</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aefc4117191c9cacece6ea5028b59e03d">BuscarCliente</a> (int clienteId)</td></tr>
+<tr class="memdesc:aefc4117191c9cacece6ea5028b59e03d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca un cliente por su ID (Atajo para el repositorio).  <br /></td></tr>
 <tr class="memitem:aa64b1862c4a4e063a55bf1f30bbd2293" id="r_aa64b1862c4a4e063a55bf1f30bbd2293"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classCliente.html">Cliente</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa64b1862c4a4e063a55bf1f30bbd2293">ObtenerClientesSinRespuesta</a> ()</td></tr>
+<tr class="memdesc:aa64b1862c4a4e063a55bf1f30bbd2293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reporte: Busca clientes cuya última interacción fue una llamada "Recibida". (Asume que una llamada recibida requiere una acción o respuesta).  <br /></td></tr>
 <tr class="memitem:a1a4c8d02ccf754d4c74cb1129de1013b" id="r_a1a4c8d02ccf754d4c74cb1129de1013b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResumenDashboard.html">ResumenDashboard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a4c8d02ccf754d4c74cb1129de1013b">ObtenerResumenDashboard</a> ()</td></tr>
+<tr class="memdesc:a1a4c8d02ccf754d4c74cb1129de1013b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recopila varias estadísticas para mostrar un resumen general del sistema.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00006">6</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<div class="textblock"><p>Implementa el patrón "Fachada" (Facade). Es el único punto de entrada unificado para todas las operaciones de la lógica de negocio (la biblioteca o "core"). Oculta la complejidad interna de los repositorios y la coordinación entre ellos. </p>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00011">11</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a50eb8203b32636963be33238a3e019eb" name="a50eb8203b32636963be33238a3e019eb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a50eb8203b32636963be33238a3e019eb">&#9670;&#160;</a></span>ActivarUsuario()</h2>
@@ -152,7 +189,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00234">234</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Cambia el estado de un usuario a EstadoUsuario.Activo. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idUsuario</td><td>ID del usuario a activar.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00412">412</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -175,7 +220,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00200">200</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Asocia una etiqueta existente a un cliente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">idEtiqueta</td><td>ID de la etiqueta.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00355">355</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -203,7 +257,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00171">171</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Agrega una nota de texto a una interacción específica, identificada por su índice. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente dueño de la interacción.</td></tr>
+    <tr><td class="paramname">indiceInteraccion</td><td>Posición (índice) de la interacción en la lista del cliente.</td></tr>
+    <tr><td class="paramname">textoNota</td><td>El texto a agregar.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00306">306</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -226,7 +290,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00042">42</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Asigna un Vendedor (<a class="el" href="classUsuario.html" title="Representa a un usuario del sistema (Admin o Vendedor). Es el &quot;Experto&quot; (Expert) en su propia informa...">Usuario</a>) a un <a class="el" href="classCliente.html" title="Representa a un cliente en el sistema. Esta clase es un &quot;Experto en Información&quot; (Patrón Expert) sobr...">Cliente</a>. Este método coordina múltiples repositorios y aplica lógica de negocio (validaciones de rol y estado). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>El ID del cliente que recibirá la asignación.</td></tr>
+    <tr><td class="paramname">idNuevoVendedor</td><td>El ID del usuario (Vendedor) a asignar.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00114">114</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
 
 </div>
 </div>
@@ -245,7 +323,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00326">326</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Busca un cliente por su ID (Atajo para el repositorio). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clienteId</td><td>ID del cliente a buscar.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>El <a class="el" href="classCliente.html" title="Representa a un cliente en el sistema. Esta clase es un &quot;Experto en Información&quot; (Patrón Expert) sobr...">Cliente</a> encontrado, o <code>null</code>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00565">565</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -264,7 +351,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00032">32</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Busca clientes cuyo nombre, apellido, teléfono, correo o género contengan el término. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">termino</td><td>El texto a buscar (ignora mayúsculas/minúsculas).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Una lista de clientes que coinciden con la búsqueda.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00091">91</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -283,7 +379,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00242">242</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Busca y devuelve un usuario por su ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idUsuario</td><td>ID del usuario a buscar.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>El <a class="el" href="classUsuario.html" title="Representa a un usuario del sistema (Admin o Vendedor). Es el &quot;Experto&quot; (Expert) en su propia informa...">Usuario</a> encontrado, o <code>null</code> si no existe.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00431">431</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -306,7 +411,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00268">268</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Calcula el monto total de ventas generales (no de clientes) dentro de un rango de fechas. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fechaInicio</td><td>Fecha de inicio del período.</td></tr>
+    <tr><td class="paramname">fechaFin</td><td>Fecha de fin del período.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>La suma de los importes de las ventas en ese rango.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00484">484</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -349,7 +464,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00014">14</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Crea un nuevo cliente y lo persiste en el repositorio. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nombre</td><td>Nombre del cliente.</td></tr>
+    <tr><td class="paramname">apellido</td><td>Apellido del cliente.</td></tr>
+    <tr><td class="paramname">telefono</td><td>Teléfono del cliente.</td></tr>
+    <tr><td class="paramname">correo</td><td><a class="el" href="classLibrary_1_1Correo.html" title="Representa una interacción de tipo Correo Electrónico. Hereda de Interaccion, demostrando el principi...">Correo</a> del cliente.</td></tr>
+    <tr><td class="paramname">genero</td><td>Género del cliente.</td></tr>
+    <tr><td class="paramname">fechaNacimiento</td><td>Fecha de nacimiento del cliente.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00052">52</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -368,7 +496,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00185">185</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Crea una nueva etiqueta global en el sistema. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nombre</td><td>El nombre de la etiqueta (ej: "VIP").</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00327">327</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -396,7 +532,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00225">225</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Crea un nuevo usuario (Vendedor o Administrador) en el sistema. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nombreUsuario</td><td>Nombre de login (ej: "jPerez").</td></tr>
+    <tr><td class="paramname">contrasena</td><td>Contraseña del usuario.</td></tr>
+    <tr><td class="paramname">rol</td><td>El rol (RolUsuario.Administrador o RolUsuario.Vendedor).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00394">394</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -415,7 +561,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00037">37</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Elimina un cliente del sistema usando su ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>El ID del cliente a eliminar.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00100">100</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -434,7 +588,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00195">195</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Elimina una etiqueta del repositorio global de etiquetas. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idEtiqueta</td><td>El ID de la etiqueta a eliminar.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00345">345</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -453,7 +615,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00238">238</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Elimina un usuario del sistema. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idUsuario</td><td>ID del usuario a eliminar.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00421">421</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -501,7 +671,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00026">26</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Modifica los datos de un cliente existente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>El ID del cliente a modificar.</td></tr>
+    <tr><td class="paramname">nombre</td><td>El nuevo nombre.</td></tr>
+    <tr><td class="paramname">apellido</td><td>El nuevo apellido.</td></tr>
+    <tr><td class="paramname">telefono</td><td>El nuevo teléfono.</td></tr>
+    <tr><td class="paramname">correo</td><td>El nuevo correo.</td></tr>
+    <tr><td class="paramname">genero</td><td>El nuevo género.</td></tr>
+    <tr><td class="paramname">fechaNacimiento</td><td>La nueva fecha de nacimiento.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00080">80</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -520,7 +704,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00295">295</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Obtiene una lista de clientes que no han tenido interacciones recientes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">diasSinInteraccion</td><td>El número de días hacia atrás para considerar "inactivo".</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Una lista de clientes inactivos.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00525">525</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -539,7 +732,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00331">331</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Reporte: Busca clientes cuya última interacción fue una llamada "Recibida". (Asume que una llamada recibida requiere una acción o respuesta). </p>
+<dl class="section return"><dt>Returns</dt><dd>Una lista de clientes que esperan una respuesta.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00575">575</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -558,7 +754,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00368">368</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Recopila varias estadísticas para mostrar un resumen general del sistema. </p>
+<dl class="section return"><dt>Returns</dt><dd>Un objeto <a class="el" href="classResumenDashboard.html" title="Clase modelo simple (a veces llamada DTO - Data Transfer Object). Su única responsabilidad es agrupar...">ResumenDashboard</a> con los datos compilados.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00620">620</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -581,7 +780,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00214">214</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Quita la asociación entre un cliente y una etiqueta. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">idEtiqueta</td><td>ID de la etiqueta.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00375">375</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -624,7 +832,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00095">95</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Registra un nuevo correo en el historial de un cliente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">fecha</td><td>Fecha del correo.</td></tr>
+    <tr><td class="paramname">tema</td><td>Tema del correo.</td></tr>
+    <tr><td class="paramname">remitente</td><td>Remitente del correo.</td></tr>
+    <tr><td class="paramname">destinatario</td><td>Destinatario del correo.</td></tr>
+    <tr><td class="paramname">asunto</td><td>Asunto del correo.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00203">203</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -657,7 +878,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00284">284</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Registra una <a class="el" href="classCotizacion.html" title="Representa una cotización enviada a un cliente. Hereda de Interaccion, demostrando el principio de He...">Cotizacion</a> (que es una <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>) en el historial de un cliente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clienteId</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">tema</td><td>Tema de la cotización.</td></tr>
+    <tr><td class="paramname">monto</td><td>Monto cotizado.</td></tr>
+    <tr><td class="paramname">detalle</td><td>Detalle de la cotización.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00509">509</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -690,7 +922,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00064">64</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Registra una nueva llamada en el historial de un cliente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">fecha</td><td>Fecha de la llamada.</td></tr>
+    <tr><td class="paramname">tema</td><td>Tema de la llamada.</td></tr>
+    <tr><td class="paramname">tipoLlamada</td><td>Tipo ("Entrante", "Saliente", etc.).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00147">147</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -728,7 +971,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00085">85</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Registra un nuevo mensaje (SMS, chat) en el historial de un cliente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">fecha</td><td>Fecha del mensaje.</td></tr>
+    <tr><td class="paramname">tema</td><td>Tema del mensaje.</td></tr>
+    <tr><td class="paramname">remitente</td><td>Quién envió el mensaje.</td></tr>
+    <tr><td class="paramname">destinatario</td><td>Quién recibió el mensaje.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00184">184</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -761,7 +1016,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00075">75</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Registra una nueva reunión en el historial de un cliente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">fecha</td><td>Fecha de la reunión.</td></tr>
+    <tr><td class="paramname">tema</td><td>Tema de la reunión.</td></tr>
+    <tr><td class="paramname">lugar</td><td>Lugar de la reunión (físico o virtual).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00166">166</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -789,7 +1055,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00256">256</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>(Sobrecarga) Registra una venta y la asigna a un cliente específico. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clienteId</td><td>ID del cliente que realizó la compra.</td></tr>
+    <tr><td class="paramname">producto</td><td>Descripción del producto/servicio.</td></tr>
+    <tr><td class="paramname">monto</td><td>Monto de la venta.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00464">464</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -817,7 +1093,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00251">251</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Registra una venta general (no asignada a un cliente específico). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">producto</td><td>Descripción del producto/servicio.</td></tr>
+    <tr><td class="paramname">importe</td><td>Monto de la venta.</td></tr>
+    <tr><td class="paramname">fecha</td><td>Fecha de la venta.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00453">453</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -836,7 +1122,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00230">230</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Cambia el estado de un usuario a EstadoUsuario.Suspendido. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idUsuario</td><td>ID del usuario a suspender.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00403">403</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -855,7 +1149,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00105">105</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Obtiene el historial completo de interacciones de un cliente. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente a consultar.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Una lista de <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00218">218</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
 
 </div>
 </div>
@@ -878,7 +1186,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00115">115</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>(Sobrecarga) Obtiene las interacciones de un cliente, filtradas por tipo. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente a consultar.</td></tr>
+    <tr><td class="paramname">tipoDeInteraccion</td><td>El tipo a filtrar (ej: "llamada", "reunion").</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Una lista filtrada de <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00234">234</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -906,7 +1224,23 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00155">155</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>(Sobrecarga) Obtiene las interacciones, filtradas por tipo y fecha. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idCliente</td><td>ID del cliente.</td></tr>
+    <tr><td class="paramname">tipoDeInteraccion</td><td>El tipo a filtrar.</td></tr>
+    <tr><td class="paramname">fechaDesde</td><td>La fecha de inicio (inclusive) para el filtro.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Una lista doblemente filtrada de <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00282">282</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
 
 </div>
 </div>
@@ -925,7 +1259,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00190">190</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Obtiene todas las etiquetas disponibles en el sistema. </p>
+<dl class="section return"><dt>Returns</dt><dd>Una lista de <a class="el" href="classEtiqueta.html" title="Representa una Etiqueta o &quot;Tag&quot; (ej: &quot;VIP&quot;, &quot;Nuevo&quot;, &quot;Inactivo&quot;). Sirve para clasificar o agrupar obj...">Etiqueta</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00336">336</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -944,7 +1281,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00022">22</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Obtiene una lista de todos los clientes registrados. </p>
+<dl class="section return"><dt>Returns</dt><dd>Una List&lt;T&gt; de <a class="el" href="classCliente.html" title="Representa a un cliente en el sistema. Esta clase es un &quot;Experto en Información&quot; (Patrón Expert) sobr...">Cliente</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00065">65</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>
@@ -963,7 +1303,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00246">246</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
+<p>Devuelve la lista completa de usuarios. </p>
+<dl class="section return"><dt>Returns</dt><dd>Una List&lt;T&gt; de <a class="el" href="classUsuario.html" title="Representa a un usuario del sistema (Admin o Vendedor). Es el &quot;Experto&quot; (Expert) en su propia informa...">Usuario</a>.</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Fachada_8cs_source.html#l00440">440</a> of file <a class="el" href="Fachada_8cs_source.html">Fachada.cs</a>.</p>
 
 </div>
 </div>

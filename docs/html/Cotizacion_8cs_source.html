@@ -92,23 +92,36 @@ $(function(){initNavTree('Cotizacion_8cs_source.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">using </span><a class="code hl_namespace" href="namespaceLibrary.html">Library</a>;</div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>System;</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="foldopen" id="foldopen00005" data-start="{" data-end="};">
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="classCotizacion.html">    5</a></span><span class="keyword">public</span> <span class="keyword">class </span>Cotizacion : Interaccion</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>{</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keyword">public</span> <span class="keywordtype">double</span> Monto { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">public</span> <span class="keywordtype">string</span> Detalle { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">public</span> Cotizacion(<span class="keywordtype">string</span> tema, <span class="keywordtype">double</span> monto, <span class="keywordtype">string</span> detalle) </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        : base(DateTime.Now, tema)</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        this.Monto = monto;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        this.Detalle = detalle;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    }</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">using </span>System;</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="classCotizacion.html">    8</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_function" href="classCotizacion.html#a4dcb2e0ee92486c544f658a1ec239ea5">Cotizacion</a> : <a class="code hl_function" href="classInteraccion.html#aefb22b294a84832830108c1598c99ed8">Interaccion</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="comment">// --- Propiedades Específicas de Cotizacion ---</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classCotizacion.html#a10baefac6e1ba4c6f81a02b9500ed191">   15</a></span>    <span class="keyword">public</span> <span class="keywordtype">double</span> <a class="code hl_property" href="classCotizacion.html#a10baefac6e1ba4c6f81a02b9500ed191">Monto</a> { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classCotizacion.html#a5d7545cc8dbc55351a61a6de6a9b0768">   20</a></span>    <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code hl_property" href="classCotizacion.html#a5d7545cc8dbc55351a61a6de6a9b0768">Detalle</a> { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="comment">// --- Constructor ---</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    </div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classCotizacion.html#a4dcb2e0ee92486c544f658a1ec239ea5">   31</a></span>    <span class="keyword">public</span> <a class="code hl_function" href="classCotizacion.html#a4dcb2e0ee92486c544f658a1ec239ea5">Cotizacion</a>(<span class="keywordtype">string</span> tema, <span class="keywordtype">double</span> monto, <span class="keywordtype">string</span> detalle)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="comment">// Llama al constructor de la clase base (Interaccion).</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="comment">// Usa &#39;DateTime.Now&#39; para asignar automáticamente la fecha</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="comment">// y hora actual al momento de crear la cotización.</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        : base(DateTime.Now, tema)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        this.Monto = monto;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        this.Detalle = detalle;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    }</div>
 </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
+</div>
+<div class="ttc" id="aclassCotizacion_html_a10baefac6e1ba4c6f81a02b9500ed191"><div class="ttname"><a href="classCotizacion.html#a10baefac6e1ba4c6f81a02b9500ed191">Cotizacion.Monto</a></div><div class="ttdeci">double Monto</div><div class="ttdoc">Obtiene el valor monetario de lo que se está cotizando.</div><div class="ttdef"><b>Definition</b> <a href="#l00015">Cotizacion.cs:15</a></div></div>
+<div class="ttc" id="aclassCotizacion_html_a4dcb2e0ee92486c544f658a1ec239ea5"><div class="ttname"><a href="classCotizacion.html#a4dcb2e0ee92486c544f658a1ec239ea5">Cotizacion.Cotizacion</a></div><div class="ttdeci">Cotizacion(string tema, double monto, string detalle)</div><div class="ttdoc">Inicializa una nueva instancia de la clase Cotizacion. Asigna automáticamente la fecha y hora actual.</div><div class="ttdef"><b>Definition</b> <a href="#l00031">Cotizacion.cs:31</a></div></div>
+<div class="ttc" id="aclassCotizacion_html_a5d7545cc8dbc55351a61a6de6a9b0768"><div class="ttname"><a href="classCotizacion.html#a5d7545cc8dbc55351a61a6de6a9b0768">Cotizacion.Detalle</a></div><div class="ttdeci">string Detalle</div><div class="ttdoc">Obtiene una descripción o detalle de los productos/servicios cotizados.</div><div class="ttdef"><b>Definition</b> <a href="#l00020">Cotizacion.cs:20</a></div></div>
+<div class="ttc" id="aclassInteraccion_html_aefb22b294a84832830108c1598c99ed8"><div class="ttname"><a href="classInteraccion.html#aefb22b294a84832830108c1598c99ed8">Interaccion.Interaccion</a></div><div class="ttdeci">Interaccion(DateTime fecha, string tema)</div><div class="ttdoc">Inicializa una nueva instancia de una clase derivada de Interaccion.</div><div class="ttdef"><b>Definition</b> <a href="Interaccion_8cs_source.html#l00036">Interaccion.cs:36</a></div></div>
 <div class="ttc" id="anamespaceLibrary_html"><div class="ttname"><a href="namespaceLibrary.html">Library</a></div><div class="ttdef"><b>Definition</b> <a href="Correo_8cs_source.html#l00003">Correo.cs:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

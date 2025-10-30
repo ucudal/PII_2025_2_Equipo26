@@ -96,24 +96,33 @@ $(function(){initNavTree('Correo_8cs_source.html','',''); });
 <div class="foldopen" id="foldopen00003" data-start="{" data-end="}">
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="namespaceLibrary.html">    3</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceLibrary.html">Library</a></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>{</div>
-<div class="foldopen" id="foldopen00005" data-start="{" data-end="};">
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="classLibrary_1_1Correo.html">    5</a></span>    <span class="keyword">public</span> <span class="keyword">class </span>Correo : Interaccion</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>        <span class="keyword">public</span> <span class="keywordtype">string</span> Remitente { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        <span class="keyword">public</span> <span class="keywordtype">string</span> Destinatario { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <span class="keyword">public</span> <span class="keywordtype">string</span> Asunto { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <span class="keyword">public</span> Correo(DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> remitente, <span class="keywordtype">string</span> destinatario, <span class="keywordtype">string</span> asunto)</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            : base(fecha, tema)</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            this.Remitente = remitente;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>            this.Destinatario = destinatario;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>            this.Asunto = asunto;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        }</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    }</div>
+<div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="classLibrary_1_1Correo.html">    9</a></span>    <span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_function" href="classLibrary_1_1Correo.html#abb33ba0d732354f0aab1abd433564196">Correo</a> : <a class="code hl_function" href="classInteraccion.html#aefb22b294a84832830108c1598c99ed8">Interaccion</a></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classLibrary_1_1Correo.html#af642f93c5e58e702da3c60586980802e">   14</a></span>        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code hl_property" href="classLibrary_1_1Correo.html#af642f93c5e58e702da3c60586980802e">Remitente</a> { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classLibrary_1_1Correo.html#a008b326895a7781600bf116e54f408a2">   19</a></span>        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code hl_property" href="classLibrary_1_1Correo.html#a008b326895a7781600bf116e54f408a2">Destinatario</a> { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classLibrary_1_1Correo.html#a3c6d7098356c66df89332af6a6672824">   24</a></span>        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code hl_property" href="classLibrary_1_1Correo.html#a3c6d7098356c66df89332af6a6672824">Asunto</a> { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classLibrary_1_1Correo.html#abb33ba0d732354f0aab1abd433564196">   34</a></span>        <span class="keyword">public</span> <a class="code hl_function" href="classLibrary_1_1Correo.html#abb33ba0d732354f0aab1abd433564196">Correo</a>(DateTime fecha, <span class="keywordtype">string</span> tema, <span class="keywordtype">string</span> remitente, <span class="keywordtype">string</span> destinatario, <span class="keywordtype">string</span> asunto)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            : base(fecha, tema) <span class="comment">// Llama al constructor de la clase base (Interaccion).</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            this.Remitente = remitente;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            this.Destinatario = destinatario;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            this.Asunto = asunto;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        }</div>
 </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    }</div>
 </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
+</div>
+<div class="ttc" id="aclassInteraccion_html_aefb22b294a84832830108c1598c99ed8"><div class="ttname"><a href="classInteraccion.html#aefb22b294a84832830108c1598c99ed8">Interaccion.Interaccion</a></div><div class="ttdeci">Interaccion(DateTime fecha, string tema)</div><div class="ttdoc">Inicializa una nueva instancia de una clase derivada de Interaccion.</div><div class="ttdef"><b>Definition</b> <a href="Interaccion_8cs_source.html#l00036">Interaccion.cs:36</a></div></div>
+<div class="ttc" id="aclassLibrary_1_1Correo_html_a008b326895a7781600bf116e54f408a2"><div class="ttname"><a href="classLibrary_1_1Correo.html#a008b326895a7781600bf116e54f408a2">Library.Correo.Destinatario</a></div><div class="ttdeci">string Destinatario</div><div class="ttdoc">Obtiene el destinatario del correo.</div><div class="ttdef"><b>Definition</b> <a href="#l00019">Correo.cs:19</a></div></div>
+<div class="ttc" id="aclassLibrary_1_1Correo_html_a3c6d7098356c66df89332af6a6672824"><div class="ttname"><a href="classLibrary_1_1Correo.html#a3c6d7098356c66df89332af6a6672824">Library.Correo.Asunto</a></div><div class="ttdeci">string Asunto</div><div class="ttdoc">Obtiene el asunto del correo.</div><div class="ttdef"><b>Definition</b> <a href="#l00024">Correo.cs:24</a></div></div>
+<div class="ttc" id="aclassLibrary_1_1Correo_html_abb33ba0d732354f0aab1abd433564196"><div class="ttname"><a href="classLibrary_1_1Correo.html#abb33ba0d732354f0aab1abd433564196">Library.Correo.Correo</a></div><div class="ttdeci">Correo(DateTime fecha, string tema, string remitente, string destinatario, string asunto)</div><div class="ttdoc">Inicializa una nueva instancia de la clase Correo.</div><div class="ttdef"><b>Definition</b> <a href="#l00034">Correo.cs:34</a></div></div>
+<div class="ttc" id="aclassLibrary_1_1Correo_html_af642f93c5e58e702da3c60586980802e"><div class="ttname"><a href="classLibrary_1_1Correo.html#af642f93c5e58e702da3c60586980802e">Library.Correo.Remitente</a></div><div class="ttdeci">string Remitente</div><div class="ttdoc">Obtiene el remitente del correo.</div><div class="ttdef"><b>Definition</b> <a href="#l00014">Correo.cs:14</a></div></div>
 <div class="ttc" id="anamespaceLibrary_html"><div class="ttname"><a href="namespaceLibrary.html">Library</a></div><div class="ttdef"><b>Definition</b> <a href="#l00003">Correo.cs:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

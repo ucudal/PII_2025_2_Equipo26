@@ -92,26 +92,39 @@ $(function(){initNavTree('Venta_8cs_source.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">using </span><a class="code hl_namespace" href="namespaceLibrary.html">Library</a>;</div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>System;</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="foldopen" id="foldopen00005" data-start="{" data-end="};">
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="classVenta.html">    5</a></span><span class="keyword">public</span> <span class="keyword">class </span>Venta</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>{</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keyword">public</span> <span class="keywordtype">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">public</span> <span class="keywordtype">string</span> Producto { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">public</span> <span class="keywordtype">float</span> Importe { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">public</span> DateTime Fecha { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">public</span> Venta(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> importe, DateTime fecha)</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        this.Id = id;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        this.Producto = producto;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        this.Importe = importe;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        this.Fecha = fecha;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    }</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">using </span>System;</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="classVenta.html">    8</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_function" href="classVenta.html#ad016ed00a8b22f45c28c85e7f0070e61">Venta</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="comment">// --- Propiedades ---</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classVenta.html#aaeaee4f2b76b41320dca9f9c03c70b7d">   15</a></span>    <span class="keyword">public</span> <span class="keywordtype">int</span> <a class="code hl_property" href="classVenta.html#aaeaee4f2b76b41320dca9f9c03c70b7d">Id</a> { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classVenta.html#a7a0fa5f059254a102f8044db964e1f54">   20</a></span>    <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code hl_property" href="classVenta.html#a7a0fa5f059254a102f8044db964e1f54">Producto</a> { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classVenta.html#ab31ed30a62e0bd46b1396da5ac027a3f">   25</a></span>    <span class="keyword">public</span> <span class="keywordtype">float</span> <a class="code hl_property" href="classVenta.html#ab31ed30a62e0bd46b1396da5ac027a3f">Importe</a> { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classVenta.html#a63eeb3da3c1da6c1d85786afcc079d4b">   30</a></span>    <span class="keyword">public</span> DateTime <a class="code hl_property" href="classVenta.html#a63eeb3da3c1da6c1d85786afcc079d4b">Fecha</a> { <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="comment">// --- Constructor ---</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    </div>
+<div class="foldopen" id="foldopen00041" data-start="{" data-end="}">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classVenta.html#ad016ed00a8b22f45c28c85e7f0070e61">   41</a></span>    <span class="keyword">public</span> <a class="code hl_function" href="classVenta.html#ad016ed00a8b22f45c28c85e7f0070e61">Venta</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> importe, DateTime fecha)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        this.Id = id;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        this.Producto = producto;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        this.Importe = importe;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        this.Fecha = fecha;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    }</div>
 </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+</div>
+<div class="ttc" id="aclassVenta_html_a63eeb3da3c1da6c1d85786afcc079d4b"><div class="ttname"><a href="classVenta.html#a63eeb3da3c1da6c1d85786afcc079d4b">Venta.Fecha</a></div><div class="ttdeci">DateTime Fecha</div><div class="ttdoc">Obtiene o establece la fecha y hora en que se registró la venta.</div><div class="ttdef"><b>Definition</b> <a href="#l00030">Venta.cs:30</a></div></div>
+<div class="ttc" id="aclassVenta_html_a7a0fa5f059254a102f8044db964e1f54"><div class="ttname"><a href="classVenta.html#a7a0fa5f059254a102f8044db964e1f54">Venta.Producto</a></div><div class="ttdeci">string Producto</div><div class="ttdoc">Obtiene o establece la descripción del producto o servicio vendido.</div><div class="ttdef"><b>Definition</b> <a href="#l00020">Venta.cs:20</a></div></div>
+<div class="ttc" id="aclassVenta_html_aaeaee4f2b76b41320dca9f9c03c70b7d"><div class="ttname"><a href="classVenta.html#aaeaee4f2b76b41320dca9f9c03c70b7d">Venta.Id</a></div><div class="ttdeci">int Id</div><div class="ttdoc">Obtiene o establece el identificador único de la venta.</div><div class="ttdef"><b>Definition</b> <a href="#l00015">Venta.cs:15</a></div></div>
+<div class="ttc" id="aclassVenta_html_ab31ed30a62e0bd46b1396da5ac027a3f"><div class="ttname"><a href="classVenta.html#ab31ed30a62e0bd46b1396da5ac027a3f">Venta.Importe</a></div><div class="ttdeci">float Importe</div><div class="ttdoc">Obtiene o establece el monto o valor total de la venta.</div><div class="ttdef"><b>Definition</b> <a href="#l00025">Venta.cs:25</a></div></div>
+<div class="ttc" id="aclassVenta_html_ad016ed00a8b22f45c28c85e7f0070e61"><div class="ttname"><a href="classVenta.html#ad016ed00a8b22f45c28c85e7f0070e61">Venta.Venta</a></div><div class="ttdeci">Venta(int id, string producto, float importe, DateTime fecha)</div><div class="ttdoc">Inicializa una nueva instancia de la clase Venta.</div><div class="ttdef"><b>Definition</b> <a href="#l00041">Venta.cs:41</a></div></div>
 <div class="ttc" id="anamespaceLibrary_html"><div class="ttname"><a href="namespaceLibrary.html">Library</a></div><div class="ttdef"><b>Definition</b> <a href="Correo_8cs_source.html#l00003">Correo.cs:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

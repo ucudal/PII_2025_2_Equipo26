@@ -92,31 +92,41 @@ $(function(){initNavTree('RepoVentas_8cs_source.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">using </span><a class="code hl_namespace" href="namespaceLibrary.html">Library</a>;</div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>System;</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">using </span>System.Collections.Generic;</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="foldopen" id="foldopen00006" data-start="{" data-end="};">
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="classRepoVentas.html">    6</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="classRepoVentas.html">RepoVentas</a></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">private</span> List&lt;Venta&gt; _ventas = <span class="keyword">new</span> List&lt;Venta&gt;();</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">private</span> <span class="keywordtype">int</span> _nextId = 1;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">public</span> <a class="code hl_class" href="classVenta.html">Venta</a> Agregar(<span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> importe, DateTime fecha)</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        var nuevaVenta = <span class="keyword">new</span> <a class="code hl_class" href="classVenta.html">Venta</a>(_nextId++, producto, importe, fecha);</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        _ventas.Add(nuevaVenta);</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keywordflow">return</span> nuevaVenta;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    }</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">public</span> List&lt;Venta&gt; ObtenerTodas()</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">return</span> _ventas;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    }</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">using </span>System;</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>System.Collections.Generic;</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span></div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classRepoVentas.html">   10</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="classRepoVentas.html">RepoVentas</a></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="comment">// --- Campos Privados ---</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">private</span> List&lt;Venta&gt; _ventas = <span class="keyword">new</span> List&lt;Venta&gt;();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">private</span> <span class="keywordtype">int</span> _nextId = 1;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">// --- Métodos Públicos ---</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classRepoVentas.html#a62f8c20ef6784598db9a82536cc2e404">   33</a></span>    <span class="keyword">public</span> <a class="code hl_class" href="classVenta.html">Venta</a> <a class="code hl_function" href="classRepoVentas.html#a62f8c20ef6784598db9a82536cc2e404">Agregar</a>(<span class="keywordtype">string</span> producto, <span class="keywordtype">float</span> importe, DateTime fecha)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        var nuevaVenta = <span class="keyword">new</span> <a class="code hl_class" href="classVenta.html">Venta</a>(_nextId++, producto, importe, fecha);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        _ventas.Add(nuevaVenta);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">return</span> nuevaVenta;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    }</div>
 </div>
-<div class="ttc" id="aclassRepoVentas_html"><div class="ttname"><a href="classRepoVentas.html">RepoVentas</a></div><div class="ttdef"><b>Definition</b> <a href="#l00006">RepoVentas.cs:7</a></div></div>
-<div class="ttc" id="aclassVenta_html"><div class="ttname"><a href="classVenta.html">Venta</a></div><div class="ttdef"><b>Definition</b> <a href="Venta_8cs_source.html#l00005">Venta.cs:6</a></div></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classRepoVentas.html#a754092e6a7e7ad0c8c50815252824d70">   44</a></span>    <span class="keyword">public</span> List&lt;Venta&gt; <a class="code hl_function" href="classRepoVentas.html#a754092e6a7e7ad0c8c50815252824d70">ObtenerTodas</a>()</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordflow">return</span> _ventas;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    }</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+</div>
+<div class="ttc" id="aclassRepoVentas_html"><div class="ttname"><a href="classRepoVentas.html">RepoVentas</a></div><div class="ttdoc">Implementa el patrón &quot;Repositorio&quot; (Repository). Su responsabilidad es manejar la lista de todas las ...</div><div class="ttdef"><b>Definition</b> <a href="#l00010">RepoVentas.cs:11</a></div></div>
+<div class="ttc" id="aclassRepoVentas_html_a62f8c20ef6784598db9a82536cc2e404"><div class="ttname"><a href="classRepoVentas.html#a62f8c20ef6784598db9a82536cc2e404">RepoVentas.Agregar</a></div><div class="ttdeci">Venta Agregar(string producto, float importe, DateTime fecha)</div><div class="ttdoc">Agrega una nueva venta a la lista (Operación Create).</div><div class="ttdef"><b>Definition</b> <a href="#l00033">RepoVentas.cs:33</a></div></div>
+<div class="ttc" id="aclassRepoVentas_html_a754092e6a7e7ad0c8c50815252824d70"><div class="ttname"><a href="classRepoVentas.html#a754092e6a7e7ad0c8c50815252824d70">RepoVentas.ObtenerTodas</a></div><div class="ttdeci">List&lt; Venta &gt; ObtenerTodas()</div><div class="ttdoc">Devuelve la lista completa de todas las ventas (Operación Read All).</div><div class="ttdef"><b>Definition</b> <a href="#l00044">RepoVentas.cs:44</a></div></div>
+<div class="ttc" id="aclassVenta_html"><div class="ttname"><a href="classVenta.html">Venta</a></div><div class="ttdoc">Representa una Venta que se ha completado. Es un modelo de datos simple (a veces llamado POCO o DTO).</div><div class="ttdef"><b>Definition</b> <a href="Venta_8cs_source.html#l00008">Venta.cs:9</a></div></div>
 <div class="ttc" id="anamespaceLibrary_html"><div class="ttname"><a href="namespaceLibrary.html">Library</a></div><div class="ttdef"><b>Definition</b> <a href="Correo_8cs_source.html#l00003">Correo.cs:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

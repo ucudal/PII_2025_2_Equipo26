@@ -1,0 +1,12 @@
+digraph "RepoEtiquetas.Buscar"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="RepoEtiquetas.Buscar",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Busca una etiqueta específica por su ID (Read)."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="RepoEtiquetas.Eliminar",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classRepoEtiquetas.html#a1b57ce741c6a6ebebcac8a67e88a86d3",tooltip="Elimina una etiqueta de la lista (Delete)."];
+}

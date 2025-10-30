@@ -91,6 +91,9 @@ $(function(){initNavTree('classCotizacion.html','','classCotizacion-members'); }
   <div class="headertitle"><div class="title">Cotizacion Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Representa una cotización enviada a un cliente. Hereda de <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>, demostrando el principio de Herencia.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for Cotizacion:</div>
 <div class="dyncontent">
@@ -105,21 +108,29 @@ Collaboration diagram for Cotizacion:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4dcb2e0ee92486c544f658a1ec239ea5" id="r_a4dcb2e0ee92486c544f658a1ec239ea5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dcb2e0ee92486c544f658a1ec239ea5">Cotizacion</a> (string tema, double monto, string detalle)</td></tr>
+<tr class="memdesc:a4dcb2e0ee92486c544f658a1ec239ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa una nueva instancia de la clase <a class="el" href="classCotizacion.html" title="Representa una cotización enviada a un cliente. Hereda de Interaccion, demostrando el principio de He...">Cotizacion</a>. Asigna automáticamente la fecha y hora actual.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classInteraccion"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classInteraccion')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classInteraccion.html">Interaccion</a></td></tr>
 <tr class="memitem:aefb22b294a84832830108c1598c99ed8 inherit pub_methods_classInteraccion" id="r_aefb22b294a84832830108c1598c99ed8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInteraccion.html#aefb22b294a84832830108c1598c99ed8">Interaccion</a> (DateTime fecha, string tema)</td></tr>
+<tr class="memdesc:aefb22b294a84832830108c1598c99ed8 inherit pub_methods_classInteraccion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa una nueva instancia de una clase derivada de <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-properties" class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a10baefac6e1ba4c6f81a02b9500ed191" id="r_a10baefac6e1ba4c6f81a02b9500ed191"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10baefac6e1ba4c6f81a02b9500ed191">Monto</a><code> [get]</code></td></tr>
+<tr class="memdesc:a10baefac6e1ba4c6f81a02b9500ed191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el valor monetario de lo que se está cotizando.  <br /></td></tr>
 <tr class="memitem:a5d7545cc8dbc55351a61a6de6a9b0768" id="r_a5d7545cc8dbc55351a61a6de6a9b0768"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d7545cc8dbc55351a61a6de6a9b0768">Detalle</a><code> [get]</code></td></tr>
+<tr class="memdesc:a5d7545cc8dbc55351a61a6de6a9b0768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene una descripción o detalle de los productos/servicios cotizados.  <br /></td></tr>
 <tr class="inherit_header properties_classInteraccion"><td colspan="2" onclick="javascript:dynsection.toggleInherit('properties_classInteraccion')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Properties inherited from <a class="el" href="classInteraccion.html">Interaccion</a></td></tr>
 <tr class="memitem:a022b1d38a8cf67c2d9c60c35e222c0ae inherit properties_classInteraccion" id="r_a022b1d38a8cf67c2d9c60c35e222c0ae"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInteraccion.html#a022b1d38a8cf67c2d9c60c35e222c0ae">Fecha</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a022b1d38a8cf67c2d9c60c35e222c0ae inherit properties_classInteraccion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene o establece la fecha y hora en que ocurrió la interacción.  <br /></td></tr>
 <tr class="memitem:a8b3075b55bdef8887fb1938f39b392d7 inherit properties_classInteraccion" id="r_a8b3075b55bdef8887fb1938f39b392d7"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInteraccion.html#a8b3075b55bdef8887fb1938f39b392d7">Tema</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a8b3075b55bdef8887fb1938f39b392d7 inherit properties_classInteraccion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene o establece un breve resumen o tema de la interacción.  <br /></td></tr>
 <tr class="memitem:a075f6d14d48b9840d2efdbd75cc07241 inherit properties_classInteraccion" id="r_a075f6d14d48b9840d2efdbd75cc07241"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNota.html">Nota</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInteraccion.html#a075f6d14d48b9840d2efdbd75cc07241">NotaAdicional</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a075f6d14d48b9840d2efdbd75cc07241 inherit properties_classInteraccion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene o establece una <a class="el" href="classNota.html" title="Representa una nota de texto simple. Se usa (mediante Agregación) en Interaccion para añadir detalles...">Nota</a> opcional para agregar más detalles. (Ejemplo de Agregación).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00005">5</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
+<div class="textblock"><p>Representa una cotización enviada a un cliente. Hereda de <a class="el" href="classInteraccion.html" title="Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo,...">Interaccion</a>, demostrando el principio de Herencia. </p>
+
+<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00008">8</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4dcb2e0ee92486c544f658a1ec239ea5" name="a4dcb2e0ee92486c544f658a1ec239ea5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4dcb2e0ee92486c544f658a1ec239ea5">&#9670;&#160;</a></span>Cotizacion()</h2>
@@ -145,7 +156,17 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00010">10</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
+<p>Inicializa una nueva instancia de la clase <a class="el" href="classCotizacion.html" title="Representa una cotización enviada a un cliente. Hereda de Interaccion, demostrando el principio de He...">Cotizacion</a>. Asigna automáticamente la fecha y hora actual. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tema</td><td>El tema o título de la cotización (ej: "Cotización CRM Licencia Plus").</td></tr>
+    <tr><td class="paramname">monto</td><td>El valor monetario de la cotización.</td></tr>
+    <tr><td class="paramname">detalle</td><td>Una descripción de los ítems cotizados.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00031">31</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
 
 </div>
 </div>
@@ -170,7 +191,9 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00008">8</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
+<p>Obtiene una descripción o detalle de los productos/servicios cotizados. </p>
+
+<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00020">20</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
 
 </div>
 </div>
@@ -194,7 +217,9 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00007">7</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
+<p>Obtiene el valor monetario de lo que se está cotizando. </p>
+
+<p class="definition">Definition at line <a class="el" href="Cotizacion_8cs_source.html#l00015">15</a> of file <a class="el" href="Cotizacion_8cs_source.html">Cotizacion.cs</a>.</p>
 
 </div>
 </div>

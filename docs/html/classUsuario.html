@@ -91,6 +91,9 @@ $(function(){initNavTree('classUsuario.html','','classUsuario-members'); });
   <div class="headertitle"><div class="title">Usuario Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Representa a un usuario del sistema (Admin o Vendedor). Es el "Experto" (Expert) en su propia información y estado.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Collaboration diagram for Usuario:</div>
 <div class="dyncontent">
@@ -100,21 +103,31 @@ Collaboration diagram for Usuario:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad3c45f1280d27cc0bfe659a8e58b0bf8" id="r_ad3c45f1280d27cc0bfe659a8e58b0bf8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3c45f1280d27cc0bfe659a8e58b0bf8">Usuario</a> (int id, string nombreUsuario, string contrasena, RolUsuario rol)</td></tr>
+<tr class="memdesc:ad3c45f1280d27cc0bfe659a8e58b0bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa una nueva instancia de la clase <a class="el" href="classUsuario.html" title="Representa a un usuario del sistema (Admin o Vendedor). Es el &quot;Experto&quot; (Expert) en su propia informa...">Usuario</a>. Por defecto, un usuario siempre se crea como EstadoUsuario.Activo.  <br /></td></tr>
 <tr class="memitem:aabbb438fba49ea41787df9c751aa615e" id="r_aabbb438fba49ea41787df9c751aa615e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabbb438fba49ea41787df9c751aa615e">Suspender</a> ()</td></tr>
+<tr class="memdesc:aabbb438fba49ea41787df9c751aa615e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cambia el estado interno del usuario a EstadoUsuario.Suspendido.  <br /></td></tr>
 <tr class="memitem:a1c4179ab681a8105ba9b9ef8a7dfd73f" id="r_a1c4179ab681a8105ba9b9ef8a7dfd73f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c4179ab681a8105ba9b9ef8a7dfd73f">Activar</a> ()</td></tr>
+<tr class="memdesc:a1c4179ab681a8105ba9b9ef8a7dfd73f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cambia el estado interno del usuario a EstadoUsuario.Activo.  <br /></td></tr>
 <tr class="memitem:a4c44da66c45eed23674bfdb44aed5d72" id="r_a4c44da66c45eed23674bfdb44aed5d72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c44da66c45eed23674bfdb44aed5d72">CambiarContrasena</a> (string nuevaContrasena)</td></tr>
+<tr class="memdesc:a4c44da66c45eed23674bfdb44aed5d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permite actualizar la contraseña del usuario.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-properties" class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a50485ccb41d59d41e7b6bb218fdc6134" id="r_a50485ccb41d59d41e7b6bb218fdc6134"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50485ccb41d59d41e7b6bb218fdc6134">Id</a><code> [get]</code></td></tr>
+<tr class="memdesc:a50485ccb41d59d41e7b6bb218fdc6134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el ID numérico único del usuario.  <br /></td></tr>
 <tr class="memitem:ad2638b572c9b5ddfc8d416b5611f3ca5" id="r_ad2638b572c9b5ddfc8d416b5611f3ca5"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2638b572c9b5ddfc8d416b5611f3ca5">NombreUsuario</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ad2638b572c9b5ddfc8d416b5611f3ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene o establece el nombre de login (ej: "jPerez").  <br /></td></tr>
 <tr class="memitem:a3c1a9c08277849c571df963d2dc3f8ea" id="r_a3c1a9c08277849c571df963d2dc3f8ea"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c1a9c08277849c571df963d2dc3f8ea">Contrasena</a><code> [get]</code></td></tr>
+<tr class="memdesc:a3c1a9c08277849c571df963d2dc3f8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene la contraseña del usuario.  <br /></td></tr>
 <tr class="memitem:a089bc82a5bf05222d1e7f2085b476d1b" id="r_a089bc82a5bf05222d1e7f2085b476d1b"><td class="memItemLeft" align="right" valign="top">RolUsuario&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a089bc82a5bf05222d1e7f2085b476d1b">Rol</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a089bc82a5bf05222d1e7f2085b476d1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene o establece el tipo de usuario (tomado del Enum RolUsuario).  <br /></td></tr>
 <tr class="memitem:a1ef1d463bda38bb2be4eb5f2b507ac26" id="r_a1ef1d463bda38bb2be4eb5f2b507ac26"><td class="memItemLeft" align="right" valign="top">EstadoUsuario&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ef1d463bda38bb2be4eb5f2b507ac26">Estado</a><code> [get]</code></td></tr>
+<tr class="memdesc:a1ef1d463bda38bb2be4eb5f2b507ac26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene el estado actual (tomado del Enum EstadoUsuario).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00003">3</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<div class="textblock"><p>Representa a un usuario del sistema (Admin o Vendedor). Es el "Experto" (Expert) en su propia información y estado. </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00007">7</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad3c45f1280d27cc0bfe659a8e58b0bf8" name="ad3c45f1280d27cc0bfe659a8e58b0bf8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad3c45f1280d27cc0bfe659a8e58b0bf8">&#9670;&#160;</a></span>Usuario()</h2>
@@ -145,7 +158,18 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00012">12</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Inicializa una nueva instancia de la clase <a class="el" href="classUsuario.html" title="Representa a un usuario del sistema (Admin o Vendedor). Es el &quot;Experto&quot; (Expert) en su propia informa...">Usuario</a>. Por defecto, un usuario siempre se crea como EstadoUsuario.Activo. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>El ID único del usuario.</td></tr>
+    <tr><td class="paramname">nombreUsuario</td><td>El nombre de login.</td></tr>
+    <tr><td class="paramname">contrasena</td><td>La contraseña.</td></tr>
+    <tr><td class="paramname">rol</td><td>El rol (Admin o Vendedor).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00055">55</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -165,7 +189,9 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00026">26</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Cambia el estado interno del usuario a EstadoUsuario.Activo. </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00079">79</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -184,7 +210,15 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00031">31</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Permite actualizar la contraseña del usuario. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nuevaContrasena</td><td>La nueva contraseña (sin encriptar).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00088">88</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -203,7 +237,9 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00021">21</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Cambia el estado interno del usuario a EstadoUsuario.Suspendido. </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00071">71</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -228,7 +264,10 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00007">7</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Obtiene la contraseña del usuario. </p>
+<p>Solo se puede cambiar usando <a class="el" href="#a4c44da66c45eed23674bfdb44aed5d72" title="Permite actualizar la contraseña del usuario.">CambiarContrasena(string)</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00030">30</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -252,7 +291,10 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00009">9</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Obtiene el estado actual (tomado del Enum EstadoUsuario). </p>
+<p>Solo se puede cambiar con <a class="el" href="#a1c4179ab681a8105ba9b9ef8a7dfd73f" title="Cambia el estado interno del usuario a EstadoUsuario.Activo.">Activar()</a> o <a class="el" href="#aabbb438fba49ea41787df9c751aa615e" title="Cambia el estado interno del usuario a EstadoUsuario.Suspendido.">Suspender()</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00043">43</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -276,7 +318,10 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00005">5</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Obtiene el ID numérico único del usuario. </p>
+<p>No se puede cambiar después de que se crea el objeto (private set). </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00017">17</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -300,7 +345,9 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00006">6</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Obtiene o establece el nombre de login (ej: "jPerez"). </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00022">22</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
@@ -324,7 +371,9 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00008">8</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
+<p>Obtiene o establece el tipo de usuario (tomado del Enum RolUsuario). </p>
+
+<p class="definition">Definition at line <a class="el" href="Usuario_8cs_source.html#l00035">35</a> of file <a class="el" href="Usuario_8cs_source.html">Usuario.cs</a>.</p>
 
 </div>
 </div>
