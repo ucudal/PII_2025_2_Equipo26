@@ -4,7 +4,7 @@ using Library;
 /// Representa una Etiqueta o "Tag" (ej: "VIP", "Nuevo", "Inactivo").
 /// Sirve para clasificar o agrupar objetos <see cref="Cliente"/>.
 /// </summary>
-public class Etiqueta
+public class Etiqueta : IEntidad
 {
     // --- Propiedades ---
 
@@ -14,7 +14,7 @@ public class Etiqueta
     /// <remarks>
     /// 'private set' significa que su valor solo se puede asignar en el constructor.
     /// </remarks>
-    public int Id { get; private set; }
+    public int Id { get; set; }
     
     /// <summary>
     /// Obtiene o establece el texto visible de la etiqueta (ej: "Cliente Frecuente").

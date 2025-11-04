@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// Esta clase es un "Experto en Información" (Patrón Expert) sobre los datos
 /// personales y el historial de un cliente.
 /// </summary>
-public class Cliente
+public class Cliente : IEntidad
 {
     // --- Propiedades del Cliente ---
     
@@ -17,7 +17,7 @@ public class Cliente
     /// <remarks>
     /// El 'private set' asegura que el ID solo se pueda asignar en el constructor.
     /// </remarks>
-    public int Id { get; private set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Obtiene o establece el nombre del cliente.
