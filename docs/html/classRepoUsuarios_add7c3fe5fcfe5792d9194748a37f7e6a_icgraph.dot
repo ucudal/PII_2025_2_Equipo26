@@ -1,0 +1,16 @@
+digraph "RepoUsuarios.Buscar"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="RepoUsuarios.Buscar",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Busca un usuario por su ID (Read)."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="RepoUsuarios.Activar",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classRepoUsuarios.html#a42b161232c7be88a00de287f4374746a",tooltip="Cambia el estado de un usuario a 'Activo'. Delega la acción al objeto Usuario (Principio Expert)."];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="RepoUsuarios.Eliminar",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classRepoUsuarios.html#a002f07c813459240c1e1f8561845d669",tooltip="Elimina un usuario de la lista (Delete)."];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="RepoUsuarios.Suspender",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classRepoUsuarios.html#a1a00a7bbdc97c2fe0ed45e4c8a9aaa90",tooltip="Cambia el estado de un usuario a 'Suspendido'. Delega la acción al objeto Usuario (Principio Expert)."];
+}
