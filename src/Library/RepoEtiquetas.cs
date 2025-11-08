@@ -1,76 +1,39 @@
-using Library;
 using System.Collections.Generic;
 
-/// <summary>
-/// Implementa el patrón "Repositorio" (Repository).
-/// Su única responsabilidad (SRP) es administrar la colección en memoria
-/// de objetos <see cref="Etiqueta"/>.
-/// </summary>
-public class RepoEtiquetas
+namespace Library
 {
-    // --- Campos Privados ---
-
     /// <summary>
-    /// La lista interna donde se guardan todas las etiquetas del sistema.
+    /// Repositorio de Etiquetas.
+    /// Implementa Singleton y IRepoEtiquetas (DIP).
+    /// Hereda de Repositorio<Etiqueta> para reutilizar la lógica (Feedback #18).
     /// </summary>
-    private List<Etiqueta> _etiquetas = new List<Etiqueta>();
-    
-    /// <summary>
-    /// Un contador para asignar IDs únicos y automáticos a las nuevas etiquetas.
-    /// </summary>
-    private int _nextId = 1;
-    
-    // --- Métodos Públicos (Operaciones CRUD) ---
-
-    /// <summary>
-    /// Crea una nueva etiqueta con un nombre y la agrega a la lista (Create).
-    /// </summary>
-    /// <param name="nombre">El nombre de la nueva etiqueta.</param>
-    public void Crear(string nombre)
+    public class RepoEtiquetas : Repositorio<Etiqueta>, IRepoEtiquetas
     {
-        // '++' después de '_nextId' usa el valor actual y LUEGO lo incrementa.
-        var nuevaEtiqueta = new Etiqueta(_nextId++, nombre);
-        
-        _etiquetas.Add(nuevaEtiqueta);
-    }
+        private static RepoEtiquetas _instancia;
 
-    /// <summary>
-    /// Devuelve la lista completa de todas las etiquetas (Read All).
-    /// </summary>
-    /// <returns>Una <see cref="List{T}"/> de <see cref="Etiqueta"/>.</returns>
-    public List<Etiqueta> ObtenerTodas()
-    {
-        return _etiquetas;
-    }
-
-    /// <summary>
-    /// Busca una etiqueta específica por su ID (Read).
-    /// </summary>
-    /// <param name="id">El ID de la etiqueta a buscar.</param>
-    /// <returns>La <see cref="Etiqueta"/> encontrada, o <c>null</c> si no existe.</returns>
-    public Etiqueta Buscar(int id)
-    {
-        foreach (var etiqueta in _etiquetas)
+        /// <summary>
+        /// Constructor privado para asegurar el patrón Singleton.
+        /// </summary>
+        private RepoEtiquetas() : base()
         {
-            if (etiqueta.Id == id)
+        }
+
+        /// <summary>
+        /// Obtiene la instancia única del repositorio (Singleton).
+        /// </summary>
+        public static RepoEtiquetas Instancia
+        {
+            get
             {
-                return etiqueta;
+                if (_instancia == null)
+                {
+                    _instancia = new RepoEtiquetas();
+                }
+                return _instancia;
             }
         }
-        return null;
-    }
-
-    /// <summary>
-    /// Elimina una etiqueta de la lista (Delete).
-    /// </summary>
-    /// <param name="id">El ID de la etiqueta a eliminar.</param>
-    public void Eliminar(int id)
-    {
-        var etiqueta = Buscar(id);
         
-        if (etiqueta != null)
-        {
-            _etiquetas.Remove(etiqueta);
-        }
+        // ¡Lógica heredada!
+        // (Tu compañero "Nahuel" agregará el método 'CrearEtiqueta' aquí en su commit)
     }
 }
