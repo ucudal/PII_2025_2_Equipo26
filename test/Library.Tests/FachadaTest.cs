@@ -28,7 +28,7 @@ namespace Library.Tests
 
             // 2. Act (Actuar)
             fachada.CrearCliente(nombre, apellido, telefono, correo, "Masculino", fechaNac);
-            List<Cliente> clientes = fachada.VerTodosLosClientes();
+            var clientes = fachada.VerTodosLosClientes();
 
             // 3. Assert (Verificar)
             Assert.AreEqual(1, clientes.Count); // Verificamos que se agregó 1 cliente
@@ -79,7 +79,7 @@ namespace Library.Tests
 
             // 3. Assert (Verificar)
             // La lista de clientes ahora debería estar vacía
-            List<Cliente> clientes = fachada.VerTodosLosClientes();
+            var clientes = fachada.VerTodosLosClientes();
             Assert.AreEqual(0, clientes.Count); 
         }
 
