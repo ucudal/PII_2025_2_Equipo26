@@ -88,17 +88,18 @@ public class Cliente : IEntidad
     /// <param name="correo">El correo electrónico del cliente.</param>
     /// <param name="genero">El género del cliente.</param>
     /// <param name="fechaNacimiento">La fecha de nacimiento del cliente.</param>
-    public Cliente(int id, string nombre, string apellido, string telefono, 
-        string correo, string genero, DateTime fechaNacimiento)
-    {
-        this.Id = id;
-        this.Nombre = nombre;
-        this.Apellido = apellido;
-        this.Telefono = telefono;
-        this.Correo = correo;
-        this.Genero = genero;
-        this.FechaNacimiento = fechaNacimiento;
-    }
+    // DESPUÉS (El constructor que necesitas):
+public Cliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
+{
+    // Ya NO se asigna el 'Id' aquí.
+    this.Nombre = nombre;
+    this.Apellido = apellido;
+    this.Telefono = telefono;
+    this.Correo = correo;
+    this.Genero = genero;
+    this.FechaNacimiento = fechaNacimiento;
+    // ... (el resto de tus inicializaciones)
+}
     
      // --- Métodos ---
 

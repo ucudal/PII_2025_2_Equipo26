@@ -1,4 +1,4 @@
-using Library;
+using Library; // Este 'using' es para IEntidad, asumiendo que también está en Library.
 
 namespace Library
 {
@@ -71,4 +71,4 @@ namespace Library
         
         // --- MÉTODO 'CambiarContrasena' ELIMINADO ---
     }
-}
+} // <-- AÑADE ESTA LÍNEA
