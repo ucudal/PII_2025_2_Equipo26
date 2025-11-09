@@ -4,7 +4,7 @@ using Library;
 /// Representa una Etiqueta o "Tag" (ej: "VIP", "Nuevo", "Inactivo").
 /// Sirve para clasificar o agrupar objetos <see cref="Cliente"/>.
 /// </summary>
-public class Etiqueta
+public class Etiqueta : IEntidad
 {
     // --- Propiedades ---
 

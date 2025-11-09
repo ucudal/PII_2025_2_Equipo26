@@ -21,7 +21,7 @@ namespace Library.Tests
         {
             string nombreUsuario = "testAdmin";
             string contrasena = "pass123";
-            RolUsuario rol = RolUsuario.Administrador;
+            Rol rol = Rol.Administrador;
 
             fachada.CrearUsuario(nombreUsuario, contrasena, rol);
 
@@ -33,14 +33,14 @@ namespace Library.Tests
             Assert.IsNotNull(usuarioCreado);
             Assert.AreEqual(nombreUsuario, usuarioCreado.NombreUsuario);
             Assert.AreEqual(rol, usuarioCreado.Rol);
-            Assert.AreEqual(EstadoUsuario.Activo, usuarioCreado.Estado);
+            Assert.AreEqual(Estado.Activo, usuarioCreado.Estado);
             Assert.AreEqual(1, usuarioCreado.Id);
         }
         
         [Test]
         public void SuspenderUsuario_DeberiaCambiarEstadoASuspendido()
         {
-            fachada.CrearUsuario("testUser", "pass", RolUsuario.Vendedor);
+            fachada.CrearUsuario("testUser", "pass", Rol.Vendedor);
             
             int idUsuarioASuspender = 1;
 
@@ -51,13 +51,13 @@ namespace Library.Tests
 
             Assert.IsNotNull(usuarioSuspendido);
             Assert.AreEqual(idUsuarioASuspender, usuarioSuspendido.Id);
-            Assert.AreEqual(EstadoUsuario.Suspendido, usuarioSuspendido.Estado);
+            Assert.AreEqual(Estado.Suspendido, usuarioSuspendido.Estado);
         }
 
         [Test]
         public void ActivarUsuario_DeberiaCambiarEstadoAActivo()
         {
-            fachada.CrearUsuario("testUser", "pass", RolUsuario.Vendedor);
+            fachada.CrearUsuario("testUser", "pass", Rol.Vendedor);
             int idUsuario = 1;
             
             fachada.SuspenderUsuario(idUsuario);
@@ -77,7 +77,7 @@ namespace Library.Tests
 
             Assert.IsNotNull(usuarioActivado);
             Assert.AreEqual(idUsuario, usuarioActivado.Id);
-            Assert.AreEqual(EstadoUsuario.Activo, usuarioActivado.Estado);
+            Assert.AreEqual(Estado.Activo, usuarioActivado.Estado);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Library.Tests
             fachada.CrearCliente("Ana", "Gomez", "091987654", "ag@mail.com", "F", DateTime.Now);
             int idCliente = 1;
 
-            fachada.CrearUsuario("vendedorEstrella", "pass", RolUsuario.Vendedor);
+            fachada.CrearUsuario("vendedorEstrella", "pass", Rol.Vendedor);
             int idVendedor = 1;
 
             fachada.AsignarClienteVendedor(idCliente, idVendedor);
@@ -122,7 +122,7 @@ namespace Library.Tests
         [Test]
         public void EliminarUsuario_DeberiaQuitarUsuarioDelRepositorio()
         {
-            fachada.CrearUsuario("userParaEliminar", "pass", RolUsuario.Vendedor);
+            fachada.CrearUsuario("userParaEliminar", "pass", Rol.Vendedor);
             int idUsuarioAEliminar = 1;
 
             Assert.AreEqual(1, fachada.VerTodosLosUsuarios().Count);
@@ -142,7 +142,7 @@ namespace Library.Tests
             fachada.CrearCliente("Cliente", "Test", "123", "c@mail.com", "M", DateTime.Now);
             int idCliente = 1;
 
-            fachada.CrearUsuario("vendedorSuspendido", "pass", RolUsuario.Vendedor);
+            fachada.CrearUsuario("vendedorSuspendido", "pass", Rol.Vendedor);
             int idVendedor = 1;
             
             fachada.SuspenderUsuario(idVendedor);
@@ -161,7 +161,7 @@ namespace Library.Tests
             fachada.CrearCliente("Cliente", "Test", "123", "c@mail.com", "M", DateTime.Now);
             int idCliente = 1;
 
-            fachada.CrearUsuario("adminUser", "pass", RolUsuario.Administrador);
+            fachada.CrearUsuario("adminUser", "pass", Rol.Administrador);
             int idAdmin = 1;
 
             fachada.AsignarClienteVendedor(idCliente, idAdmin);

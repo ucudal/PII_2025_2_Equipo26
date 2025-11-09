@@ -3,11 +3,21 @@ using System;
 
 public class Program
 {
-    private static Fachada fachada = new Fachada();
+    private static Fachada fachada;
 
     public static void Main(string[] args)
     {
         Console.WriteLine("--- Iniciando Demo del CRM ---");
+
+        // --- "Composition Root" ---
+        var repoClientes = new RepoClientes();
+        var repoEtiquetas = new RepoEtiquetas();
+        var repoUsuarios = new RepoUsuarios();
+        var repoVentas = new RepoVentas();
+
+        // Se "Inyectan" las dependencias en el constructor de la Fachada.
+        fachada = new Fachada(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
+        // -----------------------------
 
         DemoGestionUsuarios();
         DemoClientesYAsignacion();
@@ -21,9 +31,10 @@ public class Program
     {
         Console.WriteLine("\n--- 1. Demo Gestión de Usuarios ---");
         
-        fachada.CrearUsuario("admin_global", "pass123", RolUsuario.Administrador);
-        fachada.CrearUsuario("vendedor_juan", "pass456", RolUsuario.Vendedor);
-        fachada.CrearUsuario("vendedor_maria", "pass789", RolUsuario.Vendedor);
+        // --- LLAMADAS A 'CrearUsuario' ACTUALIZADAS ---
+        fachada.CrearUsuario("admin_global", Rol.Administrador);
+        fachada.CrearUsuario("vendedor_juan", Rol.Vendedor);
+        fachada.CrearUsuario("vendedor_maria", Rol.Vendedor);
         Console.WriteLine("Usuarios 'admin_global', 'vendedor_juan' y 'vendedor_maria' creados.");
 
         int idMaria = 3; 

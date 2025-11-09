@@ -1,40 +1,36 @@
-using Library;
 using System;
 
-/// <summary>
-/// Representa una cotización enviada a un cliente.
-/// Hereda de <see cref="Interaccion"/>, demostrando el principio de Herencia.
-/// </summary>
-public class Cotizacion : Interaccion
+namespace Library
 {
-    // --- Propiedades Específicas de Cotizacion ---
-
     /// <summary>
-    /// Obtiene el valor monetario de lo que se está cotizando.
+    /// Representa una interacción de tipo Cotización.
     /// </summary>
-    public double Monto { get; private set; }
-    
-    /// <summary>
-    /// Obtiene una descripción o detalle de los productos/servicios cotizados.
-    /// </summary>
-    public string Detalle { get; private set; }
-
-    // --- Constructor ---
-    
-    /// <summary>
-    /// Inicializa una nueva instancia de la clase <see cref="Cotizacion"/>.
-    /// Asigna automáticamente la fecha y hora actual.
-    /// </summary>
-    /// <param name="tema">El tema o título de la cotización (ej: "Cotización CRM Licencia Plus").</param>
-    /// <param name="monto">El valor monetario de la cotización.</param>
-    /// <param name="detalle">Una descripción de los ítems cotizados.</param>
-    public Cotizacion(string tema, double monto, string detalle)
-        // Llama al constructor de la clase base (Interaccion).
-        // Usa 'DateTime.Now' para asignar automáticamente la fecha
-        // y hora actual al momento de crear la cotización.
-        : base(DateTime.Now, tema)
+    public class Cotizacion : Interaccion
     {
-        this.Monto = monto;
-        this.Detalle = detalle;
+        /// <summary>
+        /// Obtiene o establece el monto cotizado.
+        /// </summary>
+        public double Monto { get; set; }
+
+        /// <summary>
+        /// Obtiene o establece el detalle de la cotización.
+        /// </summary>
+        public string Detalle { get; set; }
+
+        /// <summary>
+        /// Obtiene el tipo de esta interacción.
+        /// </summary>
+        public override TipoInteraccion Tipo => TipoInteraccion.Cotizacion;
+
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="Cotizacion"/>.
+        /// Asigna la fecha actual por defecto.
+        /// </summary>
+        public Cotizacion(string tema, double monto, string detalle)
+            : base(DateTime.Now, tema) // Asume la fecha de creación.
+        {
+            this.Monto = monto;
+            this.Detalle = detalle;
+        }
     }
 }

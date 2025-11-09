@@ -5,7 +5,7 @@ using System;
 /// Representa una Venta que se ha completado.
 /// Es un modelo de datos simple (a veces llamado POCO o DTO).
 /// </summary>
-public class Venta
+public class Venta : IEntidad
 {
     // --- Propiedades ---
 
