@@ -31,14 +31,6 @@ namespace Library
             this.elementos.Add(item);
         }
 
-        /// <inheritdoc />
-        /// <remarks>
-        //
-        // CORRECCIÓN: Se elimina LINQ (FirstOrDefault) y la
-        // expresión lambda (=>) para no usar "sistema de flechas".
-        // También se quita el '?' de 'T?'.
-        //
-        /// </remarks>
         public virtual T Buscar(int id)
         {
             // Bucle manual en lugar de FirstOrDefault

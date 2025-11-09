@@ -10,12 +10,12 @@ namespace Library
     /// </summary>
     public class RepoVentas : Repositorio<Venta>, IRepoVentas
     {
-        private static RepoVentas _instancia;
+        public static RepoVentas _instancia;
 
         /// <summary>
         /// Constructor privado para asegurar el patrón Singleton.
         /// </summary>
-        private RepoVentas() : base()
+        public RepoVentas() : base()
         {
         }
 

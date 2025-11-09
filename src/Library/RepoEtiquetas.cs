@@ -9,12 +9,12 @@ namespace Library
     /// </summary>
     public class RepoEtiquetas : Repositorio<Etiqueta>, IRepoEtiquetas
     {
-        private static RepoEtiquetas _instancia;
+        public static RepoEtiquetas _instancia;
 
         /// <summary>
         /// Constructor privado para asegurar el patrón Singleton.
         /// </summary>
-        private RepoEtiquetas() : base()
+        public RepoEtiquetas() : base()
         {
         }
 

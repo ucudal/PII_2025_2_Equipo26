@@ -1,42 +1,54 @@
+using Library;
+using System;
 using System.Collections.Generic;
-// No necesitas System.Linq
 
-namespace Library
+/// <summary>
+/// Implementa el patrón "Repositorio" (Repository).
+/// Su responsabilidad es manejar la lista de todos los clientes del sistema.
+/// </summary>
+public class RepoClientes : Repositorio<Cliente>
 {
-    /// <summary>
-    /// Repositorio de Clientes.
-    /// Implementa Singleton y IRepoClientes (DIP).
-    /// Hereda de Repositorio<Cliente> para reutilizar la lógica (Feedback #18).
-    /// </summary>
-    public class RepoClientes : Repositorio<Cliente>, IRepoClientes
+    public Cliente CrearCliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
     {
-        private static RepoClientes _instancia;
+        var nuevoCliente = new Cliente(nombre, apellido, telefono, correo, genero, fechaNacimiento);
+        this.Agregar(nuevoCliente);
+        return nuevoCliente;
+    }
+    public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
+    {
+        var cliente = Buscar(id);
 
-        /// <summary>
-        /// Constructor privado para asegurar el patrón Singleton.
-        /// </summary>
-        private RepoClientes() : base()
+        if (cliente != null)
         {
+            cliente.Nombre = nombre;
+            cliente.Apellido = apellido;
+            cliente.Telefono = telefono;
+            cliente.Correo = correo;
+            cliente.Genero = genero;
+            cliente.FechaNacimiento = fechaNacimiento;
         }
+    }
+    /// <summary>
+    /// Busca clientes que coincidan con un término en varios campos (Nombre, Apellido, Teléfono, Correo, Género).
+    /// </summary>
+    /// <param name="termino">El texto a buscar (ignora mayúsculas/minúsculas).</param>
+    /// <returns>Una <see cref="List{T}"/> de <see cref="Cliente"/> que coinciden.</returns>
+    public List<Cliente> BuscarPorTermino(string termino)
+    {
+        var resultados = new List<Cliente>();
+        var busqueda = termino.ToLower();
 
-        /// <summary>
-        /// Obtiene la instancia única del repositorio (Singleton).
-        /// </summary>
-        public static RepoClientes Instancia
+        foreach (var cliente in _clientes)
         {
-            get
+            if (cliente.Nombre.ToLower().Contains(busqueda) ||
+                cliente.Apellido.ToLower().Contains(busqueda) ||
+                cliente.Telefono.Contains(busqueda) ||
+                cliente.Correo.ToLower().Contains(busqueda) ||
+                cliente.Genero.ToLower().Contains(busqueda)) 
             {
-                if (_instancia == null)
-                {
-                    _instancia = new RepoClientes();
-                }
-                return _instancia;
+                resultados.Add(cliente);
             }
         }
-
-        // ¡YA NO NECESITAS LOS MÉTODOS Agregar, Buscar, Eliminar, ObtenerTodos!
-        // Se heredan de Repositorio<Cliente>.
-        
-        // (Tu compañero "Nahuel" agregará el método 'CrearCliente' aquí en su commit)
+        return resultados;
     }
 }
