@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using library;
+using Library;
 
 namespace Library
 {
@@ -33,8 +33,17 @@ namespace Library
                 return _instancia;
             }
         }
-        
-        // ¡Lógica heredada!
-        // (Tu compañero "Nahuel" agregará el método 'CrearVenta' aquí en su commit)
+
+        public Venta Agregar(string producto, float importe, DateTime fecha)
+        {
+            var nuevaVenta = new Venta(_nextId++, producto, importe, fecha);
+            _ventas.Add(nuevaVenta);
+            return nuevaVenta;
+        }
+
+        public List<Venta> ObtenerTodas()
+        {
+            return _ventas;
+        }
     }
 }

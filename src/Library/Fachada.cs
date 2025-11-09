@@ -49,14 +49,11 @@ public class Fachada
     /// <param name="correo">Correo del cliente.</param>
     /// <param name="genero">Género del cliente.</param>
     /// <param name="fechaNacimiento">Fecha de nacimiento del cliente.</param>
-    public void CrearCliente(string nombre, string apellido, string telefono, string correo, 
-                           string genero, DateTime fechaNacimiento)
-    {
-        // (Pasa 0 como ID temporal, asumiendo que el Repo lo ajustará)
-        var clienteTemporal = new Cliente(0, nombre, apellido, telefono, correo, 
-                                        genero, fechaNacimiento);
-        _repoClientes.Agregar(clienteTemporal);
-    }
+    public Cliente CrearCliente(string nombre, string apellido, string email, string telefono, string genero, DateTime fechaNacimiento)
+{
+    // La Fachada delega la creación al Repositorio (Creator)
+    return this._repoClientes.CrearCliente(nombre, apellido, email, telefono, genero, fechaNacimiento);
+}   
     
     /// <summary>
     /// Obtiene una lista de todos los clientes registrados.
@@ -64,7 +61,7 @@ public class Fachada
     /// <returns>Una <see cref="List{T}"/> de <see cref="Cliente"/>.</returns>
     public List<Cliente> VerTodosLosClientes()
     {
-        return _repoClientes.ObtenerTodos();
+        return Repositorio<Cliente>._repoClientes.ObtenerTodos();
     }
     
     /// <summary>
