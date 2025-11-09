@@ -1,55 +1,83 @@
 using Library;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-/// <summary>
-/// Implementa el patrón "Repositorio" (Repository).
-/// Su responsabilidad es manejar la lista de todos los clientes del sistema.
-/// </summary>
-public class RepoClientes : Repositorio<Cliente>
+namespace Library
 {
-    public Cliente CrearCliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
-    {
-        var nuevoCliente = new Cliente(nombre, apellido, telefono, correo, genero, fechaNacimiento);
-        this.Agregar(nuevoCliente);
-        return nuevoCliente;
-    }
-    public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
-    {
-        var cliente = Buscar(id);
-
-        if (cliente != null)
-        {
-            cliente.Nombre = nombre;
-            cliente.Apellido = apellido;
-            cliente.Telefono = telefono;
-            cliente.Correo = correo;
-            cliente.Genero = genero;
-            cliente.FechaNacimiento = fechaNacimiento;
-        }
-    }
     /// <summary>
-    /// Busca clientes que coincidan con un término en varios campos (Nombre, Apellido, Teléfono, Correo, Género).
+    /// Administra la colección de objetos <see cref="Cliente"/>.
+    /// Hereda la lógica común de <see cref="RepositorioBase{T}"/>.
     /// </summary>
-    /// <param name="termino">El texto a buscar (ignora mayúsculas/minúsculas).</param>
-    /// <returns>Una <see cref="List{T}"/> de <see cref="Cliente"/> que coinciden.</returns>
-    public List<Cliente> BuscarPorTermino(string termino)
+    public class RepoClientes : RepositorioBase<Cliente>, IRepoClientes
     {
-        var resultados = new List<Cliente>();
-        var busqueda = termino.ToLower();
+        // --- Campos Privados ---
+        // 'private List<Cliente> _clientes' HA SIDO ELIMINADO
+        // 'private int _nextId' HA SIDO ELIMINADO
+        // (Ambos son heredados como 'protected _items' y 'protected _nextId')
 
-        // src/Library/RepoClientes.cs
-        foreach (var cliente in elementos)
+        // --- Métodos Públicos (Operaciones CRUD) ---
+
+        /// <summary>
+        /// Crea y agrega un nuevo cliente a la lista (Operación Create).
+        /// Esta clase es la 'Creator' (GRASP) de los objetos Cliente.
+        /// </summary>
+        public void Agregar(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
         {
-            if (cliente.Nombre.ToLower().Contains(busqueda) ||
-                cliente.Apellido.ToLower().Contains(busqueda) ||
-                cliente.Telefono.Contains(busqueda) ||
-                cliente.Correo.ToLower().Contains(busqueda) ||
-                cliente.Genero.ToLower().Contains(busqueda)) 
+            var nuevoCliente = new Cliente(
+                this._nextId++, // Usa el _nextId heredado
+                nombre, 
+                apellido, 
+                telefono, 
+                correo,
+                genero, 
+                fechaNacimiento 
+            );
+            this._items.Add(nuevoCliente); // Usa la lista _items heredada
+        }
+
+        // --- 'Buscar(int id)' HA SIDO ELIMINADO (Heredado) ---
+
+        /// <summary>
+        /// Actualiza los datos de un cliente existente (Operación Update).
+        /// </summary>
+        public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
+        {
+            var cliente = this.Buscar(id); // Llama a Buscar() heredado
+            
+            if (cliente != null)
             {
-                resultados.Add(cliente);
+                cliente.Nombre = nombre;
+                cliente.Apellido = apellido;
+                cliente.Telefono = telefono;
+                cliente.Correo = correo;
+                cliente.Genero = genero; 
+                cliente.FechaNacimiento = fechaNacimiento; 
             }
         }
-        return resultados;
+        
+        /// <summary>
+        /// Busca clientes que coincidan con un término (Método específico de Cliente).
+        /// </summary>
+        public List<Cliente> BuscarPorTermino(string termino)
+        {
+            var resultados = new List<Cliente>();
+            var busqueda = termino.ToLower();
+
+            // Itera sobre la lista _items heredada
+            foreach (var cliente in this._items)
+            {
+                if (cliente.Nombre.ToLower().Contains(busqueda) ||
+                    cliente.Apellido.ToLower().Contains(busqueda) ||
+                    cliente.Telefono.Contains(busqueda) ||
+                    cliente.Correo.ToLower().Contains(busqueda) ||
+                    cliente.Genero.ToLower().Contains(busqueda)) 
+                {
+                    resultados.Add(cliente);
+                }
+            }
+            return resultados;
+        }
+    
     }
 }

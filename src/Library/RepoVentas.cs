@@ -1,51 +1,37 @@
-using System.Collections.Generic;
 using Library;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Library
 {
     /// <summary>
-    /// Repositorio de Ventas.
-    /// Implementa Singleton y IRepoVentas (DIP).
-    /// Hereda de Repositorio<Venta> para reutilizar la lógica (Feedback #18).
+    /// Implementa el patrón "Repositorio" (Repository).
+    /// Maneja la lista de ventas generales (no atadas a un cliente).
+    /// Hereda la lógica común de <see cref="RepositorioBase{T}"/>.
     /// </summary>
-    public class RepoVentas : Repositorio<Venta>, IRepoVentas
+    public class RepoVentas : RepositorioBase<Venta>, IRepoVentas
     {
-        public static RepoVentas _instancia;
+        // --- Campos Privados ---
+        // 'private List<Venta> _ventas' HA SIDO ELIMINADO
+        // 'private int _nextId' HA SIDO ELIMINADO
+        // (Ambos son heredados como 'protected _items' y 'protected _nextId')
+
+        // --- Métodos Públicos ---
 
         /// <summary>
-        /// Constructor privado para asegurar el patrón Singleton.
+        /// Agrega una nueva venta a la lista (Operación Create).
         /// </summary>
-        public RepoVentas() : base()
-        {
-        }
-
-        /// <summary>
-        /// Obtiene la instancia única del repositorio (Singleton).
-        /// </summary>
-        public static RepoVentas Instancia
-        {
-            get
-            {
-                if (_instancia == null)
-                {
-                    _instancia = new RepoVentas();
-                }
-                return _instancia;
-            }
-        }
-
+        /// <param name="producto">Descripción del producto o servicio vendido.</param>
+        /// <param name="importe">El monto o valor total de la venta.</param>
+        /// <param name="fecha">La fecha y hora en que se registró la venta.</param>
+        /// <returns>La <see cref="Venta"/> recién creada (con su ID asignado).</returns>
         public Venta Agregar(string producto, float importe, DateTime fecha)
         {
-            
-            var nuevaVenta = new Venta(nextId++, producto, importe, fecha);
-            elementos.Add(nuevaVenta);
+            var nuevaVenta = new Venta(this._nextId++, producto, importe, fecha);
+            this._items.Add(nuevaVenta); // Usa la lista _items heredada
             return nuevaVenta;
         }
 
-        public List<Venta> ObtenerTodas()
-        {
-            
-            return elementos;
-        }
     }
 }

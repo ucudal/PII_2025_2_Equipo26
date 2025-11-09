@@ -1,44 +1,31 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Library
 {
     /// <summary>
-    /// Define la interfaz genérica para un Repositorio (Feedback #18).
+    /// Define el contrato genérico para un repositorio de solo lectura
+    /// y búsqueda/eliminación básica.
     /// </summary>
-    /// <typeparam name="T">El tipo de entidad que almacena el repositorio.</typeparam>
-    //
-    // CORRECCIÓN: Se añade 'class' para permitir que 'T' sea 'null'
-    // sin usar la característica 'nullable'.
-    //
-    public interface IRepositorio<T> where T : class, IEntidad
+    /// <typeparam name="T">El tipo de entidad, debe implementar IEntidad.</typeparam>
+    public interface IRepositorio<T> where T : IEntidad
     {
         /// <summary>
-        /// Agrega una entidad al repositorio.
+        /// Busca una entidad por su ID.
         /// </summary>
-        /// <param name="item">La entidad a agregar.</param>
-        void Agregar(T item);
-
-        /// <summary>
-        /// Busca una entidad por su Id.
-        /// </summary>
-        /// <param name="id">El Id de la entidad a buscar.</param>
-        /// <returns>La entidad encontrada, o null si no se encuentra.</returns>
-        //
-        // CORRECCIÓN: Se quita el '?' de 'T?'.
-        // Como 'T' es una 'class', ya puede ser 'null' sin el '?'.
-        //
+        /// <param name="id">El ID a buscar.</param>
+        /// <returns>La entidad encontrada, o <c>null</c>.</returns>
         T Buscar(int id);
 
         /// <summary>
-        /// Elimina una entidad por su Id.
+        /// Devuelve una lista de solo lectura de todas las entidades.
         /// </summary>
-        /// <param name="id">El Id de la entidad a eliminar.</param>
-        void Eliminar(int id);
+        /// <returns>Un <see cref="IReadOnlyList{T}"/>.</returns>
+        IReadOnlyList<T> ObtenerTodas();
 
         /// <summary>
-        /// Obtiene una colección de solo lectura de todas las entidades.
+        /// Elimina una entidad de la lista por su ID.
         /// </summary>
-        /// <returns>Un IReadOnlyList<T> con todas las entidades.</returns>
-        IReadOnlyList<T> ObtenerTodos();
+        /// <param name="id">El ID de la entidad a eliminar.</param>
+        void Eliminar(int id);
     }
 }

@@ -1,12 +1,19 @@
+﻿using System.Collections.Generic;
+
 namespace Library
 {
     /// <summary>
-    /// Interfaz específica para el Repositorio de Etiquetas.
-    /// Hereda de IRepositorio<Etiqueta>
-    /// Esencial para la Inversión de Dependencias (DIP).
+    /// Define el contrato para el Repositorio de Etiquetas.
+    /// Hereda la funcionalidad base de IRepositorio.
     /// </summary>
+    
+    //  hereda de IRepositorio<Etiqueta>
     public interface IRepoEtiquetas : IRepositorio<Etiqueta>
     {
-        // (Tu compañero "Nahuel" agregará la firma de 'CrearEtiqueta' aquí)
+        /// <summary>
+        /// Crea una nueva etiqueta.
+        /// </summary>
+        void Crear(string nombre);
+
     }
 }

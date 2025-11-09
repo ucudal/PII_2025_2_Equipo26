@@ -17,7 +17,8 @@ public class Cliente : IEntidad
     /// <remarks>
     /// El 'private set' asegura que el ID solo se pueda asignar en el constructor.
     /// </remarks>
-    public int Id { get; set; }
+    public int Id { get; private set; }
+    
 
     /// <summary>
     /// Obtiene o establece el nombre del cliente.
@@ -111,7 +112,7 @@ public Cliente(string nombre, string apellido, string telefono, string correo, s
     public void AsignarVendedor(Usuario nuevoVendedor)
     {
         // La Fachada ya validó que el vendedor es válido (no nulo, rol Vendedor, estado Activo)
-        if (nuevoVendedor != null && nuevoVendedor.Rol == RolUsuario.Vendedor)
+        if (nuevoVendedor != null && nuevoVendedor.Rol == Rol.Vendedor)
         {
             this.VendedorAsignado = nuevoVendedor;
         }

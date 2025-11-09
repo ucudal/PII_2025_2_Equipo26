@@ -1,12 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+
 namespace Library
 {
     /// <summary>
-    /// Interfaz específica para el Repositorio de Clientes.
-    /// Hereda de IRepositorio<Cliente>
-    /// Esencial para la Inversión de Dependencias (DIP).
+    /// Define el contrato para el Repositorio de Clientes.
+    /// Hereda la funcionalidad base de IRepositorio.
     /// </summary>
     public interface IRepoClientes : IRepositorio<Cliente>
     {
-        // (Tu compañero/a "Nahuel" agregará la firma de 'CrearCliente' aquí)
+        /// <summary>
+        /// Crea y agrega un nuevo cliente.
+        /// </summary>
+        void Agregar(string nombre, string apellido, string telefono, string correo,
+            string genero, DateTime fechaNacimiento);
+
+        /// <summary>
+        /// Modifica un cliente existente.
+        /// </summary>
+        void Modificar(int id, string nombre, string apellido, string telefono, 
+            string correo, string genero, DateTime fechaNacimiento);
+
+        /// <summary>
+        /// Busca clientes por un término de texto.
+        /// </summary>
+        List<Cliente> BuscarPorTermino(string termino);
+
+        // HEMOS ELIMINADO: Buscar(int), ObtenerTodos(), Eliminar(int)
     }
 }

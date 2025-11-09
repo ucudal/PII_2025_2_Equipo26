@@ -5,7 +5,7 @@ using Library;
 /// Una enumeración (enum) es un tipo de dato por valor que define un conjunto
 /// de constantes con nombre.
 /// </summary>
-public enum RolUsuario
+public enum Rol
 {
     /// <summary>
     /// Un usuario que puede configurar el sistema, crear otros usuarios, etc.

@@ -2,33 +2,34 @@ using System;
 
 namespace Library
 {
-
     /// <summary>
-    /// Clase base abstracta para todos los tipos de interacción (Llamada, Reunion, Correo, etc.).
-    /// Define las propiedades comunes que toda interacción debe tener.
-    /// No se puede instanciar directamente (es abstracta).
+    /// Clase base abstracta para todos los tipos de interacción.
     /// </summary>
-
-    public abstract class Interaccion : IEntidad
+    public abstract class Interaccion
     {
-        public int Id { get; set; }
         // --- Propiedades Comunes ---
 
         /// <summary>
         /// Obtiene o establece la fecha y hora en que ocurrió la interacción.
         /// </summary>
         public DateTime Fecha { get; set; }
-
+        
         /// <summary>
         /// Obtiene o establece un breve resumen o tema de la interacción.
         /// </summary>
         public string Tema { get; set; }
-
+        
         /// <summary>
-        /// Obtiene o establece una <see cref="Nota"/> opcional para agregar más detalles.
-        /// (Ejemplo de Agregación).
+        /// Obtiene o establece una <see cref="Nota"/> opcional.
         /// </summary>
         public Nota NotaAdicional { get; set; }
+
+        // --- Propiedad Polimórfica (NUEVA) ---
+
+        /// <summary>
+        /// Obtiene el tipo de esta interacción (para polimorfismo).
+        /// </summary>
+        public abstract TipoInteraccion Tipo { get; }
 
         // --- Constructor Base ---
 

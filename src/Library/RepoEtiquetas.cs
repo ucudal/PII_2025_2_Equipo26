@@ -1,47 +1,21 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Library
 {
     /// <summary>
-    /// Repositorio de Etiquetas.
-    /// Implementa Singleton y IRepoEtiquetas (DIP).
-    /// Hereda de Repositorio<Etiqueta> para reutilizar la lógica (Feedback #18).
+    /// Implementa el patrón "Repositorio" (Repository).
+    /// Administra la colección de objetos <see cref="Etiqueta"/>.
+    /// Hereda la lógica común de <see cref="RepositorioBase{T}"/>.
     /// </summary>
-    public class RepoEtiquetas : Repositorio<Etiqueta>, IRepoEtiquetas
+    public class RepoEtiquetas : RepositorioBase<Etiqueta>, IRepoEtiquetas
     {
-        public static RepoEtiquetas _instancia;
+        // --- Campos Privados ---
+        // 'private List<Etiqueta> _etiquetas' HA SIDO ELIMINADO
+        // 'private int _nextId' HA SIDO ELIMINADO
+        // (Ambos son heredados como 'protected _items' y 'protected _nextId')
 
-        /// <summary>
-        /// Constructor privado para asegurar el patrón Singleton.
-        /// </summary>
-        public RepoEtiquetas() : base()
-        {
-        }
-
-        /// <summary>
-        /// Obtiene la instancia única del repositorio (Singleton).
-        /// </summary>
-        public static RepoEtiquetas Instancia
-        {
-            get
-            {
-                if (_instancia == null)
-                {
-                    _instancia = new RepoEtiquetas();
-                }
-                return _instancia;
-            }
-        }
-
-        /// <summary>
-        /// Devuelve la lista completa de todas las etiquetas (Read All).
-        /// </summary>
-        /// <returns>Una <see cref="List{T}"/> de <see cref="Etiqueta"/>.</returns>
-        public List<Etiqueta> ObtenerTodas()
-        {
-            // src/Library/RepoEtiquetas.cs
-            return elementos;
-        }
+        // --- Métodos Públicos (Operaciones CRUD) ---
 
         /// <summary>
         /// Crea una nueva etiqueta con un nombre y la agrega a la lista (Create).
@@ -50,11 +24,13 @@ namespace Library
         public void Crear(string nombre)
         {
             // '++' después de '_nextId' usa el valor actual y LUEGO lo incrementa.
-            // src/Library/RepoEtiquetas.cs
-        var nuevaEtiqueta = new Etiqueta(nextId++, nombre);
-
-            // src/Library/RepoEtiquetas.cs
-            elementos.Add(nuevaEtiqueta);
+            var nuevaEtiqueta = new Etiqueta(this._nextId++, nombre);
+            
+            this._items.Add(nuevaEtiqueta); // Usa la lista _items heredada
         }
+
+        // --- 'ObtenerTodas()' HA SIDO ELIMINADO (Heredado) ---
+        // --- 'Buscar(int id)' HA SIDO ELIMINADO (Heredado) ---
+        // --- 'Eliminar(int id)' HA SIDO ELIMINADO (Heredado) ---
     }
 }

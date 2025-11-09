@@ -1,7 +1,7 @@
 using Library; // Este 'using' es para IEntidad, asumiendo que también está en Library.
 
-namespace Library // <-- AÑADE ESTA LÍNEA
-{ // <-- AÑADE ESTA LÍNEA
+namespace Library
+{
     /// <summary>
     /// Representa a un usuario del sistema (Admin o Vendedor).
     /// Es el "Experto" (Expert) en su propia información y estado.
@@ -13,85 +13,62 @@ namespace Library // <-- AÑADE ESTA LÍNEA
         /// <summary>
         /// Obtiene el ID numérico único del usuario.
         /// </summary>
-        /// <remarks>
-        /// No se puede cambiar después de que se crea el objeto (private set).
-        /// </remarks>
-        public int Id { get; set; }
+        public int Id { get; private set; }
         
         /// <summary>
         /// Obtiene o establece el nombre de login (ej: "jPerez").
         /// </summary>
         public string NombreUsuario { get; set; }
         
-        /// <summary>
-        /// Obtiene la contraseña del usuario.
-        /// </summary>
-        /// <remarks>
-        /// Solo se puede cambiar usando <see cref="CambiarContrasena(string)"/>.
-        /// </remarks>
-        public string Contrasena { get; private set; } 
+        // --- PROPIEDAD 'Contrasena' ELIMINADA ---
         
         /// <summary>
-        /// Obtiene o establece el tipo de usuario (tomado del Enum <see cref="RolUsuario"/>).
+        /// Obtiene o establece el tipo de usuario (tomado del Enum <see cref="Rol"/>).
         /// </summary>
-        public RolUsuario Rol { get; set; }
+        public Rol Rol { get; set; }
         
         /// <summary>
-        /// Obtiene el estado actual (tomado del Enum <see cref="EstadoUsuario"/>).
+        /// Obtiene el estado actual (tomado del Enum <see cref="Estado"/>).
         /// </summary>
-        /// <remarks>
-        /// Solo se puede cambiar con <see cref="Activar()"/> o <see cref="Suspender()"/>.
-        /// </remarks>
-        public EstadoUsuario Estado { get; private set; } 
+        public Estado Estado { get; private set; } 
 
         // --- Constructor ---
         
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Usuario"/>.
-        /// Por defecto, un usuario siempre se crea como <see cref="EstadoUsuario.Activo"/>.
+        /// Por defecto, un usuario siempre se crea como <see cref="Estado.Activo"/>.
         /// </summary>
         /// <param name="id">El ID único del usuario.</param>
         /// <param name="nombreUsuario">El nombre de login.</param>
-        /// <param name="contrasena">La contraseña.</param>
         /// <param name="rol">El rol (Admin o Vendedor).</param>
-        public Usuario(int id, string nombreUsuario, string contrasena, RolUsuario rol)
+        // --- PARÁMETRO 'contrasena' ELIMINADO ---
+        public Usuario(int id, string nombreUsuario, Rol rol)
         {
             this.Id = id;
             this.NombreUsuario = nombreUsuario;
-            this.Contrasena = contrasena; 
             this.Rol = rol;
             
-            // Por defecto, un usuario siempre se crea como 'Activo'.
-            this.Estado = EstadoUsuario.Activo; 
+            this.Estado = Estado.Activo; 
         }
         
         // --- Métodos (Comportamientos) ---
 
         /// <summary>
-        /// Cambia el estado interno del usuario a <see cref="EstadoUsuario.Suspendido"/>.
+        /// Cambia el estado interno del usuario a <see cref="Estado.Suspendido"/>.
         /// </summary>
         public void Suspender()
         {
-            this.Estado = EstadoUsuario.Suspendido;
+            this.Estado = Estado.Suspendido;
         }
 
         /// <summary>
-        /// Cambia el estado interno del usuario a <see cref="EstadoUsuario.Activo"/>.
+        /// Cambia el estado interno del usuario a <see cref="Estado.Activo"/>.
         /// </summary>
         public void Activar()
         {
-            this.Estado = EstadoUsuario.Activo;
+            this.Estado = Estado.Activo;
         }
         
-        /// <summary>
-        /// Permite actualizar la contraseña del usuario.
-        /// </summary>
-        /// <param name="nuevaContrasena">La nueva contraseña (sin encriptar).</param>
-        public void CambiarContrasena(string nuevaContrasena)
-        {
-            // (Aquí se podría agregar lógica de validación,
-            //  como "que no sea la misma de antes" o "que tenga 8 caracteres").
-            this.Contrasena = nuevaContrasena;
-        }
+        // --- MÉTODO 'CambiarContrasena' ELIMINADO ---
     }
 } // <-- AÑADE ESTA LÍNEA
