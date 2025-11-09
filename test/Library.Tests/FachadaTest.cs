@@ -11,10 +11,18 @@ namespace Library.Tests
         private Fachada fachada;
 
         [SetUp]
-        public void Setup()
-        {
-            fachada = new Fachada(); 
-        }
+
+public void Setup()
+{
+
+    IRepoClientes repoClientes = new RepoClientes();
+    IRepoEtiquetas repoEtiquetas = new RepoEtiquetas();
+    IRepoUsuarios repoUsuarios = new RepoUsuarios();
+    IRepoVentas repoVentas = new RepoVentas();
+
+
+    fachada = new Fachada(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
+}
 
         [Test]
         public void Test_CrearYVerCliente()

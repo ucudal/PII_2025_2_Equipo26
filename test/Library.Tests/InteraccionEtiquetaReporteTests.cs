@@ -11,11 +11,18 @@ namespace Library.Tests
     {
         private Fachada fachada;
 
-        [SetUp]
-        public void Setup()
-        {
-            fachada = new Fachada();
-        }
+      [SetUp]
+public void Setup()
+{
+    // 1. Creamos las implementaciones reales de los repositorios
+    IRepoClientes repoClientes = new RepoClientes();
+    IRepoEtiquetas repoEtiquetas = new RepoEtiquetas();
+    IRepoUsuarios repoUsuarios = new RepoUsuarios();
+    IRepoVentas repoVentas = new RepoVentas();
+
+    // 2. Inyectamos los repositorios en el constructor de la Fachada
+    fachada = new Fachada(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
+}
 
         [Test]
         public void RegistrarMultiplesInteracciones_PruebaPolimorfismo()
@@ -28,7 +35,7 @@ namespace Library.Tests
             fachada.RegistrarCorreo(cliente.Id, DateTime.Now, "Correo prueba", "cli@mail.com", "ven@mail.com", "Consulta"); //
             fachada.RegistrarCotizacion(cliente.Id, "Cotizacion prueba", 1500.0, "Detalle"); //
             
-            var interacciones = fachada.VerInteraccionesDeCliente(cliente.Id);
+            var interacciones = fachada.VerInteraccionesCliente(cliente.Id);
 
             Assert.AreEqual(4, interacciones.Count);
             Assert.IsTrue(interacciones.Any(i => i is Llamada)); //
@@ -46,7 +53,7 @@ namespace Library.Tests
             fachada.CrearEtiqueta("VIP"); //
             var etiqueta = fachada.VerTodasLasEtiquetas().First(e => e.Nombre == "VIP"); 
 
-            fachada.AgregarEtiquetaACliente(cliente.Id, etiqueta.Id); //
+            fachada.AgregarEtiquetaCliente(cliente.Id, etiqueta.Id); //
             var clienteActualizado = fachada.BuscarCliente(cliente.Id);
 
             Assert.AreEqual(1, clienteActualizado.Etiquetas.Count);
