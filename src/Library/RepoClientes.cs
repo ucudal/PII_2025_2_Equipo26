@@ -1,22 +1,42 @@
-using Library;
-using System;
 using System.Collections.Generic;
+// No necesitas System.Linq
 
-/// <summary>
-/// ... (tus comentarios XML están bien) ...
-/// </summary>
-public class RepoClientes : Repositorio<Cliente>
+namespace Library
 {
-    // APLICAR PATRÓN CREATOR (Feedback: "los repositorios deberían crear las instancias")
-
-    // ANTES (Incorrecto - 8 argumentos):
-    // public Cliente CrearCliente(int id, string nombre, string apellido, string email, string telefono, string correo, string genero, DateTime fechaNacimiento)
-
-    // DESPUÉS (Correcto - 7 argumentos):
-    public Cliente CrearCliente(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
+    /// <summary>
+    /// Repositorio de Clientes.
+    /// Implementa Singleton y IRepoClientes (DIP).
+    /// Hereda de Repositorio<Cliente> para reutilizar la lógica (Feedback #18).
+    /// </summary>
+    public class RepoClientes : Repositorio<Cliente>, IRepoClientes
     {
-        var nuevoCliente = new Cliente(nombre, apellido, telefono, correo, genero, fechaNacimiento);
-        this.Agregar(nuevoCliente);
-        return nuevoCliente;
+        private static RepoClientes _instancia;
+
+        /// <summary>
+        /// Constructor privado para asegurar el patrón Singleton.
+        /// </summary>
+        private RepoClientes() : base()
+        {
+        }
+
+        /// <summary>
+        /// Obtiene la instancia única del repositorio (Singleton).
+        /// </summary>
+        public static RepoClientes Instancia
+        {
+            get
+            {
+                if (_instancia == null)
+                {
+                    _instancia = new RepoClientes();
+                }
+                return _instancia;
+            }
+        }
+
+        // ¡YA NO NECESITAS LOS MÉTODOS Agregar, Buscar, Eliminar, ObtenerTodos!
+        // Se heredan de Repositorio<Cliente>.
+        
+        // (Tu compañero "Nahuel" agregará el método 'CrearCliente' aquí en su commit)
     }
 }
