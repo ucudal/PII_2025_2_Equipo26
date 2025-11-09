@@ -18,7 +18,7 @@ namespace Library
         /// </summary>
         protected readonly List<T> elementos = new List<T>();
         
-        private int nextId = 1;
+        protected int nextId = 1;
 
         /// <inheritdoc />
         public virtual void Agregar(T item)

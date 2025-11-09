@@ -38,7 +38,8 @@ public class RepoClientes : Repositorio<Cliente>
         var resultados = new List<Cliente>();
         var busqueda = termino.ToLower();
 
-        foreach (var cliente in _clientes)
+        // src/Library/RepoClientes.cs
+        foreach (var cliente in elementos)
         {
             if (cliente.Nombre.ToLower().Contains(busqueda) ||
                 cliente.Apellido.ToLower().Contains(busqueda) ||

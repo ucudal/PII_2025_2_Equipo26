@@ -39,7 +39,8 @@ namespace Library
         /// <returns>Una <see cref="List{T}"/> de <see cref="Etiqueta"/>.</returns>
         public List<Etiqueta> ObtenerTodas()
         {
-            return _etiquetas;
+            // src/Library/RepoEtiquetas.cs
+            return elementos;
         }
 
         /// <summary>
@@ -49,9 +50,11 @@ namespace Library
         public void Crear(string nombre)
         {
             // '++' después de '_nextId' usa el valor actual y LUEGO lo incrementa.
-            var nuevaEtiqueta = new Etiqueta(_nextId++, nombre);
+            // src/Library/RepoEtiquetas.cs
+        var nuevaEtiqueta = new Etiqueta(nextId++, nombre);
 
-            _etiquetas.Add(nuevaEtiqueta);
+            // src/Library/RepoEtiquetas.cs
+            elementos.Add(nuevaEtiqueta);
         }
     }
 }

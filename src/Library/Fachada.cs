@@ -1,7 +1,6 @@
 using Library;
 using System;
 using System.Collections.Generic;
-
 /// <summary>
 /// Implementa el patrón "Fachada" (Facade).
 /// Es el único punto de entrada unificado para todas las operaciones de la lógica
@@ -59,11 +58,17 @@ public class Fachada
     /// Obtiene una lista de todos los clientes registrados.
     /// </summary>
     /// <returns>Una <see cref="List{T}"/> de <see cref="Cliente"/>.</returns>
-    public List<Cliente> VerTodosLosClientes()
-    {
-        return Repositorio<Cliente>._repoClientes.ObtenerTodos();
-    }
-    
+    // src/Library/Fachada.cs
+// src/Library/Fachada.cs
+
+/// <summary>
+/// Obtiene una lista de solo lectura de todos los clientes registrados.
+/// </summary>
+/// <returns>Una <see cref="IReadOnlyList{T}"/> de <see cref="Cliente"/>.</returns>
+public IReadOnlyList<Cliente> VerTodosLosClientes() // <-- CAMBIA List POR IReadOnlyList
+{
+    return this._repoClientes.ObtenerTodos(); // <-- Ahora los tipos coinciden
+}
     /// <summary>
     /// Modifica los datos de un cliente existente.
     /// </summary>

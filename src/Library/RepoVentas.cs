@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Library;
-
+using System;
 namespace Library
 {
     /// <summary>
@@ -36,14 +36,16 @@ namespace Library
 
         public Venta Agregar(string producto, float importe, DateTime fecha)
         {
-            var nuevaVenta = new Venta(_nextId++, producto, importe, fecha);
-            _ventas.Add(nuevaVenta);
+            
+            var nuevaVenta = new Venta(nextId++, producto, importe, fecha);
+            elementos.Add(nuevaVenta);
             return nuevaVenta;
         }
 
         public List<Venta> ObtenerTodas()
         {
-            return _ventas;
+            
+            return elementos;
         }
     }
 }
