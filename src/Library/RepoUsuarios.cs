@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace library
+namespace Library
 {
 
     /// <summary>

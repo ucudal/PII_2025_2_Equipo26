@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using library;
-
+using Library;
+using System;
 namespace Library
 {
     /// <summary>
@@ -10,12 +10,12 @@ namespace Library
     /// </summary>
     public class RepoVentas : Repositorio<Venta>, IRepoVentas
     {
-        private static RepoVentas _instancia;
+        public static RepoVentas _instancia;
 
         /// <summary>
         /// Constructor privado para asegurar el patrón Singleton.
         /// </summary>
-        private RepoVentas() : base()
+        public RepoVentas() : base()
         {
         }
 
@@ -33,8 +33,19 @@ namespace Library
                 return _instancia;
             }
         }
-        
-        // ¡Lógica heredada!
-        // (Tu compañero "Nahuel" agregará el método 'CrearVenta' aquí en su commit)
+
+        public Venta Agregar(string producto, float importe, DateTime fecha)
+        {
+            
+            var nuevaVenta = new Venta(nextId++, producto, importe, fecha);
+            elementos.Add(nuevaVenta);
+            return nuevaVenta;
+        }
+
+        public List<Venta> ObtenerTodas()
+        {
+            
+            return elementos;
+        }
     }
 }

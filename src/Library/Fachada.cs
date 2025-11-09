@@ -1,7 +1,6 @@
 using Library;
 using System;
 using System.Collections.Generic;
-
 /// <summary>
 /// Implementa el patrón "Fachada" (Facade).
 /// Es el único punto de entrada unificado para todas las operaciones de la lógica
@@ -49,24 +48,27 @@ public class Fachada
     /// <param name="correo">Correo del cliente.</param>
     /// <param name="genero">Género del cliente.</param>
     /// <param name="fechaNacimiento">Fecha de nacimiento del cliente.</param>
-    public void CrearCliente(string nombre, string apellido, string telefono, string correo, 
-                           string genero, DateTime fechaNacimiento)
-    {
-        // (Pasa 0 como ID temporal, asumiendo que el Repo lo ajustará)
-        var clienteTemporal = new Cliente(0, nombre, apellido, telefono, correo, 
-                                        genero, fechaNacimiento);
-        _repoClientes.Agregar(clienteTemporal);
-    }
+    public Cliente CrearCliente(string nombre, string apellido, string email, string telefono, string genero, DateTime fechaNacimiento)
+{
+    // La Fachada delega la creación al Repositorio (Creator)
+    return this._repoClientes.CrearCliente(nombre, apellido, email, telefono, genero, fechaNacimiento);
+}   
     
     /// <summary>
     /// Obtiene una lista de todos los clientes registrados.
     /// </summary>
     /// <returns>Una <see cref="List{T}"/> de <see cref="Cliente"/>.</returns>
-    public List<Cliente> VerTodosLosClientes()
-    {
-        return _repoClientes.ObtenerTodos();
-    }
-    
+    // src/Library/Fachada.cs
+// src/Library/Fachada.cs
+
+/// <summary>
+/// Obtiene una lista de solo lectura de todos los clientes registrados.
+/// </summary>
+/// <returns>Una <see cref="IReadOnlyList{T}"/> de <see cref="Cliente"/>.</returns>
+public IReadOnlyList<Cliente> VerTodosLosClientes() // <-- CAMBIA List POR IReadOnlyList
+{
+    return this._repoClientes.ObtenerTodos(); // <-- Ahora los tipos coinciden
+}
     /// <summary>
     /// Modifica los datos de un cliente existente.
     /// </summary>

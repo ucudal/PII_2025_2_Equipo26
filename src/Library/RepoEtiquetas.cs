@@ -9,12 +9,12 @@ namespace Library
     /// </summary>
     public class RepoEtiquetas : Repositorio<Etiqueta>, IRepoEtiquetas
     {
-        private static RepoEtiquetas _instancia;
+        public static RepoEtiquetas _instancia;
 
         /// <summary>
         /// Constructor privado para asegurar el patrón Singleton.
         /// </summary>
-        private RepoEtiquetas() : base()
+        public RepoEtiquetas() : base()
         {
         }
 
@@ -32,8 +32,29 @@ namespace Library
                 return _instancia;
             }
         }
-        
-        // ¡Lógica heredada!
-        // (Tu compañero "Nahuel" agregará el método 'CrearEtiqueta' aquí en su commit)
+
+        /// <summary>
+        /// Devuelve la lista completa de todas las etiquetas (Read All).
+        /// </summary>
+        /// <returns>Una <see cref="List{T}"/> de <see cref="Etiqueta"/>.</returns>
+        public List<Etiqueta> ObtenerTodas()
+        {
+            // src/Library/RepoEtiquetas.cs
+            return elementos;
+        }
+
+        /// <summary>
+        /// Crea una nueva etiqueta con un nombre y la agrega a la lista (Create).
+        /// </summary>
+        /// <param name="nombre">El nombre de la nueva etiqueta.</param>
+        public void Crear(string nombre)
+        {
+            // '++' después de '_nextId' usa el valor actual y LUEGO lo incrementa.
+            // src/Library/RepoEtiquetas.cs
+        var nuevaEtiqueta = new Etiqueta(nextId++, nombre);
+
+            // src/Library/RepoEtiquetas.cs
+            elementos.Add(nuevaEtiqueta);
+        }
     }
 }

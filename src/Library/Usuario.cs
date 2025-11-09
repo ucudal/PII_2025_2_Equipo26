@@ -1,8 +1,7 @@
-using Library;
+using Library; // Este 'using' es para IEntidad, asumiendo que también está en Library.
 
-namespace library
-{
-
+namespace Library // <-- AÑADE ESTA LÍNEA
+{ // <-- AÑADE ESTA LÍNEA
     /// <summary>
     /// Representa a un usuario del sistema (Admin o Vendedor).
     /// Es el "Experto" (Expert) en su propia información y estado.
@@ -18,35 +17,35 @@ namespace library
         /// No se puede cambiar después de que se crea el objeto (private set).
         /// </remarks>
         public int Id { get; set; }
-
+        
         /// <summary>
         /// Obtiene o establece el nombre de login (ej: "jPerez").
         /// </summary>
         public string NombreUsuario { get; set; }
-
+        
         /// <summary>
         /// Obtiene la contraseña del usuario.
         /// </summary>
         /// <remarks>
         /// Solo se puede cambiar usando <see cref="CambiarContrasena(string)"/>.
         /// </remarks>
-        public string Contrasena { get; private set; }
-
+        public string Contrasena { get; private set; } 
+        
         /// <summary>
         /// Obtiene o establece el tipo de usuario (tomado del Enum <see cref="RolUsuario"/>).
         /// </summary>
         public RolUsuario Rol { get; set; }
-
+        
         /// <summary>
         /// Obtiene el estado actual (tomado del Enum <see cref="EstadoUsuario"/>).
         /// </summary>
         /// <remarks>
         /// Solo se puede cambiar con <see cref="Activar()"/> o <see cref="Suspender()"/>.
         /// </remarks>
-        public EstadoUsuario Estado { get; private set; }
+        public EstadoUsuario Estado { get; private set; } 
 
         // --- Constructor ---
-
+        
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Usuario"/>.
         /// Por defecto, un usuario siempre se crea como <see cref="EstadoUsuario.Activo"/>.
@@ -59,13 +58,13 @@ namespace library
         {
             this.Id = id;
             this.NombreUsuario = nombreUsuario;
-            this.Contrasena = contrasena;
+            this.Contrasena = contrasena; 
             this.Rol = rol;
-
+            
             // Por defecto, un usuario siempre se crea como 'Activo'.
-            this.Estado = EstadoUsuario.Activo;
+            this.Estado = EstadoUsuario.Activo; 
         }
-
+        
         // --- Métodos (Comportamientos) ---
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace library
         {
             this.Estado = EstadoUsuario.Activo;
         }
-
+        
         /// <summary>
         /// Permite actualizar la contraseña del usuario.
         /// </summary>
@@ -95,4 +94,4 @@ namespace library
             this.Contrasena = nuevaContrasena;
         }
     }
-}
+} // <-- AÑADE ESTA LÍNEA
