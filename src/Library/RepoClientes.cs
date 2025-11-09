@@ -25,7 +25,6 @@ namespace Library
         public void Agregar(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
         {
             var nuevoCliente = new Cliente(
-                this._nextId++, // Usa el _nextId heredado
                 nombre, 
                 apellido, 
                 telefono, 
