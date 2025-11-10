@@ -13,27 +13,47 @@ namespace Library.Tests
     public class FachadaTest
     {
         /// <summary>
-        /// Instancia de la fachada (Singleton) que se utilizará en todas las pruebas.
+        /// La instancia de la fachada que se probará.
         /// </summary>
         private Fachada fachada;
 
         /// <summary>
+        /// Repositorios "mock" o "en memoria" que se inyectarán
+        /// en la fachada antes de cada prueba.
+        /// </summary>
+        private IRepoClientes repoClientes;
+        private IRepoEtiquetas repoEtiquetas;
+        private IRepoUsuarios repoUsuarios;
+        private IRepoVentas repoVentas;
+
+        /// <summary>
         /// Prepara el entorno para CADA prueba unitaria.
         /// Este método se ejecuta antes de cada [Test].
-        /// Obtiene la instancia de la Fachada y resetea todos los repositorios
-        /// para garantizar el aislamiento de la prueba (evitar que una
-        /// prueba afecte el resultado de otra).
+        /// 
+        /// 1. Crea instancias "frescas" de los repositorios concretos.
+        /// 2. Crea una "nueva" instancia de Fachada, inyectando
+        ///    dichos repositorios en su constructor (Inyección de Dependencias).
+        /// 
+        /// Esto garantiza que cada prueba se ejecute en un estado aislado
+        /// y limpio, sin interferencia de pruebas anteriores.
         /// </summary>
         [SetUp]
         public void SetUp()
         {
-            this.fachada = Fachada.Instancia;
+            /// <summary>
+            /// Asumimos que las implementaciones concretas (RepoClientes, etc.)
+            /// tienen constructores públicos y ya no son Singletons,
+            /// para coincidir con el diseño DI de la Fachada.
+            /// </summary>
+            this.repoClientes = new RepoClientes();
+            this.repoEtiquetas = new RepoEtiquetas();
+            this.repoUsuarios = new RepoUsuarios();
+            this.repoVentas = new RepoVentas();
 
-            // Gracias a InternalsVisibleTo, podemos invocar Reset()
-            RepoClientes.Instancia.Reset();
-            RepoUsuarios.Instancia.Reset();
-            RepoEtiquetas.Instancia.Reset();
-            RepoVentas.Instancia.Reset();
+            /// <summary>
+            /// Inyectamos las dependencias en la fachada.
+            /// </summary>
+            this.fachada = new Fachada(this.repoClientes, this.repoEtiquetas, this.repoUsuarios, this.repoVentas);
         }
 
         /// <summary>
@@ -48,8 +68,15 @@ namespace Library.Tests
             string apellido = "Perez";
             DateTime fechaNac = new DateTime(1990, 5, 15);
 
+            /// <summary>
+            /// Actuamos (Llamamos al método de la fachada)
+            /// </summary>
             this.fachada.CrearCliente(nombre, apellido, "099123456", "juan@perez.com", "M", fechaNac);
 
+            /// <summary>
+            /// Verificamos (Consultamos a la fachada, que a su vez
+            /// consultará al repositorio que le inyectamos).
+            /// </summary>
             var clientes = this.fachada.VerTodosLosClientes();
             
             Assert.AreEqual(1, clientes.Count);
@@ -66,18 +93,24 @@ namespace Library.Tests
         [Test]
         public void TestModificarCliente()
         {
-            // Primero creamos un cliente para modificar
+            /// <summary>
+            /// Arrange: Preparamos el escenario creando un cliente.
+            /// </summary>
             this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "M", DateTime.Now);
             var cliente = this.fachada.VerTodosLosClientes()[0];
             
             string nuevoNombre = "Juan Modificado";
             string nuevoCorreo = "nuevo@correo.com";
 
-            // Actuamos
+            /// <summary>
+            /// Act: Ejecutamos la lógica a probar.
+            /// </summary>
             this.fachada.ModificarCliente(cliente.Id, nuevoNombre, cliente.Apellido, cliente.Telefono, 
                                           nuevoCorreo, cliente.Genero, cliente.FechaNacimiento);
 
-            // Verificamos
+            /// <summary>
+            /// Assert: Verificamos que los cambios se hayan aplicado.
+            /// </summary>
             var clienteModificado = this.fachada.BuscarCliente(cliente.Id);
             Assert.IsNotNull(clienteModificado);
             Assert.AreEqual(nuevoNombre, clienteModificado.Nombre);
@@ -91,12 +124,21 @@ namespace Library.Tests
         [Test]
         public void TestEliminarCliente()
         {
+            /// <summary>
+            /// Arrange
+            /// </summary>
             this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "M", DateTime.Now);
             Assert.AreEqual(1, this.fachada.VerTodosLosClientes().Count);
             var clienteId = this.fachada.VerTodosLosClientes()[0].Id;
 
+            /// <summary>
+            /// Act
+            /// </summary>
             this.fachada.EliminarCliente(clienteId);
 
+            /// <summary>
+            /// Assert
+            /// </summary>
             Assert.AreEqual(0, this.fachada.VerTodosLosClientes().Count);
             Assert.IsNull(this.fachada.BuscarCliente(clienteId));
         }
@@ -109,12 +151,21 @@ namespace Library.Tests
         [Test]
         public void TestBuscarClientes()
         {
+            /// <summary>
+            /// Arrange
+            /// </summary>
             this.fachada.CrearCliente("Juan", "Perez", "111111", "juan@mail.com", "M", DateTime.Now);
             this.fachada.CrearCliente("Juana", "Gonzalez", "222222", "juana@mail.com", "F", DateTime.Now);
             this.fachada.CrearCliente("Pedro", "Gomez", "333333", "pedro@mail.com", "M", DateTime.Now);
 
+            /// <summary>
+            /// Act
+            /// </summary>
             var resultadoBusqueda = this.fachada.BuscarClientes("Juan");
 
+            /// <summary>
+            /// Assert
+            /// </summary>
             Assert.AreEqual(2, resultadoBusqueda.Count);
             Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juan"));
             Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juana"));

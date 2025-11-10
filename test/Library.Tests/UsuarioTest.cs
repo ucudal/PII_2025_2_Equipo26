@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using Library;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Library.Tests
 {
