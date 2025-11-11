@@ -17,9 +17,11 @@ public class Cliente : IEntidad
     /// <remarks>
     /// El 'private set' asegura que el ID solo se pueda asignar en el constructor.
     /// </remarks>
-    public int Id { get; private set; }
     
-
+    // --- CORRECCIÓN ---
+    // Se cambia 'private set' por 'set' para que el RepositorioBase pueda asignar el ID.
+    public int Id { get; set; }
+    
     /// <summary>
     /// Obtiene o establece el nombre del cliente.
     /// </summary>
