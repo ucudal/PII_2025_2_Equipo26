@@ -31,3 +31,5 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 * **Tutoriales de Git:** Diversos recursos online para entender mejor el flujo de trabajo con ramas y fusiones.
 * **Ayuda de Trello:** Para optimizar el uso del tablero y sus funcionalidades.
 
+Aclaraciones:
+Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
