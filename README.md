@@ -31,8 +31,8 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 * **Tutoriales de Git:** Diversos recursos online para entender mejor el flujo de trabajo con ramas y fusiones.
 * **Ayuda de Trello:** Para optimizar el uso del tablero y sus funcionalidades.
 
-Diagrama UML:
-<img width="3394" height="3845" alt="Diagrama UML protecto F-NAF-2025-10-20-192559" src="https://github.com/user-attachments/assets/20b4f79b-5133-481c-b782-fc0884ae7950" />
+Diagrama UML(Actualizado):
+<img width="3454" height="800" alt="image" src="https://github.com/user-attachments/assets/858c132b-0956-48b8-9ec3-2afd4686b791" />
 
 Tarjetas CRC:
 <img width="6678" height="1310" alt="Untitled diagram-2025-10-21-034511" src="https://github.com/user-attachments/assets/95909555-fdac-4b66-82a1-68eb8b90c2ab" />
