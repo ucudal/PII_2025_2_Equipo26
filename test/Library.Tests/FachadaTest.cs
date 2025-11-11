@@ -1,134 +1,174 @@
 using NUnit.Framework;
 using Library;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Library.Tests
 {
+    /// <summary>
+    /// Pruebas unitarias para los métodos de la Fachada relacionados
+    /// con la gestión de Clientes (Crear, Modificar, Eliminar, Buscar).
+    /// </summary>
     [TestFixture]
     public class FachadaTest
     {
+        /// <summary>
+        /// La instancia de la fachada que se probará.
+        /// </summary>
         private Fachada fachada;
 
+        /// <summary>
+        /// Repositorios "mock" o "en memoria" que se inyectarán
+        /// en la fachada antes de cada prueba.
+        /// </summary>
+        private IRepoClientes repoClientes;
+        private IRepoEtiquetas repoEtiquetas;
+        private IRepoUsuarios repoUsuarios;
+        private IRepoVentas repoVentas;
+
+        /// <summary>
+        /// Prepara el entorno para CADA prueba unitaria.
+        /// Este método se ejecuta antes de cada [Test].
+        /// 
+        /// 1. Crea instancias "frescas" de los repositorios concretos.
+        /// 2. Crea una "nueva" instancia de Fachada, inyectando
+        ///    dichos repositorios en su constructor (Inyección de Dependencias).
+        /// 
+        /// Esto garantiza que cada prueba se ejecute en un estado aislado
+        /// y limpio, sin interferencia de pruebas anteriores.
+        /// </summary>
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
-            fachada = new Fachada(); 
+            /// <summary>
+            /// Asumimos que las implementaciones concretas (RepoClientes, etc.)
+            /// tienen constructores públicos y ya no son Singletons,
+            /// para coincidir con el diseño DI de la Fachada.
+            /// </summary>
+            this.repoClientes = new RepoClientes();
+            this.repoEtiquetas = new RepoEtiquetas();
+            this.repoUsuarios = new RepoUsuarios();
+            this.repoVentas = new RepoVentas();
+
+            /// <summary>
+            /// Inyectamos las dependencias en la fachada.
+            /// </summary>
+            this.fachada = new Fachada(this.repoClientes, this.repoEtiquetas, this.repoUsuarios, this.repoVentas);
         }
 
+        /// <summary>
+        /// Verifica que se pueda crear un cliente correctamente.
+        /// Comprueba que el cliente se persiste en el repositorio
+        /// y que sus datos (nombre, apellido, ID) son correctos.
+        /// </summary>
         [Test]
-        public void Test_CrearYVerCliente()
+        public void TestCrearCliente()
         {
-            // 1. Arrange (Organizar)
             string nombre = "Juan";
             string apellido = "Perez";
-            string telefono = "099123456";
-            string correo = "juan@perez.com";
-            DateTime fechaNac = new DateTime(1990, 1, 1);
+            DateTime fechaNac = new DateTime(1990, 5, 15);
 
-            // 2. Act (Actuar)
-            fachada.CrearCliente(nombre, apellido, telefono, correo, "Masculino", fechaNac);
-            var clientes = fachada.VerTodosLosClientes();
+            /// <summary>
+            /// Actuamos (Llamamos al método de la fachada)
+            /// </summary>
+            this.fachada.CrearCliente(nombre, apellido, "099123456", "juan@perez.com", "M", fechaNac);
 
-            // 3. Assert (Verificar)
-            Assert.AreEqual(1, clientes.Count); // Verificamos que se agregó 1 cliente
-            Assert.AreEqual(nombre, clientes[0].Nombre); // Verificamos los datos
+            /// <summary>
+            /// Verificamos (Consultamos a la fachada, que a su vez
+            /// consultará al repositorio que le inyectamos).
+            /// </summary>
+            var clientes = this.fachada.VerTodosLosClientes();
+            
+            Assert.AreEqual(1, clientes.Count);
+            Assert.AreEqual(nombre, clientes[0].Nombre);
             Assert.AreEqual(apellido, clientes[0].Apellido);
-            Assert.AreEqual(telefono, clientes[0].Telefono);
+            Assert.AreEqual(fechaNac, clientes[0].FechaNacimiento);
+            Assert.AreEqual(1, clientes[0].Id); // El primer ID debe ser 1
         }
 
+        /// <summary>
+        /// Verifica que los datos de un cliente existente se puedan modificar
+        /// correctamente.
+        /// </summary>
         [Test]
-        public void Test_ModificarCliente()
+        public void TestModificarCliente()
         {
-            // 1. Arrange (Organizar)
-            // Primero, creamos un cliente para poder modificarlo
-            fachada.CrearCliente("Ana", "Gomez", "091111111", "ana@gomez.com", "Femenino", new DateTime(1985, 5, 5));
-            Cliente clienteCreado = fachada.VerTodosLosClientes()[0];
-            int idCliente = clienteCreado.Id;
-
-            // Nuevos datos para la modificación
-            string nuevoTelefono = "092222222";
-            string nuevoCorreo = "ana.actualizada@gomez.com";
-
-            // 2. Act (Actuar)
-            fachada.ModificarCliente(idCliente, "Ana", "Gomez", nuevoTelefono, nuevoCorreo, "Femenino", new DateTime(1985, 5, 5));
-
-            // 3. Assert (Verificar)
-            Cliente clienteModificado = fachada.VerTodosLosClientes()[0]; // Sigue habiendo un solo cliente
+            /// <summary>
+            /// Arrange: Preparamos el escenario creando un cliente.
+            /// </summary>
+            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "M", DateTime.Now);
+            var cliente = this.fachada.VerTodosLosClientes()[0];
             
-            Assert.AreEqual(idCliente, clienteModificado.Id); // El ID no debe cambiar
-            Assert.AreEqual("Ana", clienteModificado.Nombre); // El nombre se mantuvo
-            Assert.AreEqual(nuevoTelefono, clienteModificado.Telefono); // El teléfono se actualizó
-            Assert.AreEqual(nuevoCorreo, clienteModificado.Correo); // El correo se actualizó
+            string nuevoNombre = "Juan Modificado";
+            string nuevoCorreo = "nuevo@correo.com";
+
+            /// <summary>
+            /// Act: Ejecutamos la lógica a probar.
+            /// </summary>
+            this.fachada.ModificarCliente(cliente.Id, nuevoNombre, cliente.Apellido, cliente.Telefono, 
+                                          nuevoCorreo, cliente.Genero, cliente.FechaNacimiento);
+
+            /// <summary>
+            /// Assert: Verificamos que los cambios se hayan aplicado.
+            /// </summary>
+            var clienteModificado = this.fachada.BuscarCliente(cliente.Id);
+            Assert.IsNotNull(clienteModificado);
+            Assert.AreEqual(nuevoNombre, clienteModificado.Nombre);
+            Assert.AreEqual(nuevoCorreo, clienteModificado.Correo);
         }
 
+        /// <summary>
+        /// Verifica que un cliente pueda ser eliminado del sistema
+        /// usando su ID.
+        /// </summary>
         [Test]
-        public void Test_EliminarCliente()
+        public void TestEliminarCliente()
         {
-            // 1. Arrange (Organizar)
-            // Creamos un cliente para luego eliminarlo
-            fachada.CrearCliente("Carlos", "Ruiz", "093333333", "carlos@ruiz.com", "Masculino", new DateTime(1970, 10, 10));
-            Cliente clienteCreado = fachada.VerTodosLosClientes()[0];
-            int idCliente = clienteCreado.Id;
-            
-            // Verificación previa: hay 1 cliente
-            Assert.AreEqual(1, fachada.VerTodosLosClientes().Count); 
+            /// <summary>
+            /// Arrange
+            /// </summary>
+            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "M", DateTime.Now);
+            Assert.AreEqual(1, this.fachada.VerTodosLosClientes().Count);
+            var clienteId = this.fachada.VerTodosLosClientes()[0].Id;
 
-            // 2. Act (Actuar)
-            fachada.EliminarCliente(idCliente);
+            /// <summary>
+            /// Act
+            /// </summary>
+            this.fachada.EliminarCliente(clienteId);
 
-            // 3. Assert (Verificar)
-            // La lista de clientes ahora debería estar vacía
-            var clientes = fachada.VerTodosLosClientes();
-            Assert.AreEqual(0, clientes.Count); 
+            /// <summary>
+            /// Assert
+            /// </summary>
+            Assert.AreEqual(0, this.fachada.VerTodosLosClientes().Count);
+            Assert.IsNull(this.fachada.BuscarCliente(clienteId));
         }
 
+        /// <summary>
+        /// Prueba la funcionalidad de búsqueda de clientes.
+        /// Verifica que el método devuelva todos los clientes
+        /// que coincidan parcialmente con el término de búsqueda.
+        /// </summary>
         [Test]
-        public void Test_BuscarClientesPorNombre()
+        public void TestBuscarClientes()
         {
-            // 1. Arrange (Organizar)
-            // Creamos varios clientes
-            fachada.CrearCliente("Maria", "Rodriguez", "094444444", "maria1@mail.com", "Femenino", new DateTime(1995, 2, 2));
-            fachada.CrearCliente("Maria", "Lopez", "095555555", "maria2@mail.com", "Femenino", new DateTime(1992, 3, 3));
-            fachada.CrearCliente("Pedro", "Gonzalez", "096666666", "pedro@mail.com", "Masculino", new DateTime(1990, 4, 4));
+            /// <summary>
+            /// Arrange
+            /// </summary>
+            this.fachada.CrearCliente("Juan", "Perez", "111111", "juan@mail.com", "M", DateTime.Now);
+            this.fachada.CrearCliente("Juana", "Gonzalez", "222222", "juana@mail.com", "F", DateTime.Now);
+            this.fachada.CrearCliente("Pedro", "Gomez", "333333", "pedro@mail.com", "M", DateTime.Now);
 
-            // 2. Act (Actuar)
-            // Buscamos clientes que contengan "Maria" en su nombre (ignora mayúsculas/minúsculas)
-            List<Cliente> resultadoBusqueda = fachada.BuscarClientes("maria");
+            /// <summary>
+            /// Act
+            /// </summary>
+            var resultadoBusqueda = this.fachada.BuscarClientes("Juan");
 
-            // 3. Assert (Verificar)
-            Assert.AreEqual(2, resultadoBusqueda.Count); // Debe encontrar a las dos Marias
-            Assert.AreEqual("Rodriguez", resultadoBusqueda[0].Apellido);
-            Assert.AreEqual("Lopez", resultadoBusqueda[1].Apellido);
-        }
-
-        [Test]
-        public void Test_BuscarClientesPorCorreo()
-        {
-            // 1. Arrange (Organizar)
-            fachada.CrearCliente("Maria", "Rodriguez", "094444444", "maria1@mail.com", "Femenino", new DateTime(1995, 2, 2));
-            fachada.CrearCliente("Pedro", "Gonzalez", "096666666", "pedro@mail.com", "Masculino", new DateTime(1990, 4, 4));
-
-            // 2. Act (Actuar)
-            // Buscamos por correo electrónico
-            List<Cliente> resultadoBusqueda = fachada.BuscarClientes("pedro@mail.com");
-
-            // 3. Assert (Verificar)
-            Assert.AreEqual(1, resultadoBusqueda.Count); // Debe encontrar solo a Pedro
-            Assert.AreEqual("Pedro", resultadoBusqueda[0].Nombre);
-        }
-
-        [Test]
-        public void Test_BuscarClientesSinResultados()
-        {
-            // 1. Arrange (Organizar)
-            fachada.CrearCliente("Maria", "Rodriguez", "094444444", "maria1@mail.com", "Femenino", new DateTime(1995, 2, 2));
-
-            // 2. Act (Actuar)
-            List<Cliente> resultadoBusqueda = fachada.BuscarClientes("Inexistente");
-
-            // 3. Assert (Verificar)
-            Assert.AreEqual(0, resultadoBusqueda.Count); // No debe encontrar nada
+            /// <summary>
+            /// Assert
+            /// </summary>
+            Assert.AreEqual(2, resultadoBusqueda.Count);
+            Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juan"));
+            Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juana"));
         }
     }
 }

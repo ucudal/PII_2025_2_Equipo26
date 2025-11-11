@@ -289,16 +289,19 @@ public void EliminarEtiqueta(int idEtiqueta)
         public List<Cliente> ObtenerClientesInactivos(int diasSinInteraccion)
         {
             List<Cliente> clientesInactivos = new List<Cliente>();
+            // Calcula la fecha límite (ej. si hoy es 11/Nov y dias=30, fechaLimite es 12/Oct)
             DateTime fechaLimite = DateTime.Now.AddDays(-diasSinInteraccion);
 
             foreach (var cliente in this._repoClientes.ObtenerTodas())
             {
+                // 1. Si el cliente no tiene interacciones, es inactivo.
                 if (cliente.Interacciones.Count == 0)
                 {
                     clientesInactivos.Add(cliente);
-                    continue; 
+                    continue; // Pasa al siguiente cliente
                 }
 
+                // 2. Encontrar la interacción más reciente del cliente
                 DateTime fechaMasReciente = DateTime.MinValue;
                 foreach (var interaccion in cliente.Interacciones)
                 {
@@ -308,6 +311,15 @@ public void EliminarEtiqueta(int idEtiqueta)
                     }
                 }
 
+                // --- ESTA ES LA LÓGICA CLAVE ---
+                // 3. El cliente es inactivo si su última interacción (fechaMasReciente)
+                //    es ANTERIOR (<) a la fechaLímite.
+                //
+                //    Ej. Activo:   fechaMasReciente (1/Nov) < fechaLimite (12/Oct) -> FALSO (No es inactivo)
+                //    Ej. Inactivo: fechaMasReciente (1/Oct) < fechaLimite (12/Oct) -> VERDADERO (Es inactivo)
+                //
+                // (El error 'Expected: False, But was: True' sugiere que tu código
+                // local podría tener un '>' aquí por error).
                 if (fechaMasReciente < fechaLimite)
                 {
                     clientesInactivos.Add(cliente);
@@ -355,6 +367,9 @@ public void EliminarEtiqueta(int idEtiqueta)
         
         // --- Dashboard ---
         
+        /// <summary>
+        /// Obtiene un resumen de datos para el Dashboard.
+        /// </summary>
         public ResumenDashboard ObtenerResumenDashboard()
         {
             var todosLosClientes = this._repoClientes.ObtenerTodas();
@@ -366,31 +381,35 @@ public void EliminarEtiqueta(int idEtiqueta)
                 todasLasInteracciones.AddRange(cliente.Interacciones);
             }
 
-            todasLasInteracciones.Sort((i1, i2) => i2.Fecha.CompareTo(i1.Fecha));
-            
-            List<Interaccion> interaccionesRecientes = todasLasInteracciones.Take(5).ToList();
-
-            List<Reunion> reunionesProximas = new List<Reunion>();
             DateTime ahora = DateTime.Now;
 
-            foreach (Interaccion interaccion in todasLasInteracciones)
-            {
-                if (interaccion is Reunion) 
-                {
-                    if (interaccion.Fecha > ahora) 
-                    {
-                        reunionesProximas.Add((Reunion)interaccion);
-                    }
-                }
-            }
+            // --- INICIO DE LA CORRECCIÓN ---
 
-            reunionesProximas.Sort((r1, r2) => r1.Fecha.CompareTo(r2.Fecha));
+            // 1. Interacciones Recientes (PASADAS)
+            //    Filtra solo las que ya ocurrieron (Fecha <= ahora)
+            //    Ordena descendente (más nuevas primero) y toma las 5.
+            List<Interaccion> interaccionesRecientes = todasLasInteracciones
+                .Where(i => i.Fecha <= ahora) // <-- El filtro clave que faltaba
+                .OrderByDescending(i => i.Fecha)
+                .Take(5)
+                .ToList();
+
+            // 2. Reuniones Próximas (FUTURAS)
+            //    Filtra solo las que son de tipo 'Reunion' Y que aún no han ocurrido (Fecha > ahora)
+            //    Ordena ascendente (más cercanas primero).
+            List<Reunion> reunionesProximas = todasLasInteracciones
+                .OfType<Reunion>() // Filtra solo las que son 'Reunion'
+                .Where(r => r.Fecha > ahora) // Filtra solo las futuras
+                .OrderBy(r => r.Fecha) // Ordena (más cercana primero)
+                .ToList();
+
+            // --- FIN DE LA CORRECCIÓN ---
 
             var resumen = new ResumenDashboard
             {
                 TotalClientes = totalClientes,
-                InteraccionesRecientes = interaccionesRecientes,
-                ReunionesProximas = reunionesProximas
+                InteraccionesRecientes = interaccionesRecientes, // Corregido
+                ReunionesProximas = reunionesProximas // Corregido
             };
 
             return resumen;

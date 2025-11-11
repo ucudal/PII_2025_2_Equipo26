@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using Library;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Library.Tests
 {
@@ -10,12 +9,19 @@ namespace Library.Tests
     {
         private Fachada fachada;
 
-        [SetUp]
+       [SetUp]
         public void Setup()
         {
-            fachada = new Fachada();
-        }
+            // 1. Creamos las implementaciones reales de los repositorios
+            IRepoClientes repoClientes = new RepoClientes();
+            IRepoEtiquetas repoEtiquetas = new RepoEtiquetas();
+            IRepoUsuarios repoUsuarios = new RepoUsuarios();
+            IRepoVentas repoVentas = new RepoVentas();
 
+            // 2. Inyectamos los repositorios en el constructor de la Fachada
+            fachada = new Fachada(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
+        }
+        
         [Test]
         public void CrearUsuario_DeberiaAgregarUsuarioAlRepositorio()
         {
@@ -23,9 +29,9 @@ namespace Library.Tests
             string contrasena = "pass123";
             Rol rol = Rol.Administrador;
 
-            fachada.CrearUsuario(nombreUsuario, contrasena, rol);
+            fachada.CrearUsuario(nombreUsuario, rol);
 
-            List<Usuario> usuarios = fachada.VerTodosLosUsuarios();
+            var usuarios = fachada.VerTodosLosUsuarios();
 
             Assert.AreEqual(1, usuarios.Count);
 
@@ -40,13 +46,14 @@ namespace Library.Tests
         [Test]
         public void SuspenderUsuario_DeberiaCambiarEstadoASuspendido()
         {
-            fachada.CrearUsuario("testUser", "pass", Rol.Vendedor);
+            fachada.CrearUsuario("testUser", Rol.Vendedor);
             
-            int idUsuarioASuspender = 1;
+            // Asumimos que es 1 porque [SetUp] limpia la BBDD
+            int idUsuarioASuspender = 1; 
 
             fachada.SuspenderUsuario(idUsuarioASuspender);
 
-            List<Usuario> usuarios = fachada.VerTodosLosUsuarios();
+            var usuarios = fachada.VerTodosLosUsuarios();
             Usuario usuarioSuspendido = usuarios[0];
 
             Assert.IsNotNull(usuarioSuspendido);
@@ -57,7 +64,7 @@ namespace Library.Tests
         [Test]
         public void ActivarUsuario_DeberiaCambiarEstadoAActivo()
         {
-            fachada.CrearUsuario("testUser", "pass", Rol.Vendedor);
+            fachada.CrearUsuario("testUser", Rol.Vendedor);
             int idUsuario = 1;
             
             fachada.SuspenderUsuario(idUsuario);
@@ -72,7 +79,7 @@ namespace Library.Tests
                 usuario.Activar(); 
             }
 
-            List<Usuario> usuarios = fachada.VerTodosLosUsuarios();
+            var usuarios = fachada.VerTodosLosUsuarios();
             Usuario usuarioActivado = usuarios[0];
 
             Assert.IsNotNull(usuarioActivado);
@@ -83,47 +90,76 @@ namespace Library.Tests
         [Test]
         public void RegistrarVenta_DeberiaAgregarVentaAlCliente()
         {
+            // 1. Arrange
             fachada.CrearCliente("Juan", "Perez", "099123456", "jp@mail.com", "M", DateTime.Now);
-            int idCliente = 1;
+            
+            // --- CORRECCIÓN: Obtenemos el ID REAL ---
+            Cliente clienteCreado = fachada.VerTodosLosClientes()[0];
+            int idClienteReal = clienteCreado.Id; 
+            // --- FIN CORRECCIÓN ---
+
             string producto = "Laptop";
             float monto = 1500.50f;
 
-            fachada.RegistrarVenta(idCliente, producto, monto);
+            // 2. Act
+            fachada.RegistrarVenta(idClienteReal, producto, monto); // Usamos el ID real
 
-            Cliente cliente = fachada.BuscarCliente(idCliente);
+            // 3. Assert
+            Cliente cliente = fachada.BuscarCliente(idClienteReal); // Buscamos con el ID real
             
             Assert.IsNotNull(cliente);
-            Assert.AreEqual(1, cliente.Ventas.Count);
+            Assert.AreEqual(1, cliente.Ventas.Count); // Ahora sí encontrará la venta
             
             Venta ventaRegistrada = cliente.Ventas[0];
             Assert.AreEqual(producto, ventaRegistrada.Producto);
             Assert.AreEqual(monto, ventaRegistrada.Importe);
-            Assert.AreEqual(1, ventaRegistrada.Id);
+            
+            // Asumimos que el primer ID de Venta también es 1
+            Assert.AreEqual(1, ventaRegistrada.Id); 
         }
 
         [Test]
         public void AsignarClienteVendedor_DeberiaAsociarVendedorAlCliente()
         {
-            fachada.CrearCliente("Ana", "Gomez", "091987654", "ag@mail.com", "F", DateTime.Now);
-            int idCliente = 1;
-
-            fachada.CrearUsuario("vendedorEstrella", "pass", Rol.Vendedor);
-            int idVendedor = 1;
-
-            fachada.AsignarClienteVendedor(idCliente, idVendedor);
-
-            Cliente cliente = fachada.BuscarCliente(idCliente);
+            // --- ARRANGE ---
             
+            // 1. Crear los objetos necesarios
+            fachada.CrearCliente("Ana", "Gomez", "091987654", "ag@mail.com", "F", DateTime.Now);
+            
+            // (Asegúrate de que esta llamada coincide con tu firma en Fachada.cs)
+            fachada.CrearUsuario("vendedorEstrella", Rol.Vendedor);
+
+            // --- CORRECCIÓN: Obtenemos los IDs REALES ---
+
+            // 2. Obtener el Cliente real
+            Cliente clienteCreado = fachada.VerTodosLosClientes()[0];
+            int idClienteReal = clienteCreado.Id;
+
+            // 3. Obtener el Vendedor real
+            Usuario vendedorCreado = fachada.VerTodosLosUsuarios().First(u => u.NombreUsuario == "vendedorEstrella");
+            int idVendedorReal = vendedorCreado.Id;
+            
+            // --- ACT ---
+
+            // 5. Ejecutar la lógica de negocio con los IDs reales
+            fachada.AsignarClienteVendedor(idClienteReal, idVendedorReal);
+
+            // --- ASSERT ---
+
+            // 6. Buscar el cliente actualizado (usando el ID real)
+            Cliente cliente = fachada.BuscarCliente(idClienteReal);
+            
+            // 7. Verificar los resultados
             Assert.IsNotNull(cliente);
             Assert.IsNotNull(cliente.VendedorAsignado);
-            Assert.AreEqual(idVendedor, cliente.VendedorAsignado.Id);
+            Assert.AreEqual(idVendedorReal, cliente.VendedorAsignado.Id);
         }
-
+        
         [Test]
         public void EliminarUsuario_DeberiaQuitarUsuarioDelRepositorio()
         {
-            fachada.CrearUsuario("userParaEliminar", "pass", Rol.Vendedor);
-            int idUsuarioAEliminar = 1;
+            fachada.CrearUsuario("userParaEliminar", Rol.Vendedor);
+            int idUsuarioAEliminar = 1; // Asumimos 1 por [SetUp]
 
             Assert.AreEqual(1, fachada.VerTodosLosUsuarios().Count);
 
@@ -131,7 +167,6 @@ namespace Library.Tests
 
             Assert.AreEqual(0, fachada.VerTodosLosUsuarios().Count);
             
-            // Esta línea ahora funciona porque agregaste BuscarUsuario a la Fachada
             Usuario usuarioEliminado = fachada.BuscarUsuario(idUsuarioAEliminar);
             Assert.IsNull(usuarioEliminado);
         }
@@ -139,34 +174,47 @@ namespace Library.Tests
         [Test]
         public void AsignarClienteVendedor_NoDeberiaAsignarVendedorSuspendido()
         {
+            // --- ARRANGE ---
             fachada.CrearCliente("Cliente", "Test", "123", "c@mail.com", "M", DateTime.Now);
-            int idCliente = 1;
+            fachada.CrearUsuario("vendedorSuspendido", Rol.Vendedor);
 
-            fachada.CrearUsuario("vendedorSuspendido", "pass", Rol.Vendedor);
-            int idVendedor = 1;
+            // --- CORRECCIÓN: Obtenemos los IDs REALES ---
+            Cliente clienteCreado = fachada.VerTodosLosClientes()[0];
+            int idClienteReal = clienteCreado.Id;
             
-            fachada.SuspenderUsuario(idVendedor);
+            Usuario vendedorCreado = fachada.VerTodosLosUsuarios().First(u => u.NombreUsuario == "vendedorSuspendido");
+            int idVendedorReal = vendedorCreado.Id;
+            // --- FIN CORRECCIÓN ---
+            
+            fachada.SuspenderUsuario(idVendedorReal); // Suspendemos el ID real
 
-            fachada.AsignarClienteVendedor(idCliente, idVendedor);
+            // --- ACT ---
+            fachada.AsignarClienteVendedor(idClienteReal, idVendedorReal); // Usamos IDs reales
 
-            Cliente cliente = fachada.BuscarCliente(idCliente);
+            // --- ASSERT ---
+            Cliente cliente = fachada.BuscarCliente(idClienteReal); // Buscamos el ID real
             
             Assert.IsNotNull(cliente);
-            Assert.IsNull(cliente.VendedorAsignado);
+            Assert.IsNull(cliente.VendedorAsignado); // Esto verificará tu lógica
         }
 
         [Test]
         public void AsignarClienteVendedor_NoDeberiaAsignarUsuarioNoVendedor()
         {
+            // --- ARRANGE (CORREGIDO CON IDs REALES) ---
             fachada.CrearCliente("Cliente", "Test", "123", "c@mail.com", "M", DateTime.Now);
-            int idCliente = 1;
+            // Obtenemos el ID real
+            int idClienteReal = fachada.VerTodosLosClientes()[0].Id;
 
-            fachada.CrearUsuario("adminUser", "pass", Rol.Administrador);
-            int idAdmin = 1;
+            fachada.CrearUsuario("adminUser", Rol.Administrador);
+            // Obtenemos el ID real
+            int idAdminReal = fachada.VerTodosLosUsuarios().First(u => u.NombreUsuario == "adminUser").Id;
 
-            fachada.AsignarClienteVendedor(idCliente, idAdmin);
+            // --- ACT ---
+            fachada.AsignarClienteVendedor(idClienteReal, idAdminReal);
 
-            Cliente cliente = fachada.BuscarCliente(idCliente);
+            // --- ASSERT ---
+            Cliente cliente = fachada.BuscarCliente(idClienteReal);
             
             Assert.IsNotNull(cliente);
             Assert.IsNull(cliente.VendedorAsignado);

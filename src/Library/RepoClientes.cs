@@ -32,7 +32,11 @@ namespace Library
                 genero, 
                 fechaNacimiento 
             );
-            this._items.Add(nuevoCliente); // Usa la lista _items heredada
+            
+            // --- CORRECCIÓN ---
+            // En lugar de 'this._items.Add(nuevoCliente)', llamamos al método 'Agregar'
+            // de la clase base, que se encarga de asignar el ID y añadirlo a la lista.
+            base.Agregar(nuevoCliente);
         }
 
         // --- 'Buscar(int id)' HA SIDO ELIMINADO (Heredado) ---

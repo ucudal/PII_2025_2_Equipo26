@@ -1,52 +1,53 @@
+using Library;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Library
 {
     /// <summary>
     /// Administra la colección de objetos <see cref="Usuario"/>.
-    /// Hereda la lógica común de <see cref="RepositorioBase{T}"/>.
+    /// Hereda de <see cref="RepositorioBase{T}"/> e implementa
+    /// la interfaz específica <see cref="IRepoUsuarios"/>.
     /// </summary>
     public class RepoUsuarios : RepositorioBase<Usuario>, IRepoUsuarios
     {
-        // (Hereda _items y _nextId de RepositorioBase)
-        // (Hereda Buscar, Eliminar y ObtenerTodos de RepositorioBase)
-
         /// <summary>
-        /// Agrega un nuevo usuario a la lista (Create).
+        /// Crea y agrega un nuevo usuario (Operación Create).
         /// </summary>
-        /// <param name="nombreUsuario">Nombre de login.</param>
-        /// <param name="rol">Rol del usuario.</param>
-        /// <returns>El usuario recién creado.</returns>
-        // --- PARÁMETRO 'contrasena' ELIMINADO ---
+        
+        // --- CORRECCIÓN 1: Cambiar el tipo de retorno de 'void' a 'Usuario' ---
         public Usuario Agregar(string nombreUsuario, Rol rol)
         {
-            // --- LLAMADA AL CONSTRUCTOR ACTUALIZADA ---
-            var nuevoUsuario = new Usuario(this._nextId++, nombreUsuario, rol);
-            this._items.Add(nuevoUsuario); // Usa _items heredado
+            // La lógica de hash de contraseña se elimina ya que 
+            // la contraseña no se maneja en esta versión.
+
+            var nuevoUsuario = new Usuario(nombreUsuario, rol); 
+            
+            // Llama al método 'Agregar' de la clase base para asignar ID
+            base.Agregar(nuevoUsuario);
+            
+            // --- CORRECCIÓN 2: Retornar el usuario recién creado (como pide la interfaz) ---
             return nuevoUsuario;
         }
 
         /// <summary>
         /// Cambia el estado de un usuario a 'Suspendido'.
         /// </summary>
-        /// <param name="id">El ID del usuario a suspender.</param>
-        public void Suspender(int id)
+        public void Suspender(int idUsuario)
         {
-            var usuario = this.Buscar(id); // Usa Buscar() heredado
+            var usuario = this.Buscar(idUsuario);
             if (usuario != null)
             {
-                usuario.Suspender(); 
+                usuario.Suspender();
             }
         }
-        
+
         /// <summary>
         /// Cambia el estado de un usuario a 'Activo'.
         /// </summary>
-        /// <param name="id">El ID del usuario a activar.</param>
-        public void Activar(int id)
+        public void Activar(int idUsuario)
         {
-            var usuario = this.Buscar(id); // Usa Buscar() heredado
+            var usuario = this.Buscar(idUsuario);
             if (usuario != null)
             {
                 usuario.Activar();

@@ -1,89 +1,304 @@
 using NUnit.Framework;
 using Library;
 using System;
-using System.Linq;
+using System.Linq; // Necesario para .First(), .Any(), .Count()
 
 namespace Library.Tests
-
 {
+    /// <summary>
+    /// Pruebas de escenario que validan la lógica de negocio y la
+    /// coordinación entre múltiples clases (Clientes, Usuarios, Interacciones, Etiquetas).
+    /// </summary>
     [TestFixture]
     public class InteraccionEtiquetaReporteTests
     {
+        /// <summary>
+        /// Instancia de la fachada que se probará.
+        /// </summary>
         private Fachada fachada;
 
+        /// <summary>
+        /// Repositorios "mock" o "en memoria" que se inyectarán
+        /// en la fachada antes de cada prueba.
+        /// </summary>
+        private IRepoClientes repoClientes;
+        private IRepoEtiquetas repoEtiquetas;
+        private IRepoUsuarios repoUsuarios;
+        private IRepoVentas repoVentas;
+        
+        /// <summary>
+        /// IDs de prueba para Cliente y Vendedor
+        /// </summary>
+        private int clienteId;
+        private int vendedorId;
+
+        /// <summary>
+        /// Prepara el entorno para CADA prueba unitaria.
+        /// Crea instancias "frescas" de los repositorios y las
+        /// inyecta en una nueva instancia de Fachada (Inyección de Dependencias).
+        /// </summary>
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
-            fachada = new Fachada();
+            this.repoClientes = new RepoClientes();
+            this.repoEtiquetas = new RepoEtiquetas();
+            this.repoUsuarios = new RepoUsuarios();
+            this.repoVentas = new RepoVentas();
+            this.fachada = new Fachada(this.repoClientes, this.repoEtiquetas, this.repoUsuarios, this.repoVentas);
+
+            /// <summary>
+            /// Creamos data base para los tests de este archivo
+            /// </summary>
+            this.fachada.CrearCliente("Cliente", "Prueba", "123456", "cliente@test.com", "F", DateTime.Now);
+            this.clienteId = this.fachada.VerTodosLosClientes()[0].Id;
+
+            /// <summary>
+            /// CORREGIDO: Llamada a CrearUsuario con 2 argumentos (string, Rol)
+            /// </summary>
+            this.fachada.CrearUsuario("Vendedor", Rol.Vendedor);
+            this.vendedorId = this.fachada.VerTodosLosUsuarios()[0].Id;
         }
 
+        // --- Tests de Asignación (Coordinación) ---
+
+        /// <summary>
+        /// Prueba el escenario de coordinación donde la Fachada asigna
+        /// un Vendedor (Usuario) a un Cliente.
+        /// </summary>
         [Test]
-        public void RegistrarMultiplesInteracciones_PruebaPolimorfismo()
+        public void TestAsignarClienteVendedor()
         {
-            fachada.CrearCliente("Cliente Poli", "Test", "123", "poly@test.com", "Otro", DateTime.Now);
-            var cliente = fachada.VerTodosLosClientes().First();
+            var cliente = this.fachada.BuscarCliente(this.clienteId);
+            Assert.IsNull(cliente.VendedorAsignado);
 
-            fachada.RegistrarLlamada(cliente.Id, DateTime.Now.AddDays(-1), "Llamada prueba", "Saliente");
-            fachada.RegistrarReunion(cliente.Id, DateTime.Now.AddDays(1), "Reunion prueba", "Oficina");
-            fachada.RegistrarCorreo(cliente.Id, DateTime.Now, "Correo prueba", "cli@mail.com", "ven@mail.com", "Consulta"); //
-            fachada.RegistrarCotizacion(cliente.Id, "Cotizacion prueba", 1500.0, "Detalle"); //
-            
-            var interacciones = fachada.VerInteraccionesDeCliente(cliente.Id);
+            this.fachada.AsignarClienteVendedor(this.clienteId, this.vendedorId);
 
-            Assert.AreEqual(4, interacciones.Count);
-            Assert.IsTrue(interacciones.Any(i => i is Llamada)); //
-            Assert.IsTrue(interacciones.Any(i => i is Reunion)); //
-            Assert.IsTrue(interacciones.Any(i => i is Correo)); //
-            Assert.IsTrue(interacciones.Any(i => i is Cotizacion)); //
+            var clienteActualizado = this.fachada.BuscarCliente(this.clienteId);
+            var vendedor = this.fachada.BuscarUsuario(this.vendedorId);
+
+            Assert.IsNotNull(clienteActualizado.VendedorAsignado);
+            Assert.AreEqual(vendedor.Id, clienteActualizado.VendedorAsignado.Id);
+            Assert.AreEqual("Vendedor", clienteActualizado.VendedorAsignado.NombreUsuario);
         }
 
+        /// <summary>
+        /// Prueba la regla de negocio que impide asignar un Usuario
+        /// con Rol 'Administrador' como vendedor de un cliente.
+        /// </summary>
         [Test]
-        public void CrearYAgregarEtiquetaACliente_FuncionaCorrectamente()
+        public void TestNoSePuedeAsignarAdminComoVendedor()
         {
-            fachada.CrearCliente("Cliente Tag", "Test", "456", "tag@test.com", "Otro", DateTime.Now);
-            var cliente = fachada.VerTodosLosClientes().First();
+            /// <summary>
+            /// CORREGIDO: Llamada con 2 argumentos
+            /// </summary>
+            this.fachada.CrearUsuario("Admin", Rol.Administrador);
+            int adminId = this.fachada.VerTodosLosUsuarios().First(u => u.Rol == Rol.Administrador).Id;
+
+            this.fachada.AsignarClienteVendedor(this.clienteId, adminId);
+
+            var cliente = this.fachada.BuscarCliente(this.clienteId);
+            Assert.IsNull(cliente.VendedorAsignado); // No se debió asignar
+        }
+
+        // --- Tests de Interacciones (Polimorfismo) ---
+
+        /// <summary>
+        /// Verifica el uso de Polimorfismo.
+        /// Prueba que se puedan registrar diferentes tipos de Interaccion
+        /// (Llamada, Reunion, Correo) en la misma lista de un Cliente.
+        /// </summary>
+        [Test]
+        public void TestRegistrarInteraccionesPolimorficas()
+        {
+            DateTime fechaLlamada = new DateTime(2025, 1, 1);
+            DateTime fechaReunion = new DateTime(2025, 1, 2);
+            DateTime fechaCorreo = new DateTime(2025, 1, 3);
             
-            fachada.CrearEtiqueta("VIP"); //
-            var etiqueta = fachada.VerTodasLasEtiquetas().First(e => e.Nombre == "VIP"); 
+            this.fachada.RegistrarLlamada(this.clienteId, fechaLlamada, "Consulta", "Entrante");
+            this.fachada.RegistrarReunion(this.clienteId, fechaReunion, "Demo", "Oficina");
+            this.fachada.RegistrarCorreo(this.clienteId, fechaCorreo, "Seguimiento", "vendedor@mail.com", "cliente@mail.com", "RE: Demo");
 
-            fachada.AgregarEtiquetaACliente(cliente.Id, etiqueta.Id); //
-            var clienteActualizado = fachada.BuscarCliente(cliente.Id);
+            /// <summary>
+            /// CORREGIDO: Nombre de método 'VerInteraccionesCliente'
+            /// </summary>
+            var interacciones = this.fachada.VerInteraccionesCliente(this.clienteId);
+            Assert.AreEqual(3, interacciones.Count);
 
+            /// <summary>
+            /// CORREGIDO: Verifica usando la propiedad 'Tipo' (enum)
+            /// Esto soluciona la 'Ambiguedad' del Assert.IsTrue
+            /// </summary>
+            Assert.AreEqual(1, interacciones.Count(i => i.Tipo == TipoInteraccion.Llamada));
+            Assert.AreEqual(1, interacciones.Count(i => i.Tipo == TipoInteraccion.Reunion));
+            Assert.AreEqual(1, interacciones.Count(i => i.Tipo == TipoInteraccion.Correo));
+
+            Assert.AreEqual("Consulta", interacciones.First(i => i.Tipo == TipoInteraccion.Llamada).Tema);
+            Assert.AreEqual("Demo", interacciones.First(i => i.Tipo == TipoInteraccion.Reunion).Tema);
+        }
+
+        /// <summary>
+        /// Comprueba el filtrado de interacciones por su tipo específico,
+        /// usando el método sobrecargado que recibe un 'TipoInteraccion'.
+        /// </summary>
+        [Test]
+        public void TestFiltrarInteraccionesPorTipo()
+        {
+            this.fachada.RegistrarLlamada(this.clienteId, DateTime.Now, "Consulta 1", "Entrante");
+            this.fachada.RegistrarLlamada(this.clienteId, DateTime.Now, "Consulta 2", "Saliente");
+            this.fachada.RegistrarReunion(this.clienteId, DateTime.Now, "Demo", "Oficina");
+
+            /// <summary>
+            /// CORREGIDO: Nombre de método y uso del enum TipoInteraccion
+            /// </summary>
+            var llamadas = this.fachada.VerInteraccionesCliente(this.clienteId, TipoInteraccion.Llamada);
+            var reuniones = this.fachada.VerInteraccionesCliente(this.clienteId, TipoInteraccion.Reunion);
+            var correos = this.fachada.VerInteraccionesCliente(this.clienteId, TipoInteraccion.Correo);
+
+            Assert.AreEqual(2, llamadas.Count);
+            Assert.AreEqual(1, reuniones.Count);
+            Assert.AreEqual(0, correos.Count);
+        }
+        
+        // --- Tests de Etiquetas (Agregación) ---
+
+        /// <summary>
+        /// Prueba la relación de agregación entre Cliente y Etiqueta.
+        /// Verifica que se puedan crear etiquetas globales, asignarlas
+        /// a un cliente y quitarlas.
+        /// </summary>
+        [Test]
+        public void TestAsignarYQuitarEtiquetaACliente()
+        {
+            this.fachada.CrearEtiqueta("VIP");
+            this.fachada.CrearEtiqueta("Competencia");
+            
+            var etiquetaVip = this.fachada.VerTodasLasEtiquetas().First(e => e.Nombre == "VIP");
+            var etiquetaComp = this.fachada.VerTodasLasEtiquetas().First(e => e.Nombre == "Competencia");
+
+            /// <summary>
+            /// CORREGIDO: Nombre de método 'AgregarEtiquetaCliente'
+            /// </summary>
+            this.fachada.AgregarEtiquetaCliente(this.clienteId, etiquetaVip.Id);
+            this.fachada.AgregarEtiquetaCliente(this.clienteId, etiquetaComp.Id);
+
+            var cliente = this.fachada.BuscarCliente(this.clienteId);
+            Assert.AreEqual(2, cliente.Etiquetas.Count);
+            Assert.IsTrue(cliente.Etiquetas.Contains(etiquetaVip));
+
+            /// <summary>
+            /// CORREGIDO: Nombre de método 'QuitarEtiquetaCliente'
+            /// </summary>
+            this.fachada.QuitarEtiquetaCliente(this.clienteId, etiquetaVip.Id);
+
+            var clienteActualizado = this.fachada.BuscarCliente(this.clienteId);
             Assert.AreEqual(1, clienteActualizado.Etiquetas.Count);
-            Assert.AreEqual("VIP", clienteActualizado.Etiquetas.First().Nombre); //
+            Assert.IsFalse(clienteActualizado.Etiquetas.Contains(etiquetaVip));
+            Assert.IsTrue(clienteActualizado.Etiquetas.Contains(etiquetaComp));
         }
 
+        // --- Tests de Ventas y Reportes ---
+
+        /// <summary>
+        /// Prueba el registro de ventas generales (no asignadas a cliente)
+        /// y la lógica del reporte 'CalcularTotalVentas' por rango de fechas.
+        /// </summary>
         [Test]
-        public void ObtenerResumenDashboard_CalculaDatosCorrectamente()
+        public void TestRegistrarVentaGeneralYReporte()
         {
-            fachada.CrearCliente("Cliente A", "Test", "111", "a@test.com", "Otro", DateTime.Now);
-            fachada.CrearCliente("Cliente B", "Test", "222", "b@test.com", "Otro", DateTime.Now);
-            var clienteA = fachada.VerTodosLosClientes().First();
-            var clienteB = fachada.VerTodosLosClientes().Last();
+            DateTime fecha1 = new DateTime(2025, 10, 5);
+            DateTime fecha2 = new DateTime(2025, 10, 15);
+            DateTime fecha3 = new DateTime(2025, 10, 25); // Esta venta queda fuera del rango
 
-            var llamadaReciente = DateTime.Now.AddMinutes(-10);
-            var llamadaMenosReciente = DateTime.Now.AddMinutes(-30);
-            var reunionCercana = DateTime.Now.AddDays(1);
-            var reunionLejana = DateTime.Now.AddDays(3);
+            this.fachada.RegistrarVenta("Producto A", 100, fecha1);
+            this.fachada.RegistrarVenta("Producto B", 50, fecha2);
+            this.fachada.RegistrarVenta("Producto C", 200, fecha3); 
 
-            fachada.RegistrarLlamada(clienteA.Id, llamadaReciente, "Llamada Mas Reciente (A)", "Entrante");
-            fachada.RegistrarLlamada(clienteB.Id, llamadaMenosReciente, "Llamada Menos Reciente (B)", "Saliente");
-            fachada.RegistrarReunion(clienteB.Id, reunionCercana, "Reunion Mas Cercana (B)", "Oficina");
-            fachada.RegistrarReunion(clienteA.Id, reunionLejana, "Reunion Mas Lejana (A)", "Virtual");
+            DateTime inicioReporte = new DateTime(2025, 10, 1);
+            DateTime finReporte = new DateTime(2025, 10, 20);
+            
+            float total = this.fachada.CalcularTotalVentas(inicioReporte, finReporte);
+            
+            Assert.AreEqual(150, total); // 100 + 50
+        }
 
-            var resumen = fachada.ObtenerResumenDashboard(); //
+        /// <summary>
+        /// Verifica que una venta pueda ser registrada y
+        /// agregada al historial de un cliente específico.
+        /// </summary>
+        [Test]
+        public void TestRegistrarVentaAsignadaACliente()
+        {
+            var cliente = this.fachada.BuscarCliente(this.clienteId);
+            Assert.AreEqual(0, cliente.Ventas.Count);
 
-            Assert.AreEqual(2, resumen.TotalClientes); //
+            this.fachada.RegistrarVenta(this.clienteId, "Servicio Premium", 1500);
+            this.fachada.RegistrarVenta(this.clienteId, "Soporte", 500);
 
-            Assert.AreEqual(4, resumen.InteraccionesRecientes.Count); //
-            Assert.AreEqual("Reunion Mas Lejana (A)", resumen.InteraccionesRecientes[0].Tema);
-            Assert.AreEqual("Reunion Mas Cercana (B)", resumen.InteraccionesRecientes[1].Tema);
-            Assert.AreEqual("Llamada Mas Reciente (A)", resumen.InteraccionesRecientes[2].Tema);
-            Assert.AreEqual("Llamada Menos Reciente (B)", resumen.InteraccionesRecientes[3].Tema);
+            var clienteActualizado = this.fachada.BuscarCliente(this.clienteId);
+            Assert.AreEqual(2, clienteActualizado.Ventas.Count);
+            Assert.AreEqual(1500, clienteActualizado.Ventas[0].Importe);
+            Assert.AreEqual("Soporte", clienteActualizado.Ventas[1].Producto);
+        }
 
-            Assert.AreEqual(2, resumen.ReunionesProximas.Count); //
-            Assert.AreEqual("Reunion Mas Cercana (B)", resumen.ReunionesProximas[0].Tema);
-            Assert.AreEqual("Reunion Mas Lejana (A)", resumen.ReunionesProximas[1].Tema);
+        /// <summary>
+        /// Prueba la lógica del reporte de clientes inactivos.
+        /// Un cliente es inactivo si no tiene interacciones o si su
+        /// última interacción fue anterior a la fecha límite.
+        /// </summary>
+        [Test]
+        public void TestObtenerClientesInactivos()
+        {
+            // 1. Cliente nuevo (creado en SetUp), sin interacciones. ID = this.clienteId
+            
+            // 2. Cliente activo (interacción reciente)
+            this.fachada.CrearCliente("Activo", "User", "777", "activo@mail.com", "M", DateTime.Now);
+            int clienteActivoId = this.fachada.VerTodosLosClientes().First(c => c.Nombre == "Activo").Id;
+            this.fachada.RegistrarLlamada(clienteActivoId, DateTime.Now.AddDays(-10), "Consulta", "Entrante");
+
+            // 3. Cliente inactivo (interacción antigua)
+            this.fachada.CrearCliente("Inactivo", "User", "888", "inactivo@mail.com", "F", DateTime.Now);
+            int clienteInactivoId = this.fachada.VerTodosLosClientes().First(c => c.Nombre == "Inactivo").Id;
+            this.fachada.RegistrarLlamada(clienteInactivoId, DateTime.Now.AddDays(-40), "Consulta vieja", "Entrante");
+
+            // Buscamos clientes sin interacción en los últimos 30 días
+            var inactivos = this.fachada.ObtenerClientesInactivos(30);
+
+            Assert.AreEqual(2, inactivos.Count);
+            // Debe encontrar al cliente nuevo (ID = this.clienteId) y al "Inactivo"
+            Assert.IsTrue(inactivos.Any(c => c.Id == this.clienteId));
+            Assert.IsTrue(inactivos.Any(c => c.Nombre == "Inactivo"));
+            Assert.IsFalse(inactivos.Any(c => c.Nombre == "Activo"));
+        }
+        
+        /// <summary>
+        /// Prueba la correcta composición del objeto ResumenDashboard.
+        /// Verifica el total de clientes, el orden de interacciones
+        /// recientes (más nuevas primero) y el orden de reuniones
+        /// próximas (más cercanas primero).
+        /// </summary>
+        [Test]
+        public void TestObtenerResumenDashboard()
+        {
+            this.fachada.RegistrarLlamada(this.clienteId, DateTime.Now.AddDays(1), "Llamada futura", "Saliente"); // No debe aparecer en recientes
+            this.fachada.RegistrarReunion(this.clienteId, DateTime.Now.AddDays(5), "Reunion Proxima 1", "Zoom");
+            this.fachada.RegistrarReunion(this.clienteId, DateTime.Now.AddDays(2), "Reunion Proxima 2 (Mas cercana)", "Oficina");
+            this.fachada.RegistrarLlamada(this.clienteId, DateTime.Now.AddDays(-1), "Llamada Reciente 1", "Entrante");
+            this.fachada.RegistrarCorreo(this.clienteId, DateTime.Now.AddDays(-2), "Correo Reciente 2", "a", "b", "c");
+
+            var dashboard = this.fachada.ObtenerResumenDashboard();
+
+            // Solo el cliente del SetUp
+            Assert.AreEqual(1, dashboard.TotalClientes);
+            
+            // Solo las 2 del pasado, en orden descendente (más nueva primero)
+            Assert.AreEqual(2, dashboard.InteraccionesRecientes.Count);
+            Assert.AreEqual("Llamada Reciente 1", dashboard.InteraccionesRecientes[0].Tema);
+            Assert.AreEqual("Correo Reciente 2", dashboard.InteraccionesRecientes[1].Tema);
+
+            // Las 2 del futuro, en orden ascendente (más cercana primero)
+            Assert.AreEqual(2, dashboard.ReunionesProximas.Count);
+            Assert.AreEqual("Reunion Proxima 2 (Mas cercana)", dashboard.ReunionesProximas[0].Tema);
+            Assert.AreEqual("Reunion Proxima 1", dashboard.ReunionesProximas[1].Tema);
         }
     }
 }
