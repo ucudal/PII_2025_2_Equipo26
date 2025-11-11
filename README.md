@@ -34,5 +34,6 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 Diagrama UML(Actualizado):
 <img width="3454" height="800" alt="image" src="https://github.com/user-attachments/assets/858c132b-0956-48b8-9ec3-2afd4686b791" />
 
-Tarjetas CRC:
-<img width="6678" height="1310" alt="Untitled diagram-2025-10-21-034511" src="https://github.com/user-attachments/assets/95909555-fdac-4b66-82a1-68eb8b90c2ab" />
+Tarjetas CRC(Actualizadas):
+<img width="523" height="692" alt="image" src="https://github.com/user-attachments/assets/35283549-a3b3-4415-a05f-bf85471ad50a" />
+
