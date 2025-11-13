@@ -31,16 +31,30 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 * **Tutoriales de Git:** Diversos recursos online para entender mejor el flujo de trabajo con ramas y fusiones.
 * **Ayuda de Trello:** Para optimizar el uso del tablero y sus funcionalidades.
 
+|Historia|Comandos|
+|--------|--------|
+|Crear cliente|!crear_cliente "nom" "ap" "tel" "correo"|
+|Modificar info|!actualizar_info "info_vieja" "info_nueva"|
+|Eliminar usuario|!elim_cliente "cliente"|
+|Buscar cliente|!buscar "info_cliente_1"|
+|Ver lista de clientes|!mi_lista|
+|Registrar llamadas|!registrar_llamadas "cliente" "fecha" "tema"|
+|Registrar reuniones|!registrar_reunion "cliente" "fecha" "tema" "lugar"|
+| Registrar mensajes | !log mensaje "Nombre Cliente" "tema" "contenido" |
+| Registrar correos | !log correo "Nombre Cliente" "tema" "contenido" |
+| Agregar notas | !comentar <id_referencia> "texto de la nota" |
+| Datos personales | !datos_personales "Nombre Cliente" <genero> <fecha_nac> |
+| Crear etiquetas | !crear_etiqueta "nombre_etiqueta" |
+| Asignar etiqueta | !etiquetar "Nombre Cliente" "nombre_etiqueta" |
+| Registrar venta | !registrar_venta "Nombre Cliente" "item" <monto> |
+| Registrar Cotización | `!registrar_cotizacion <cliente_id> <importe> [fecha_opcional]`                                             |
+| Ver Historial Cliente | `!ver_historial <cliente_id> [tipo_interaccion] [fecha_inicio] [fecha_fin]`                                 |
+| Clientes Inactivos | `!clientes_inactivos <dias_inactividad>`                                                                    |
+| Interacciones Pendientes | `!interact_pendientes [dias_antiguedad]`                                                                    |
+| Admin Usuarios | `!crear_usuario <email> <rol>` <br> `/suspender_usuario <usuario_id>` <br> `/eliminar_usuario <usuario_id>` |
+| Reasignar Cliente | `/reasignar_cliente <cliente_id> <vendedor_id_destino>`                                                     |
+| Reporte de Ventas | `/reporte_ventas <fecha_inicio> <fecha_fin>`                                                                |
+| Ver Dashboard | `/dashboard` 
+
 Aclaraciones:
 Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
-
-| Historia | Comandos                                                                                                    |
-| :--- |:------------------------------------------------------------------------------------------------------------|
-| **(15)** Registrar Cotización | `/registrar_cotizacion <cliente_id> <importe> [fecha_opcional]`                                             |
-| **(16)** Ver Historial Cliente | `/ver_historial <cliente_id> [tipo_interaccion] [fecha_inicio] [fecha_fin]`                                 |
-| **(17)** Clientes Inactivos | `/clientes_inactivos <dias_inactividad>`                                                                    |
-| **(18)** Interacciones Pendientes | `/interact_pendientes [dias_antiguedad]`                                                                    |
-| **(19)** Admin Usuarios | `/crear_usuario <email> <rol>` <br> `/suspender_usuario <usuario_id>` <br> `/eliminar_usuario <usuario_id>` |
-| **(20)** Reasignar Cliente | `/reasignar_cliente <cliente_id> <vendedor_id_destino>`                                                     |
-| **(21)** Reporte de Ventas | `/reporte_ventas <fecha_inicio> <fecha_fin>`                                                                |
-| **(22)** Ver Dashboard | `/dashboard`                                                                                                |
