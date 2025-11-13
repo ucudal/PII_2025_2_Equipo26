@@ -41,3 +41,5 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 |registrar llamadas|!registrar_llamadas "cliente" "fecha" "tema"|
 |registrar reuniones|!registrar_reunion "cliente" "fecha" "tema" "lugar"|
 
+Aclaraciones:
+Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
