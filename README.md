@@ -33,11 +33,11 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 
 |Historia|Comandos|
 |--------|--------|
-|crear cliente|!crear_cliente nom ap tel correo|
-|modificar info|!actualizar_info info_vieja info_nueva|
-|eliminar usuario|!elim_cliente usuario|
-|buscar cliente|!buscar info_cliente|
+|crear cliente|!crear_cliente "nom" "ap" "tel" "correo"|
+|modificar info|!actualizar_info "info_vieja" "info_nueva"|
+|eliminar usuario|!elim_cliente "cliente"|
+|buscar cliente|!buscar "info_cliente_1"|
 |ver lista de clientes|!mi_lista|
-|registrar llamadas|!registrar_llamadas cliente fecha tema|
-|registrar reuniones|!registrar_reunion cliente fecha tema lugar|
+|registrar llamadas|!registrar_llamadas "cliente" "fecha" "tema"|
+|registrar reuniones|!registrar_reunion "cliente" "fecha" "tema" "lugar"|
 
