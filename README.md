@@ -36,17 +36,17 @@ Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con
 
 | Resumen | Comandos |
 | -------- | -------- |
-| Registrar mensajes | !log mensaje @cliente "tema" "contenido" |
-| Registrar correos | !log correo @cliente "tema" "contenido" |
+| Registrar mensajes | !log mensaje "Nombre Cliente" "tema" "contenido" |
+| Registrar correos | !log correo "Nombre Cliente" "tema" "contenido" |
 | Agregar notas | !comentar <id_referencia> "texto de la nota" |
-| Datos personales | !datos_personales @cliente <genero> <fecha_nac> |
+| Datos personales | !datos_personales "Nombre Cliente" <genero> <fecha_nac> |
 | Crear etiquetas | !crear_etiqueta "nombre_etiqueta" |
-| Asignar etiqueta | !etiquetar @cliente "nombre_etiqueta" |
-| Registrar venta | !registrar_venta @cliente "item" <monto> |
-| Registrar cotización | !registrar_cotizacion @cliente "item" <monto> |
-| Ver historial | !ver_historial @cliente |
+| Asignar etiqueta | !etiquetar "Nombre Cliente" "nombre_etiqueta" |
+| Registrar venta | !registrar_venta "Nombre Cliente" "item" <monto> |
+| Registrar cotización | !registrar_cotizacion "Nombre Cliente" "item" <monto> |
+| Ver historial | !ver_historial "Nombre Cliente" |
 | Clientes inactivos | !ver_inactivos <cantidad_dias> |
 | Pendientes respuesta | !ver_pendientes |
-| Administrar usuarios | !gestionar_usuario @usuario <accion> |
-| Reasignar cliente | !asignar_cliente @cliente @nuevo_vendedor |
+| Administrar usuarios | !gestionar_usuario "Nombre Usuario" <accion> |
+| Reasignar cliente | !asignar_cliente "Nombre Cliente" "Nombre Vendedor" |
 | Reporte ventas | !reporte_ventas <fecha_inicio> <fecha_fin> |
