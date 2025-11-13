@@ -33,3 +33,14 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 
 Aclaraciones:
 Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
+
+| Historia | Comandos                                                                                                    |
+| :--- |:------------------------------------------------------------------------------------------------------------|
+| **(15)** Registrar Cotización | `/registrar_cotizacion <cliente_id> <importe> [fecha_opcional]`                                             |
+| **(16)** Ver Historial Cliente | `/ver_historial <cliente_id> [tipo_interaccion] [fecha_inicio] [fecha_fin]`                                 |
+| **(17)** Clientes Inactivos | `/clientes_inactivos <dias_inactividad>`                                                                    |
+| **(18)** Interacciones Pendientes | `/interact_pendientes [dias_antiguedad]`                                                                    |
+| **(19)** Admin Usuarios | `/crear_usuario <email> <rol>` <br> `/suspender_usuario <usuario_id>` <br> `/eliminar_usuario <usuario_id>` |
+| **(20)** Reasignar Cliente | `/reasignar_cliente <cliente_id> <vendedor_id_destino>`                                                     |
+| **(21)** Reporte de Ventas | `/reporte_ventas <fecha_inicio> <fecha_fin>`                                                                |
+| **(22)** Ver Dashboard | `/dashboard`                                                                                                |
