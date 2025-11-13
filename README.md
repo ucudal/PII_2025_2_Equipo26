@@ -31,3 +31,13 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 * **Tutoriales de Git:** Diversos recursos online para entender mejor el flujo de trabajo con ramas y fusiones.
 * **Ayuda de Trello:** Para optimizar el uso del tablero y sus funcionalidades.
 
+|Historia|Comandos|
+|--------|--------|
+|crear cliente|!crearcliente nom ap tel correo|
+|modificar info|!actualizarinfo infoVieja infoNueva|
+|eliminar usuario|!elimcliente usuario|
+|buscar cliente|!buscar infoCliente|
+|ver lista de clientes|!milista|
+|registrar llamadas|!registrarllamadas cliente fecha tema|
+|registrar reuniones|!registrarreunion cliente fecha tema lugar|
+
