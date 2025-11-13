@@ -40,12 +40,6 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 |Ver lista de clientes|!mi_lista|
 |Registrar llamadas|!registrar_llamadas "cliente" "fecha" "tema"|
 |Registrar reuniones|!registrar_reunion "cliente" "fecha" "tema" "lugar"|
-
-Aclaraciones:
-Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
-
-| Resumen | Comandos |
-| -------- | -------- |
 | Registrar mensajes | !log mensaje "Nombre Cliente" "tema" "contenido" |
 | Registrar correos | !log correo "Nombre Cliente" "tema" "contenido" |
 | Agregar notas | !comentar <id_referencia> "texto de la nota" |
@@ -53,10 +47,14 @@ Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con
 | Crear etiquetas | !crear_etiqueta "nombre_etiqueta" |
 | Asignar etiqueta | !etiquetar "Nombre Cliente" "nombre_etiqueta" |
 | Registrar venta | !registrar_venta "Nombre Cliente" "item" <monto> |
-| Registrar cotización | !registrar_cotizacion "Nombre Cliente" "item" <monto> |
-| Ver historial | !ver_historial "Nombre Cliente" |
-| Clientes inactivos | !ver_inactivos <cantidad_dias> |
-| Pendientes respuesta | !ver_pendientes |
-| Administrar usuarios | !gestionar_usuario "Nombre Usuario" <accion> |
-| Reasignar cliente | !asignar_cliente "Nombre Cliente" "Nombre Vendedor" |
-| Reporte ventas | !reporte_ventas <fecha_inicio> <fecha_fin> |
+| Registrar Cotización | `!registrar_cotizacion <cliente_id> <importe> [fecha_opcional]`                                             |
+| Ver Historial Cliente | `!ver_historial <cliente_id> [tipo_interaccion] [fecha_inicio] [fecha_fin]`                                 |
+| Clientes Inactivos | `!clientes_inactivos <dias_inactividad>`                                                                    |
+| Interacciones Pendientes | `!interact_pendientes [dias_antiguedad]`                                                                    |
+| Admin Usuarios | `!crear_usuario <email> <rol>` <br> `/suspender_usuario <usuario_id>` <br> `/eliminar_usuario <usuario_id>` |
+| Reasignar Cliente | `/reasignar_cliente <cliente_id> <vendedor_id_destino>`                                                     |
+| Reporte de Ventas | `/reporte_ventas <fecha_inicio> <fecha_fin>`                                                                |
+| Ver Dashboard | `/dashboard` 
+
+Aclaraciones:
+Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
