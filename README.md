@@ -33,13 +33,13 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 
 |Historia|Comandos|
 |--------|--------|
-|crear cliente|!crear_cliente "nom" "ap" "tel" "correo"|
-|modificar info|!actualizar_info "info_vieja" "info_nueva"|
-|eliminar usuario|!elim_cliente "cliente"|
-|buscar cliente|!buscar "info_cliente_1"|
-|ver lista de clientes|!mi_lista|
-|registrar llamadas|!registrar_llamadas "cliente" "fecha" "tema"|
-|registrar reuniones|!registrar_reunion "cliente" "fecha" "tema" "lugar"|
+|Crear cliente|!crear_cliente "nom" "ap" "tel" "correo"|
+|Modificar info|!actualizar_info "info_vieja" "info_nueva"|
+|Eliminar usuario|!elim_cliente "cliente"|
+|Buscar cliente|!buscar "info_cliente_1"|
+|Ver lista de clientes|!mi_lista|
+|Registrar llamadas|!registrar_llamadas "cliente" "fecha" "tema"|
+|Registrar reuniones|!registrar_reunion "cliente" "fecha" "tema" "lugar"|
 
 Aclaraciones:
 Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
