@@ -31,5 +31,15 @@ Link al Trello del equipo: https://trello.com/invite/b/68d541045dec11ea36333a81/
 * **Tutoriales de Git:** Diversos recursos online para entender mejor el flujo de trabajo con ramas y fusiones.
 * **Ayuda de Trello:** Para optimizar el uso del tablero y sus funcionalidades.
 
+|Historia|Comandos|
+|--------|--------|
+|crear cliente|!crear_cliente "nom" "ap" "tel" "correo"|
+|modificar info|!actualizar_info "info_vieja" "info_nueva"|
+|eliminar usuario|!elim_cliente "cliente"|
+|buscar cliente|!buscar "info_cliente_1"|
+|ver lista de clientes|!mi_lista|
+|registrar llamadas|!registrar_llamadas "cliente" "fecha" "tema"|
+|registrar reuniones|!registrar_reunion "cliente" "fecha" "tema" "lugar"|
+
 Aclaraciones:
 Se usaron dos cuentas a nombre de Facundo porque usé distintos dispositivos con distintas cuentas, por ende, hay commits en las dos.
