@@ -1,10 +1,9 @@
-// Asegúrate de tener los 'usings' correctos
 using Discord.Commands;
 using System;
 using System.Threading.Tasks;
-using Library; // <-- ¡Importante! Para que reconozca 'Fachada' y 'Rol'
+using Library; 
 
-namespace Ucu.Poo.DiscordBot.Commands // (O el namespace de tus comandos)
+namespace Ucu.Poo.DiscordBot.Commands 
 {
     /// <summary>
     /// Módulo de comandos para la administración de usuarios (Administradores).
@@ -13,11 +12,9 @@ namespace Ucu.Poo.DiscordBot.Commands // (O el namespace de tus comandos)
     /// 2. Parseo de argumentos (automático para 'int', manual para 'Enum').
     /// 3. Delegación de lógica de negocio a la Fachada.
     /// </summary>
-    [Group("admin")] // (Opcional) Agrupa comandos. Ej: !admin crear_usuario ...
+    [Group("admin")]
     public class AdminUsuarioCommandModule : ModuleBase<SocketCommandContext>
     {
-        // --- 1. Inyección de Dependencias ---
-
         private readonly Fachada _fachada;
 
         /// <summary>
@@ -28,9 +25,6 @@ namespace Ucu.Poo.DiscordBot.Commands // (O el namespace de tus comandos)
         {
             this._fachada = fachada;
         }
-
-        // --- 2. Implementación de Comandos ---
-
         /// <summary>
         /// Comando para crear un nuevo usuario.
         /// Uso: !admin crear_usuario <email> <rol>
@@ -40,10 +34,6 @@ namespace Ucu.Poo.DiscordBot.Commands // (O el namespace de tus comandos)
         [Summary("Crea un nuevo usuario (Vendedor o Administrador).")]
         public async Task CrearUsuarioAsync(string nombreUsuario, string rolComoString)
         {
-            // --- 3. Conversión de Tipos (string a Enum 'Rol') ---
-            // El bot nos da un string, pero la Fachada espera un tipo 'Rol'.
-            // El 'true' ignora mayúsculas/minúsculas (ej: "Vendedor" vs "vendedor")
-            
             Rol rolEnum;
             if (!Enum.TryParse(rolComoString, true, out rolEnum))
             {
@@ -54,15 +44,14 @@ namespace Ucu.Poo.DiscordBot.Commands // (O el namespace de tus comandos)
 
             try
             {
-                // --- 4. Delegación ---
-                // El comando DELEGA la lógica a la Fachada.
+  // El comando DELEGA la lógica a la Fachada.
                 this._fachada.CrearUsuario(nombreUsuario, rolEnum);
                 
                 await ReplyAsync($"✅ Usuario '{nombreUsuario}' creado exitosamente con el rol '{rolEnum}'.");
             }
             catch (Exception e)
             {
-                // Manejo de errores (ej. si el usuario ya existe, etc.)
+                // Manejo de errores
                 await ReplyAsync($"❌ Error al crear el usuario: {e.Message}");
             }
         }
@@ -76,11 +65,6 @@ namespace Ucu.Poo.DiscordBot.Commands // (O el namespace de tus comandos)
         [Summary("Suspende un usuario existente por su ID.")]
         public async Task SuspenderUsuarioAsync(int idUsuario)
         {
-            // --- 5. Parseo Automático ---
-            // Nota cómo 'idUsuario' ya es un 'int'.
-            // El framework de Discord.Commands hace la conversión de string a int
-            // por nosotros. Si el usuario escribe "!admin suspender_usuario ABC",
-            // el comando ni siquiera se ejecutará y Discord dará un error.
 
             try
             {

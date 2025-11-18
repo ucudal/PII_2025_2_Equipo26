@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Library;
 
 namespace Ucu.Poo.DiscordBot.Services
 {
@@ -18,7 +19,11 @@ namespace Ucu.Poo.DiscordBot.Services
             var configuration = new ConfigurationBuilder()
                 .AddUserSecrets(Assembly.GetExecutingAssembly())
                 .Build();
-
+            IRepoClientes repoClientes = new RepoClientes();
+            IRepoEtiquetas repoEtiquetas = new RepoEtiquetas();
+            IRepoUsuarios repoUsuarios = new RepoUsuarios();
+            IRepoVentas repoVentas = new RepoVentas();
+            Fachada fachada = new Fachada(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
             var serviceProvider = new ServiceCollection()
                 .AddLogging(options =>
                 {
@@ -26,6 +31,8 @@ namespace Ucu.Poo.DiscordBot.Services
                     options.AddConsole();
                 })
                 .AddSingleton<IConfiguration>(configuration)
+
+                .AddSingleton(fachada)
                 .AddScoped<IBot, Bot>()
                 .BuildServiceProvider();
 
