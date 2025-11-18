@@ -18,15 +18,12 @@ namespace Library
         // --- CORRECCIÓN 1: Cambiar el tipo de retorno de 'void' a 'Usuario' ---
         public Usuario Agregar(string nombreUsuario, Rol rol)
         {
-            // La lógica de hash de contraseña se elimina ya que 
-            // la contraseña no se maneja en esta versión.
 
             var nuevoUsuario = new Usuario(nombreUsuario, rol); 
             
-            // Llama al método 'Agregar' de la clase base para asignar ID
+
             base.Agregar(nuevoUsuario);
             
-            // --- CORRECCIÓN 2: Retornar el usuario recién creado (como pide la interfaz) ---
             return nuevoUsuario;
         }
 
@@ -38,8 +35,9 @@ namespace Library
             var usuario = this.Buscar(idUsuario);
             if (usuario != null)
             {
-                usuario.Suspender();
+                throw new InvalidOperationException($"No se encontró un usuario con ID: {idUsuario}");
             }
+            usuario.Suspender();
         }
 
         /// <summary>
@@ -50,8 +48,9 @@ namespace Library
             var usuario = this.Buscar(idUsuario);
             if (usuario != null)
             {
-                usuario.Activar();
+                throw new InvalidOperationException($"No se encontró un usuario con ID: {idUsuario}");
             }
+            usuario.Activar();
         }
     }
 }
