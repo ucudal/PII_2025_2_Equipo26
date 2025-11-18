@@ -26,6 +26,34 @@ namespace Library
             
             return nuevoUsuario;
         }
+        
+        public void AgregarRol(int idUsuario, Rol nuevoRol)
+        {
+
+            var usuario = this.Buscar(idUsuario);
+            
+
+            if (usuario == null)
+            {
+                throw new InvalidOperationException($"No se encontró un usuario con ID: {idUsuario}");
+            }
+
+
+            bool yaTieneElRol = false;
+            foreach (Rol r in usuario.Roles)
+            {
+                if (r == nuevoRol)
+                {
+                    yaTieneElRol = true;
+                    break;
+                }
+            }
+            
+            if (!yaTieneElRol)
+            {
+                usuario.Roles.Add(nuevoRol);
+            }
+        }
 
         /// <summary>
         /// Cambia el estado de un usuario a 'Suspendido'.
@@ -33,7 +61,8 @@ namespace Library
         public void Suspender(int idUsuario)
         {
             var usuario = this.Buscar(idUsuario);
-            if (usuario != null)
+ 
+            if (usuario == null)
             {
                 throw new InvalidOperationException($"No se encontró un usuario con ID: {idUsuario}");
             }
@@ -46,11 +75,12 @@ namespace Library
         public void Activar(int idUsuario)
         {
             var usuario = this.Buscar(idUsuario);
-            if (usuario != null)
+            if (usuario == null)
             {
                 throw new InvalidOperationException($"No se encontró un usuario con ID: {idUsuario}");
             }
             usuario.Activar();
         }
     }
+    
 }
