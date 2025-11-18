@@ -28,5 +28,6 @@ namespace Library
         /// </summary>
         /// <param name="id">ID del usuario.</param>
         void Activar(int id);
+        void AgregarRol(int idUsuario, Rol rol);
     }
 }

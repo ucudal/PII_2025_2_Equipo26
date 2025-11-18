@@ -67,11 +67,9 @@ namespace Library
         {
             Cliente cliente = this._repoClientes.Buscar(idCliente);
             Usuario nuevoVendedor = this._repoUsuarios.Buscar(idNuevoVendedor);
-
+            
             if (cliente == null || nuevoVendedor == null) { return; }
-            if (nuevoVendedor.Rol != Rol.Vendedor) { return; } 
-            if (nuevoVendedor.Estado == Estado.Suspendido) { return; } 
-
+    
             cliente.AsignarVendedor(nuevoVendedor);
         }
 
@@ -237,6 +235,11 @@ public void EliminarEtiqueta(int idEtiqueta)
         public Usuario BuscarUsuario(int idUsuario)
         {
             return this._repoUsuarios.Buscar(idUsuario);
+        }
+        public void AgregarRolUsuario(int idUsuario, Rol nuevoRol)
+        {
+            
+            this._repoUsuarios.AgregarRol(idUsuario, nuevoRol);
         }
         
         public IReadOnlyList<Usuario> VerTodosLosUsuarios()

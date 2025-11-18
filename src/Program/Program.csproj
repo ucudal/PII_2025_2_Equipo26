@@ -4,7 +4,8 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>6</LangVersion>
-    </PropertyGroup>
+      <UserSecretsId>0cd36667-3211-4264-9cc8-2f820beed6a6</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Library\Library.csproj" />

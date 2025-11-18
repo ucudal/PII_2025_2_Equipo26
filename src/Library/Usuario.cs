@@ -21,8 +21,7 @@ public class Usuario : IEntidad
     /// <summary>
     /// Rol del usuario (Vendedor o Administrador).
     /// </summary>
-    public Rol Rol { get; private set; }
-
+    public List<Rol> Roles { get; set; } = new List<Rol>();
     /// <summary>
     /// Estado actual del usuario (Activo o Suspendido).
     /// </summary>
@@ -33,10 +32,10 @@ public class Usuario : IEntidad
     /// </summary>
     /// <param name="nombreUsuario">Nombre de login.</param>
     /// <param name="rol">Rol del usuario.</param>
-    public Usuario(string nombreUsuario, Rol rol)
+    public Usuario(string nombreUsuario, Rol rolInicial)
     {
         this.NombreUsuario = nombreUsuario;
-        this.Rol = rol;
+        this.Roles.Add(rolInicial);
         this.Estado = Estado.Activo; // Los usuarios se crean Activos por defecto
     }
 

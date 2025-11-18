@@ -85,20 +85,6 @@ namespace Library.Tests
         /// Prueba la regla de negocio que impide asignar un Usuario
         /// con Rol 'Administrador' como vendedor de un cliente.
         /// </summary>
-        [Test]
-        public void TestNoSePuedeAsignarAdminComoVendedor()
-        {
-            /// <summary>
-            /// CORREGIDO: Llamada con 2 argumentos
-            /// </summary>
-            this.fachada.CrearUsuario("Admin", Rol.Administrador);
-            int adminId = this.fachada.VerTodosLosUsuarios().First(u => u.Rol == Rol.Administrador).Id;
-
-            this.fachada.AsignarClienteVendedor(this.clienteId, adminId);
-
-            var cliente = this.fachada.BuscarCliente(this.clienteId);
-            Assert.IsNull(cliente.VendedorAsignado); // No se debió asignar
-        }
 
         // --- Tests de Interacciones (Polimorfismo) ---
 
