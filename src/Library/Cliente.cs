@@ -152,8 +152,46 @@ namespace Library
         /// <param name="venta">La venta completada.</param>
         public void AgregarVenta(Venta venta)
         {
-            if (venta == null) throw new ArgumentNullException(nameof(venta), "La venta no puede ser nula.");
+            if (venta == null) 
+            {
+                throw new ArgumentNullException(nameof(venta), "La venta no puede ser nula.");
+            }
             this.Ventas.Add(venta);
+        }
+
+        /// <summary>
+        /// Verifica si el cliente coincide con un término de búsqueda.
+        /// Busca en Nombre, Apellido, Teléfono y Correo.
+        /// </summary>
+        /// <param name="termino">El término a buscar.</param>
+        /// <returns>True si coincide, False en caso contrario.</returns>
+        public bool Coincide(string termino)
+        {
+            if (termino == null || termino == "") 
+            {
+                return false;
+            }
+
+            string busqueda = termino.ToLower();
+
+            if (this.Nombre != null && this.Nombre != "" && this.Nombre.ToLower().Contains(busqueda)) 
+            {
+                return true;
+            }
+            if (this.Apellido != null && this.Apellido != "" && this.Apellido.ToLower().Contains(busqueda)) 
+            {
+                return true;
+            }
+            if (this.Telefono != null && this.Telefono != "" && this.Telefono.Contains(busqueda)) 
+            {
+                return true;
+            }
+            if (this.Correo != null && this.Correo != "" && this.Correo.ToLower().Contains(busqueda)) 
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

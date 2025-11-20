@@ -77,16 +77,10 @@ namespace Library
         public List<Cliente> BuscarPorTermino(string termino)
         {
             var resultados = new List<Cliente>();
-            var busqueda = termino.ToLower();
 
-            // Itera sobre la lista _items heredada
             foreach (var cliente in this._items)
             {
-                if (cliente.Nombre.ToLower().Contains(busqueda) ||
-                    cliente.Apellido.ToLower().Contains(busqueda) ||
-                    cliente.Telefono.Contains(busqueda) ||
-                    cliente.Correo.ToLower().Contains(busqueda) ||
-                    cliente.Genero.ToLower().Contains(busqueda)) 
+                if (cliente.Coincide(termino))
                 {
                     resultados.Add(cliente);
                 }
