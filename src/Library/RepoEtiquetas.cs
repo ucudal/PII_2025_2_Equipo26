@@ -6,9 +6,9 @@ namespace Library
     /// <summary>
     /// Implementa el patrón "Repositorio" (Repository).
     /// Administra la colección de objetos <see cref="Etiqueta"/>.
-    /// Hereda la lógica común de <see cref="RepositorioBase{T}"/>.
+    /// Hereda la lógica común de <see cref="RepoBase{T}"/>.
     /// </summary>
-    public class RepoEtiquetas : RepositorioBase<Etiqueta>, IRepoEtiquetas
+    public class RepoEtiquetas : RepoBase<Etiqueta>, IRepoEtiquetas
     {
         // --- Campos Privados ---
         // 'private List<Etiqueta> _etiquetas' HA SIDO ELIMINADO

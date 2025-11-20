@@ -6,10 +6,10 @@ namespace Library
 {
     /// <summary>
     /// Administra la colección de objetos <see cref="Usuario"/>.
-    /// Hereda de <see cref="RepositorioBase{T}"/> e implementa
+    /// Hereda de <see cref="RepoBase{T}"/> e implementa
     /// la interfaz específica <see cref="IRepoUsuarios"/>.
     /// </summary>
-    public class RepoUsuarios : RepositorioBase<Usuario>, IRepoUsuarios
+    public class RepoUsuarios : RepoBase<Usuario>, IRepoUsuarios
     {
         /// <summary>
         /// Crea y agrega un nuevo usuario (Operación Create).

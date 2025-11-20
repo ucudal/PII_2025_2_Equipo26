@@ -13,7 +13,7 @@
         
         // --- CORRECCIÓN ---
         // Se agrega el 'set;' para permitir que
-        // el RepositorioBase pueda asignar el ID.
+        // el RepoBase pueda asignar el ID.
         int Id { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Library
         /// </remarks>
 
         // --- CORRECCIÓN ---
-        // Se cambia 'private set' por 'set' para que el RepositorioBase pueda asignar el ID.
+        // Se cambia 'private set' por 'set' para que el RepoBase pueda asignar el ID.
         public int Id { get; set; }
 
         /// <summary>

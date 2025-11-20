@@ -8,9 +8,9 @@ namespace Library
     /// <summary>
     /// Implementa el patrón "Repositorio" (Repository).
     /// Maneja la lista de ventas generales (no atadas a un cliente).
-    /// Hereda la lógica común de <see cref="RepositorioBase{T}"/>.
+    /// Hereda la lógica común de <see cref="RepoBase{T}"/>.
     /// </summary>
-    public class RepoVentas : RepositorioBase<Venta>, IRepoVentas
+    public class RepoVentas : RepoBase<Venta>, IRepoVentas
     {
         // --- Campos Privados ---
         // 'private List<Venta> _ventas' HA SIDO ELIMINADO

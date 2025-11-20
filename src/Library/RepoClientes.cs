@@ -7,9 +7,9 @@ namespace Library
 {
     /// <summary>
     /// Administra la colección de objetos <see cref="Cliente"/>.
-    /// Hereda la lógica común de <see cref="RepositorioBase{T}"/>.
+    /// Hereda la lógica común de <see cref="RepoBase{T}"/>.
     /// </summary>
-    public class RepoClientes : RepositorioBase<Cliente>, IRepoClientes
+    public class RepoClientes : RepoBase<Cliente>, IRepoClientes
     {
         // --- Campos Privados ---
         // 'private List<Cliente> _clientes' HA SIDO ELIMINADO

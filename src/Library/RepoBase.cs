@@ -10,8 +10,8 @@ namespace Library
     /// </summary>
     /// <typeparam name="T">El tipo de entidad, debe implementar IEntidad.</typeparam>
     
-    // 1. Añadimos la implementación de 'IRepositorio<T>'
-    public abstract class RepositorioBase<T> : IRepositorio<T> where T : IEntidad
+    // 1. Añadimos la implementación de 'IRepoBase<T>'
+    public abstract class RepoBase<T> : IRepoBase<T> where T : IEntidad
     {
         // (El resto del código de esta clase que te di antes
         //  con _items, _nextId, Buscar, ObtenerTodos y Eliminar

@@ -4,9 +4,9 @@ namespace Library
 {
     /// <summary>
     /// Define el contrato para el Repositorio de Usuarios.
-    /// Hereda la funcionalidad base de IRepositorio.
+    /// Hereda la funcionalidad base de IRepoBase.
     /// </summary>
-    public interface IRepoUsuarios : IRepositorio<Usuario>
+    public interface IRepoUsuarios : IRepoBase<Usuario>
     {
         /// <summary>
         /// Crea y agrega un nuevo usuario.
