@@ -34,6 +34,11 @@ public class Usuario : IEntidad
     /// <param name="rol">Rol del usuario.</param>
     public Usuario(string nombreUsuario, Rol rolInicial)
     {
+        if (nombreUsuario == null || nombreUsuario == "")
+        {
+            throw new ArgumentException("El nombre de usuario no puede ser nulo o vacío.", nameof(nombreUsuario));
+        }
+        
         this.NombreUsuario = nombreUsuario;
         this.Roles.Add(rolInicial);
         this.Estado = Estado.Activo; // Los usuarios se crean Activos por defecto

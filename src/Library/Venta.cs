@@ -40,6 +40,9 @@ public class Venta : IEntidad
     /// <param name="fecha">Fecha de la venta.</param>
     public Venta(int id, string producto, float importe, DateTime fecha)
     {
+        if (producto == null || producto == "") throw new ArgumentException("El producto no puede ser nulo o vacío.", nameof(producto));
+        if (importe < 0) throw new ArgumentException("El importe no puede ser negativo.", nameof(importe));
+
         this.Id = id;
         this.Producto = producto;
         this.Importe = importe;
