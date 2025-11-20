@@ -24,6 +24,12 @@ namespace Library
         /// </summary>
         public void Agregar(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
         {
+            if (nombre == null || nombre == "") throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
+            if (apellido == null || apellido == "") throw new ArgumentException("El apellido no puede ser nulo o vacío.", nameof(apellido));
+            if (telefono == null || telefono == "") throw new ArgumentException("El teléfono no puede ser nulo o vacío.", nameof(telefono));
+            if (correo == null || correo == "") throw new ArgumentException("El correo no puede ser nulo o vacío.", nameof(correo));
+            if (genero == null || genero == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(genero));
+
             var nuevoCliente = new Cliente(
                 nombre, 
                 apellido, 
@@ -46,6 +52,12 @@ namespace Library
         /// </summary>
         public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
         {
+            if (nombre == null || nombre == "") throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
+            if (apellido == null || apellido == "") throw new ArgumentException("El apellido no puede ser nulo o vacío.", nameof(apellido));
+            if (telefono == null || telefono == "") throw new ArgumentException("El teléfono no puede ser nulo o vacío.", nameof(telefono));
+            if (correo == null || correo == "") throw new ArgumentException("El correo no puede ser nulo o vacío.", nameof(correo));
+            if (genero == null || genero == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(genero));
+
             var cliente = this.Buscar(id); // Llama a Buscar() heredado
             
             if (cliente != null)

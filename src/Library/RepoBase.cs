@@ -28,27 +28,21 @@ namespace Library
         protected int _nextId = 1;
 
 
-        // --- CORRECCIÓN: MÉTODO 'Agregar' FALTANTE ---
         /// <summary>
         /// Agrega una entidad ya creada a la lista y le asigna un ID.
-        /// Este es el método que 'RepoClientes' llamará con 'base.Agregar(nuevoCliente)'.
         /// </summary>
-        /// <param name="item">La entidad a agregar (ej. un Cliente).</param>
+        /// <param name="item">La entidad a agregar.</param>
         public void Agregar(T item)
         {
-            if (item != null)
+            if (item == null)
             {
-                item.Id = this._nextId; // Asigna el ID
-                this._nextId++;         // Incrementa el contador para el próximo
-                this._items.Add(item);  // Agrega a la lista
+                throw new ArgumentNullException(nameof(item), "El item a agregar no puede ser nulo.");
             }
+            
+            item.Id = this._nextId; // Asigna el ID
+            this._nextId++;         // Incrementa el contador para el próximo
+            this._items.Add(item);  // Agrega a la lista
         }
-        // --- FIN DE LA CORRECCIÓN ---
-
-
-        /// <summary>
-        /// Busca una entidad por su ID.
-        /// </summary>
         public T Buscar(int id)
         {
             foreach (var item in this._items)

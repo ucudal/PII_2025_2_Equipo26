@@ -96,6 +96,12 @@ namespace Library
         public Cliente(string nombre, string apellido, string telefono, string correo, string genero,
             DateTime fechaNacimiento)
         {
+            if (nombre == null || nombre == "") throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
+            if (apellido == null || apellido == "") throw new ArgumentException("El apellido no puede ser nulo o vacío.", nameof(apellido));
+            if (telefono == null || telefono == "") throw new ArgumentException("El teléfono no puede ser nulo o vacío.", nameof(telefono));
+            if (correo == null || correo == "") throw new ArgumentException("El correo no puede ser nulo o vacío.", nameof(correo));
+            if (genero == null || genero == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(genero));
+
             // Ya NO se asigna el 'Id' aquí.
             this.Nombre = nombre;
             this.Apellido = apellido;
@@ -146,6 +152,7 @@ namespace Library
         /// <param name="venta">La venta completada.</param>
         public void AgregarVenta(Venta venta)
         {
+            if (venta == null) throw new ArgumentNullException(nameof(venta), "La venta no puede ser nula.");
             this.Ventas.Add(venta);
         }
     }
