@@ -116,8 +116,9 @@ namespace Library
 
         /// <summary>
         /// Asigna un nuevo vendedor a este cliente.
-        /// La lógica de validación (rol y estado) se delega a la <see cref="Fachada"/>,
-        /// pero el Cliente (Experto) es quien finalmente realiza la asignación.
+        /// Aplica el patrón Expert: Cliente conoce sus datos y relaciones.
+        /// La validación de reglas de negocio complejas (como roles) puede delegarse,
+        /// pero el Cliente mantiene la integridad de su estado.
         /// </summary>
         /// <param name="nuevoVendedor">El objeto Usuario que será el nuevo vendedor.</param>
         public void AsignarVendedor(Usuario nuevoVendedor)

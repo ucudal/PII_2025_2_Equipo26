@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Representa un Usuario del sistema (ej. Vendedor o Administrador).
+/// Implementa el patrón Expert: conoce sus roles y estado.
 /// Implementa la interfaz IEntidad para ser gestionado por un Repositorio.
 /// </summary>
 public class Usuario : IEntidad

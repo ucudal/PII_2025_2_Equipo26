@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-
+#
 namespace Library
 {
     /// <summary>
     /// Define el contrato genérico para un repositorio de solo lectura
     /// y búsqueda/eliminación básica.
+    /// Sigue el patrón Repository para abstraer el acceso a datos.
     /// </summary>
     /// <typeparam name="T">El tipo de entidad, debe implementar IEntidad.</typeparam>
     public interface IRepoBase<T> where T : IEntidad

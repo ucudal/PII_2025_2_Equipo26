@@ -19,6 +19,7 @@ namespace Library
 
         /// <summary>
         /// Crea una nueva etiqueta con un nombre y la agrega a la lista (Create).
+        /// Implementa el patrón Creator: RepoEtiquetas tiene la información para crear instancias de Etiqueta.
         /// </summary>
         /// <param name="nombre">El nombre de la nueva etiqueta.</param>
         public void Crear(string nombre)

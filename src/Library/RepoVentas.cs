@@ -21,6 +21,7 @@ namespace Library
 
         /// <summary>
         /// Agrega una nueva venta a la lista (Operación Create).
+        /// Implementa el patrón Creator: RepoVentas tiene la información para crear instancias de Venta.
         /// </summary>
         /// <param name="producto">Descripción del producto o servicio vendido.</param>
         /// <param name="importe">El monto o valor total de la venta.</param>

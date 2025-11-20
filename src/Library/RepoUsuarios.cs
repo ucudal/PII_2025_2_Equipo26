@@ -13,6 +13,8 @@ namespace Library
     {
         /// <summary>
         /// Crea y agrega un nuevo usuario (Operación Create).
+        /// Implementa el patrón Creator (GRASP): RepoUsuarios tiene la responsabilidad
+        /// de crear instancias de Usuario.
         /// </summary>
         
         // --- CORRECCIÓN 1: Cambiar el tipo de retorno de 'void' a 'Usuario' ---

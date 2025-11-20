@@ -6,6 +6,7 @@ namespace Library
 {
     /// <summary>
     /// Proporciona la implementación base para todos los repositorios.
+    /// Implementa el patrón Repository: gestiona la persistencia y acceso a datos de manera genérica.
     /// ...
     /// </summary>
     /// <typeparam name="T">El tipo de entidad, debe implementar IEntidad.</typeparam>

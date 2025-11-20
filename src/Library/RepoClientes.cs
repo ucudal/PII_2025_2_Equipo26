@@ -20,7 +20,8 @@ namespace Library
 
         /// <summary>
         /// Crea y agrega un nuevo cliente a la lista (Operación Create).
-        /// Esta clase es la 'Creator' (GRASP) de los objetos Cliente.
+        /// Implementa el patrón Creator (GRASP): RepoClientes tiene la información necesaria
+        /// para instanciar objetos Cliente y agregarlos a su colección.
         /// </summary>
         public void Agregar(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
         {

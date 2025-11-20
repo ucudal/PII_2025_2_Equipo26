@@ -4,6 +4,7 @@ namespace Library
 /// <summary>
 /// Representa una Etiqueta o "Tag" (ej: "VIP", "Nuevo", "Inactivo").
 /// Sirve para clasificar o agrupar objetos <see cref="Cliente"/>.
+/// Implementa el patrón Expert: conoce su nombre e identificación.
 /// </summary>
     public class Etiqueta : IEntidad
 
