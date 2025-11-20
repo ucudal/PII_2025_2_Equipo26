@@ -7,7 +7,7 @@ namespace Library
     /// y búsqueda/eliminación básica.
     /// </summary>
     /// <typeparam name="T">El tipo de entidad, debe implementar IEntidad.</typeparam>
-    public interface IRepositorio<T> where T : IEntidad
+    public interface IRepoBase<T> where T : IEntidad
     {
         /// <summary>
         /// Busca una entidad por su ID.

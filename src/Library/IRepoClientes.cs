@@ -5,9 +5,9 @@ namespace Library
 {
     /// <summary>
     /// Interfaz para el Repositorio de Clientes.
-    /// Hereda los métodos comunes de IRepositorio.
+    /// Hereda los métodos comunes de IRepoBase.
     /// </summary>
-    public interface IRepoClientes : IRepositorio<Cliente>
+    public interface IRepoClientes : IRepoBase<Cliente>
     {
         // --- MÉTODOS ESPECÍFICOS QUE DEBES AGREGAR ---
 
