@@ -27,11 +27,10 @@ namespace Library
         /// <param name="importe">El monto o valor total de la venta.</param>
         /// <param name="fecha">La fecha y hora en que se registró la venta.</param>
         /// <returns>La <see cref="Venta"/> recién creada (con su ID asignado).</returns>
-        public Venta Agregar(string producto, float importe, DateTime fecha)
+        public void Agregar(string producto, float importe, DateTime fecha)
         {
-            var nuevaVenta = new Venta(this._nextId++, producto, importe, fecha);
-            this._items.Add(nuevaVenta); // Usa la lista _items heredada
-            return nuevaVenta;
+            var nuevaVenta = new Venta(0, producto, importe, fecha);
+            base.Agregar(nuevaVenta);
         }
 
     }
