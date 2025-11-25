@@ -4,6 +4,7 @@ namespace Library
 {
     /// <summary>
     /// Clase base abstracta para todos los tipos de interacción.
+    /// Implementa el patrón Expert: conoce los detalles comunes de la interacción (fecha, tema).
     /// </summary>
     public abstract class Interaccion
     {

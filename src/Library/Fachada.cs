@@ -6,7 +6,8 @@ using System.Linq;
 namespace Library
 {
     /// <summary>
-    /// Implementa el patrón "Fachada" (Facade).
+    /// Implementa el patrón "Fachada" (Facade) para ocultar la complejidad del sistema
+    /// y el patrón "Controlador" (Controller) (GRASP) para coordinar las operaciones.
     /// </summary>
     public class Fachada
     {

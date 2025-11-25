@@ -4,6 +4,7 @@ using System;
 /// <summary>
 /// Representa una Venta que se ha completado.
 /// Es un modelo de datos simple (a veces llamado POCO o DTO).
+/// Implementa el patrón Expert: conoce los detalles de la venta (producto, importe, fecha).
 /// </summary>
 public class Venta : IEntidad
 {

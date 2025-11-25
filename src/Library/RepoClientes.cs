@@ -20,7 +20,8 @@ namespace Library
 
         /// <summary>
         /// Crea y agrega un nuevo cliente a la lista (Operación Create).
-        /// Esta clase es la 'Creator' (GRASP) de los objetos Cliente.
+        /// Implementa el patrón Creator (GRASP): RepoClientes tiene la información necesaria
+        /// para instanciar objetos Cliente y agregarlos a su colección.
         /// </summary>
         public void Agregar(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
         {
@@ -77,16 +78,10 @@ namespace Library
         public List<Cliente> BuscarPorTermino(string termino)
         {
             var resultados = new List<Cliente>();
-            var busqueda = termino.ToLower();
 
-            // Itera sobre la lista _items heredada
             foreach (var cliente in this._items)
             {
-                if (cliente.Nombre.ToLower().Contains(busqueda) ||
-                    cliente.Apellido.ToLower().Contains(busqueda) ||
-                    cliente.Telefono.Contains(busqueda) ||
-                    cliente.Correo.ToLower().Contains(busqueda) ||
-                    cliente.Genero.ToLower().Contains(busqueda)) 
+                if (cliente.Coincide(termino))
                 {
                     resultados.Add(cliente);
                 }
