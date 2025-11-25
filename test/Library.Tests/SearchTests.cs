@@ -109,4 +109,58 @@ namespace Library.Tests
             Assert.That(results, Does.Contain(_cliente));
         }
     }
+
+    public class SearchEtiquetasTests
+    {
+        private RepoEtiquetas _repo;
+
+        [SetUp]
+        public void Setup()
+        {
+            _repo = new RepoEtiquetas();
+            _repo.Crear("VIP");
+        }
+
+        [Test]
+        public void SearchByName_ShouldFindEtiqueta()
+        {
+            var results = _repo.BuscarPorTermino("VIP");
+            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results[0].Nombre, Is.EqualTo("VIP"));
+        }
+
+        [Test]
+        public void Search_CaseInsensitive()
+        {
+            var results = _repo.BuscarPorTermino("vip");
+            Assert.That(results.Count, Is.EqualTo(1));
+        }
+    }
+
+    public class SearchVentasTests
+    {
+        private RepoVentas _repo;
+
+        [SetUp]
+        public void Setup()
+        {
+            _repo = new RepoVentas();
+            _repo.Agregar("Laptop", 1000, DateTime.Now);
+        }
+
+        [Test]
+        public void SearchByProduct_ShouldFindVenta()
+        {
+            var results = _repo.BuscarPorTermino("Laptop");
+            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results[0].Producto, Is.EqualTo("Laptop"));
+        }
+
+        [Test]
+        public void Search_PartialMatch()
+        {
+            var results = _repo.BuscarPorTermino("Lap");
+            Assert.That(results.Count, Is.EqualTo(1));
+        }
+    }
 }

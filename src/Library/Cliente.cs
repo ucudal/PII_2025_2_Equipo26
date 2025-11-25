@@ -9,7 +9,7 @@ using System.Collections.Generic;
 /// </summary>
 namespace Library 
 {
-    public class Cliente : IEntidad
+    public class Cliente : IEntidad, IBuscable
     {
         // --- Propiedades del Cliente ---
 
@@ -56,24 +56,34 @@ namespace Library
 
         // --- Relaciones y Listas (Agregación) ---
 
-        /// <summary>
-        /// Obtiene o establece la lista de interacciones (llamadas, reuniones, etc.)
-        /// asociadas a este cliente.
-        /// </summary>
-        /// <remarks>
-        /// Esto es un ejemplo de agregación: el Cliente "tiene" Interacciones.
-        /// </remarks>
-        public List<Interaccion> Interacciones { get; set; } = new List<Interaccion>();
+        private List<Interaccion> _interacciones = new List<Interaccion>();
+        private List<Etiqueta> _etiquetas = new List<Etiqueta>();
+        private List<Venta> _ventas = new List<Venta>();
 
         /// <summary>
-        /// Obtiene o establece la lista de Etiquetas para clasificar al cliente.
+        /// Obtiene la lista de interacciones (llamadas, reuniones, etc.)
+        /// asociadas a este cliente.
         /// </summary>
-        public List<Etiqueta> Etiquetas { get; set; } = new List<Etiqueta>();
+        public IReadOnlyList<Interaccion> Interacciones
+        {
+            get { return _interacciones.AsReadOnly(); }
+        }
+
+        /// <summary>
+        /// Obtiene la lista de Etiquetas para clasificar al cliente.
+        /// </summary>
+        public IReadOnlyList<Etiqueta> Etiquetas
+        {
+            get { return _etiquetas.AsReadOnly(); }
+        }
 
         /// <summary>
         /// Obtiene el historial de ventas cerradas con este cliente.
         /// </summary>
-        public List<Venta> Ventas { get; private set; } = new List<Venta>();
+        public IReadOnlyList<Venta> Ventas
+        {
+            get { return _ventas.AsReadOnly(); }
+        }
 
         /// <summary>
         /// Obtiene el usuario (vendedor) que está a cargo de este cliente.
@@ -92,7 +102,6 @@ namespace Library
         /// <param name="correo">El correo electrónico del cliente.</param>
         /// <param name="genero">El género del cliente.</param>
         /// <param name="fechaNacimiento">La fecha de nacimiento del cliente.</param>
-        // DESPUÉS (El constructor que necesitas):
         public Cliente(string nombre, string apellido, string telefono, string correo, string genero,
             DateTime fechaNacimiento)
         {
@@ -109,7 +118,6 @@ namespace Library
             this.Correo = correo;
             this.Genero = genero;
             this.FechaNacimiento = fechaNacimiento;
-            // ... (el resto de tus inicializaciones)
         }
 
         // --- Métodos ---
@@ -157,7 +165,48 @@ namespace Library
             {
                 throw new ArgumentNullException(nameof(venta), "La venta no puede ser nula.");
             }
-            this.Ventas.Add(venta);
+            this._ventas.Add(venta);
+        }
+
+        /// <summary>
+        /// Agrega una interacción al cliente.
+        /// </summary>
+        /// <param name="interaccion">La interacción a agregar.</param>
+        public void AgregarInteraccion(Interaccion interaccion)
+        {
+            if (interaccion == null)
+            {
+                throw new ArgumentNullException(nameof(interaccion), "La interacción no puede ser nula.");
+            }
+            this._interacciones.Add(interaccion);
+        }
+
+        /// <summary>
+        /// Agrega una etiqueta al cliente.
+        /// </summary>
+        /// <param name="etiqueta">La etiqueta a agregar.</param>
+        public void AgregarEtiqueta(Etiqueta etiqueta)
+        {
+            if (etiqueta == null)
+            {
+                throw new ArgumentNullException(nameof(etiqueta), "La etiqueta no puede ser nula.");
+            }
+            if (!this._etiquetas.Contains(etiqueta))
+            {
+                this._etiquetas.Add(etiqueta);
+            }
+        }
+
+        /// <summary>
+        /// Quita una etiqueta del cliente.
+        /// </summary>
+        /// <param name="etiqueta">La etiqueta a quitar.</param>
+        public void QuitarEtiqueta(Etiqueta etiqueta)
+        {
+            if (etiqueta != null)
+            {
+                this._etiquetas.Remove(etiqueta);
+            }
         }
 
         /// <summary>

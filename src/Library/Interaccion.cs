@@ -44,5 +44,13 @@ namespace Library
             this.Fecha = fecha;
             this.Tema = tema;
         }
+        /// <summary>
+        /// Indica si la interacción se considera "sin respuesta" (ej. llamada perdida/recibida sin acción).
+        /// Por defecto es falso.
+        /// </summary>
+        public virtual bool EsSinRespuesta()
+        {
+            return false;
+        }
     }
 }

@@ -75,5 +75,26 @@ namespace Library
                 this._items.Remove(item);
             }
         }
+
+        /// <summary>
+        /// Busca entidades que coincidan con un término de búsqueda.
+        /// Utiliza la interfaz <see cref="IBuscable"/> si la entidad la implementa.
+        /// </summary>
+        /// <param name="termino">El término a buscar.</param>
+        /// <returns>Una lista de entidades que coinciden.</returns>
+        public List<T> BuscarPorTermino(string termino)
+        {
+            var resultados = new List<T>();
+
+            foreach (var item in this._items)
+            {
+                var buscable = item as IBuscable;
+                if (buscable != null && buscable.Coincide(termino))
+                {
+                    resultados.Add(item);
+                }
+            }
+            return resultados;
+        }
     }
 }

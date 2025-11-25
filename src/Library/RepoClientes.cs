@@ -72,22 +72,7 @@ namespace Library
             }
         }
         
-        /// <summary>
-        /// Busca clientes que coincidan con un término (Método específico de Cliente).
-        /// </summary>
-        public List<Cliente> BuscarPorTermino(string termino)
-        {
-            var resultados = new List<Cliente>();
 
-            foreach (var cliente in this._items)
-            {
-                if (cliente.Coincide(termino))
-                {
-                    resultados.Add(cliente);
-                }
-            }
-            return resultados;
-        }
     
     }
 }
