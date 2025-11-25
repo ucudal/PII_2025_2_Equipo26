@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// Esta clase es un "Experto en Información" (Patrón Expert) sobre los datos
 /// personales y el historial de un cliente.
 /// </summary>
-namespace Library 
+namespace Library
 {
     public class Cliente : IEntidad, IBuscable
     {
@@ -131,14 +131,14 @@ namespace Library
         /// <param name="nuevoVendedor">El objeto Usuario que será el nuevo vendedor.</param>
         public void AsignarVendedor(Usuario nuevoVendedor)
         {
-            if (nuevoVendedor == null) 
+            if (nuevoVendedor == null)
                 throw new ArgumentNullException(nameof(nuevoVendedor), "El vendedor no puede ser nulo.");
-            
+
             bool esVendedor = false;
-            
-            foreach (Rol r in nuevoVendedor.Roles) 
+
+            foreach (Rol r in nuevoVendedor.Roles)
             {
-                if (r == Rol.Vendedor) 
+                if (r == Rol.Vendedor)
                 {
                     esVendedor = true;
                     break;
@@ -148,7 +148,7 @@ namespace Library
             {
                 throw new InvalidOperationException($"El vendedor '{nuevoVendedor.NombreUsuario}' está suspendido y no puede ser asignado.");
             }
-            if (!esVendedor) 
+            if (!esVendedor)
             {
                 throw new InvalidOperationException("El usuario asignado no tiene el rol de Vendedor.");
             }
@@ -161,7 +161,7 @@ namespace Library
         /// <param name="venta">La venta completada.</param>
         public void AgregarVenta(Venta venta)
         {
-            if (venta == null) 
+            if (venta == null)
             {
                 throw new ArgumentNullException(nameof(venta), "La venta no puede ser nula.");
             }
@@ -217,26 +217,26 @@ namespace Library
         /// <returns>True si coincide, False en caso contrario.</returns>
         public bool Coincide(string termino)
         {
-            if (termino == null || termino == "") 
+            if (termino == null || termino == "")
             {
                 return false;
             }
 
             string busqueda = termino.ToLower();
 
-            if (this.Nombre != null && this.Nombre != "" && this.Nombre.ToLower().Contains(busqueda)) 
+            if (this.Nombre != null && this.Nombre != "" && this.Nombre.ToLower().Contains(busqueda))
             {
                 return true;
             }
-            if (this.Apellido != null && this.Apellido != "" && this.Apellido.ToLower().Contains(busqueda)) 
+            if (this.Apellido != null && this.Apellido != "" && this.Apellido.ToLower().Contains(busqueda))
             {
                 return true;
             }
-            if (this.Telefono != null && this.Telefono != "" && this.Telefono.Contains(busqueda)) 
+            if (this.Telefono != null && this.Telefono != "" && this.Telefono.Contains(busqueda))
             {
                 return true;
             }
-            if (this.Correo != null && this.Correo != "" && this.Correo.ToLower().Contains(busqueda)) 
+            if (this.Correo != null && this.Correo != "" && this.Correo.ToLower().Contains(busqueda))
             {
                 return true;
             }
