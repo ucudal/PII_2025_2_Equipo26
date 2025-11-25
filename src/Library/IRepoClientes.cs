@@ -23,9 +23,6 @@ namespace Library
         void Modificar(int id, string nombre, string apellido, string telefono,
                          string correo, string genero, DateTime fechaNacimiento);
         
-        /// <summary>
-        /// Busca clientes que coincidan con un término.
-        /// </summary>
-        List<Cliente> BuscarPorTermino(string termino);
+
     }
 }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 /// </summary>
 namespace Library 
 {
-    public class Cliente : IEntidad
+    public class Cliente : IEntidad, IBuscable
     {
         // --- Propiedades del Cliente ---
 

@@ -6,7 +6,7 @@ using System;
 /// Es un modelo de datos simple (a veces llamado POCO o DTO).
 /// Implementa el patrón Expert: conoce los detalles de la venta (producto, importe, fecha).
 /// </summary>
-public class Venta : IEntidad
+public class Venta : IEntidad, IBuscable
 {
     // --- Propiedades ---
 
@@ -48,5 +48,26 @@ public class Venta : IEntidad
         this.Producto = producto;
         this.Importe = importe;
         this.Fecha = fecha;
+    }
+
+    /// <summary>
+    /// Verifica si la venta coincide con un término de búsqueda.
+    /// Busca en la descripción del Producto.
+    /// </summary>
+    /// <param name="termino">El término a buscar.</param>
+    /// <returns>True si coincide, False en caso contrario.</returns>
+    public bool Coincide(string termino)
+    {
+        if (termino == null || termino == "")
+        {
+            return false;
+        }
+
+        if (this.Producto != null && this.Producto != "" && this.Producto.ToLower().Contains(termino.ToLower()))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

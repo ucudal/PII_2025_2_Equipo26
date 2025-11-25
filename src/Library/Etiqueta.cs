@@ -6,9 +6,7 @@ namespace Library
 /// Sirve para clasificar o agrupar objetos <see cref="Cliente"/>.
 /// Implementa el patrón Expert: conoce su nombre e identificación.
 /// </summary>
-    public class Etiqueta : IEntidad
-
-
+    public class Etiqueta : IEntidad, IBuscable
     {
         // --- Propiedades ---
 
@@ -34,6 +32,27 @@ namespace Library
         {
             Id = id;
             Nombre = nombre;
+        }
+
+        /// <summary>
+        /// Verifica si la etiqueta coincide con un término de búsqueda.
+        /// Busca en el Nombre.
+        /// </summary>
+        /// <param name="termino">El término a buscar.</param>
+        /// <returns>True si coincide, False en caso contrario.</returns>
+        public bool Coincide(string termino)
+        {
+            if (termino == null || termino == "")
+            {
+                return false;
+            }
+
+            if (this.Nombre != null && this.Nombre != "" && this.Nombre.ToLower().Contains(termino.ToLower()))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
