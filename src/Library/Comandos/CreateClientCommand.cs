@@ -18,7 +18,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("crear-cliente")]
+        [Command("crear_cliente")]
         [Summary("Registra un nuevo cliente solo con datos básicos.")]
         public async Task ExecuteAsync(
             [Summary("Nombre")] string nombre, 
@@ -28,7 +28,6 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-                // Usamos la nueva sobrecarga de la Fachada que no pide género ni fecha
                 _fachada.CrearCliente(nombre, apellido, telefono, correo);
 
                 await ReplyAsync($"✅ **Cliente Creado**: {nombre} {apellido} ha sido registrado exitosamente.\n*Nota: Recuerde completar los datos faltantes (género, fecha nac.) posteriormente.*");
