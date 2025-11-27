@@ -40,6 +40,13 @@ namespace Library
             this._repoClientes.Agregar(nombre, apellido, telefono, correo, 
                                      genero, fechaNacimiento);
         }
+        public void CrearCliente(string nombre, string apellido, string telefono, string correo)
+        {
+            string generoPorDefecto = "Sin definir";
+            DateTime fechaPorDefecto = DateTime.MinValue;
+            
+            this.CrearCliente(nombre, apellido, telefono, correo, generoPorDefecto, fechaPorDefecto);
+        }
         
         public IReadOnlyList<Cliente> VerTodosLosClientes()
         {
