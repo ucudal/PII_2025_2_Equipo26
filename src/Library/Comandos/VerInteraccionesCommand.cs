@@ -16,14 +16,14 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
         
-        [Command("ver-interacciones")]
+        [Command("ver_interacciones")]
         public async Task ExecuteAyudaAsync()
         {
             await ReplyAsync("❌ **Falta el ID del cliente.**\n" +
                              "Ejemplos:\n" +
-                             "`!ver-interacciones 1` (Ver todo)\n" +
-                             "`!ver-interacciones 1 Llamada` (Solo llamadas)\n" +
-                             "`!ver-interacciones 1 Correo 25/10/2023` (Correos desde esa fecha)");
+                             "`!ver_interacciones 1` (Ver todo)\n" +
+                             "`!ver_interacciones 1 Llamada` (Solo llamadas)\n" +
+                             "`!ver_interacciones 1 Correo 25/10/2023` (Correos desde esa fecha)");
         }
 
 

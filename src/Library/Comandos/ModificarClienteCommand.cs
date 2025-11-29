@@ -18,7 +18,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("modificar-cliente")]
+        [Command("modificar_cliente")]
         [Summary("Actualiza toda la información de un cliente existente dado su ID.")]
         public async Task ExecuteAsync(
             [Summary("ID del cliente a modificar")] int id,
