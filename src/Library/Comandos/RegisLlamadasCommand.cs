@@ -18,12 +18,14 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("registrar-llamada")]
+        [Command("registrar_llamada")]
         [Summary("Registra la llamada con el cliente seleccionado.")]
 
         public async Task ExecuteAsync(
             [Summary("Id del cliente con el que se tuvo la llamada")]
             int idCliente,
+            [Summary("Fecha en la que se dio la llamada")]
+            DateTime fecha,
             [Summary("Tema del que se trato la llamada")]
             string tema,
             [Summary("Tipo de la llamada (entrante o saliente)")]
@@ -31,10 +33,6 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-                // Definimos la fecha actual como momento del registro.
-                // Esto podría pasarse como argumento si se desea registrar llamadas pasadas.
-                DateTime fecha = DateTime.Now;
-
                 // Delegación: El comando no contiene lógica de negocio, solo orquesta la petición a la Fachada.
                 _fachada.RegistrarLlamada(idCliente, fecha, tema, tipollamada);
 

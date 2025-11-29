@@ -18,12 +18,14 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("registrar-reunion")]
+        [Command("registrar_reunion")]
         [Summary("Registra la reunion con el cliente seleccionado.")]
 
         public async Task ExecuteAsync(
             [Summary("Id del cliente con el que se tuvo la reunion")]
             int idCliente,
+            [Summary("Fecha en la que se dio la reunion")]
+            DateTime fecha,
             [Summary("Tema del que se trato la reunion")]
             string tema,
             [Summary("Lugar donde se tuvo la reunion")]
@@ -31,14 +33,11 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-                // 1. Definimos la fecha actual automáticamente
-                DateTime fecha = DateTime.Now;
-
-                // 2. Delegamos la lógica a la Fachada
+                // Delegamos la lógica a la Fachada
                 // La fachada se encargará de buscar al cliente y crear el objeto 'Reunion'
                 _fachada.RegistrarReunion(idCliente, fecha, tema, lugar);
 
-                // 3. Enviamos confirmación visual al usuario (Feedback)
+                // Enviamos confirmación visual al usuario (Feedback)
                 await ReplyAsync($"📅 **Reunión Registrada Exitosamente**\n" +
                                  $"- **Cliente ID**: {idCliente}\n" +
                                  $"- **Tema**: {tema}\n" +

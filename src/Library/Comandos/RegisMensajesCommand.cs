@@ -18,12 +18,14 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("registrar-mensaje")]
+        [Command("registrar_mensaje")]
         [Summary("Registra el mensaje al/del cliente seleccionado.")]
 
         public async Task ExecuteAsync(
             [Summary("Id del cliente para el que es el mensaje")]
             int idCliente,
+            [Summary("Fecha en la que se mando/recibio el mensaje")]
+            DateTime fecha,
             [Summary("Tema del que se trato el mensaje")]
             string tema,
             [Summary("Remitente del mensaje")]
@@ -33,15 +35,12 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-                // 1. Asignamos la fecha y hora actual al mensaje
-                DateTime fecha = DateTime.Now;
-
-                // 2. Delegamos la creación del mensaje a la Fachada.
+                // Delegamos la creación del mensaje a la Fachada.
                 // Esto mantiene el principio de "Experto en Información": la fachada sabe cómo
                 // buscar al cliente y cómo crear la interacción interna.
                 _fachada.RegistrarMensaje(idCliente, fecha, tema, remitente, destinatario);
 
-                // 3. Confirmación al usuario
+                // Confirmación al usuario
                 await ReplyAsync($"📨 **Mensaje Registrado**\n" +
                                  $"- **Cliente ID**: {idCliente}\n" +
                                  $"- **De**: {remitente}\n" +
