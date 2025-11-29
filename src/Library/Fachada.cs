@@ -87,23 +87,23 @@ namespace Library
         {
             // VALIDACIÓN DE PRECONDICIÓN (NEGOCIO): Cliente debe existir.
             var cliente = this._repoClientes.Buscar(idCliente);
-            
+    
             if (cliente == null)
             {
-                // Se lanza una excepción específica si la precondición no se cumple.
                 throw new ArgumentException($"No se encontró un cliente registrado con el ID: {idCliente}. No se puede registrar la llamada.", nameof(idCliente));
             }
-            
+    
             // VALIDACIÓN DE PRECONDICIÓN (NEGOCIO): Tipo de llamada debe ser válido.
             string tipoNormalizado = tipoLlamada.Trim().ToLowerInvariant();
-            
-            if (tipoNormalizado != "entrante" && tipoNormalizado != "saliente")
+    
+            // CORRECCIÓN: Ahora incluimos 'recibida'
+            if (tipoNormalizado != "entrante" && tipoNormalizado != "saliente" && tipoNormalizado != "recibida")
             {
-                // Se lanza una excepción si el valor no es parte de las reglas del dominio.
-                throw new ArgumentException($"El tipo de llamada '{tipoLlamada}' es inválido. Los tipos de llamada permitidos son 'entrante' o 'saliente'.", nameof(tipoLlamada));
+                // Actualizamos el mensaje de error para reflejar los tipos permitidos.
+                throw new ArgumentException($"El tipo de llamada '{tipoLlamada}' es inválido. Los tipos de llamada permitidos son 'entrante', 'saliente' o 'recibida'.", nameof(tipoLlamada));
             }
 
-            // DELEGACIÓN: Si todas las Precondiciones pasan, se delega al objeto Cliente.
+            // DELEGACIÓN: Si todas las Precondiciones pasan.
             cliente.AgregarInteraccion(new Llamada(fecha, tema, tipoLlamada));
         }
 
