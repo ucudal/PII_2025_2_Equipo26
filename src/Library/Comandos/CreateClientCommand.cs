@@ -28,13 +28,15 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
+                // Esta es la lógica principal que se intenta ejecutar.
                 _fachada.CrearCliente(nombre, apellido, telefono, correo);
 
                 await ReplyAsync($"✅ **Cliente Creado**: {nombre} {apellido} ha sido registrado exitosamente.\n*Nota: Recuerde completar los datos faltantes (género, fecha nac.) posteriormente.*");
             }
             catch (Exception ex)
             {
-                await ReplyAsync($"❌ **Error**: {ex.Message}");
+                // Este bloque captura cualquier error (FormatException de la Fachada, o errores de negocio).
+                await ReplyAsync($"❌ **Error**: El comando no pudo completarse. **Detalle**: {ex.Message}");
             }
         }
     }
