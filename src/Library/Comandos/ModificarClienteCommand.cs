@@ -27,7 +27,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             [Summary("Nuevo Teléfono")] string telefono, 
             [Summary("Nuevo Correo")] string correo,
             [Summary("Nuevo Género")] string genero,
-            [Summary("Nueva Fecha de nacimiento (yyyy-MM-dd)")] DateTime fechaNacimiento)
+            [Summary("Nueva Fecha de nacimiento (yyyy-mm-dd)")] DateTime fechaNacimiento)
         {
             try
             {

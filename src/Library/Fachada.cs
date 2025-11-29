@@ -85,11 +85,26 @@ namespace Library
 
         public void RegistrarLlamada(int idCliente, DateTime fecha, string tema, string tipoLlamada)
         {
+            // VALIDACIÓN DE PRECONDICIÓN (NEGOCIO): Cliente debe existir.
             var cliente = this._repoClientes.Buscar(idCliente);
-            if (cliente != null)
+    
+            if (cliente == null)
             {
-                cliente.AgregarInteraccion(new Llamada(fecha, tema, tipoLlamada));
+                throw new ArgumentException($"No se encontró un cliente registrado con el ID: {idCliente}. No se puede registrar la llamada.", nameof(idCliente));
             }
+    
+            // VALIDACIÓN DE PRECONDICIÓN (NEGOCIO): Tipo de llamada debe ser válido.
+            string tipoNormalizado = tipoLlamada.Trim().ToLowerInvariant();
+    
+            // CORRECCIÓN: Ahora incluimos 'recibida'
+            if (tipoNormalizado != "entrante" && tipoNormalizado != "saliente" && tipoNormalizado != "recibida")
+            {
+                // Actualizamos el mensaje de error para reflejar los tipos permitidos.
+                throw new ArgumentException($"El tipo de llamada '{tipoLlamada}' es inválido. Los tipos de llamada permitidos son 'entrante', 'saliente' o 'recibida'.", nameof(tipoLlamada));
+            }
+
+            // DELEGACIÓN: Si todas las Precondiciones pasan.
+            cliente.AgregarInteraccion(new Llamada(fecha, tema, tipoLlamada));
         }
 
         public void RegistrarReunion(int idCliente, DateTime fecha, string tema, string lugar)
