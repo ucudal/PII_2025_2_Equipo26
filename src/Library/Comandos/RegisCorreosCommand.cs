@@ -18,7 +18,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("registrar-correo")]
+        [Command("registrar_correo")]
         [Summary("Registra el correo al/del cliente seleccionado.")]
 
         public async Task ExecuteAsync(

@@ -27,7 +27,7 @@ namespace Ucu.Poo.DiscordBot.Commands
         }
 
 
-        [Command("ver-interacciones")]
+        [Command("ver_interacciones")]
         [Summary("Muestra historial filtrado delegando la lógica a la Fachada.")]
         public async Task ExecuteAsync(
             [Summary("ID del cliente")] int id,

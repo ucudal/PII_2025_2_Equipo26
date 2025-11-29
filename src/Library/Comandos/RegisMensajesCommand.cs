@@ -18,7 +18,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("registrar-mensaje")]
+        [Command("registrar_mensaje")]
         [Summary("Registra el mensaje al/del cliente seleccionado.")]
 
         public async Task ExecuteAsync(

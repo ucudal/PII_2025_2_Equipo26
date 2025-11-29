@@ -18,7 +18,7 @@
                 _fachada = fachada;
             }
 
-            [Command("eliminar-cliente")]
+            [Command("eliminar_cliente")]
             [Summary("Elimina un cliente del sistema permanentemente dado su ID.")]
             public async Task ExecuteAsync(
                 [Summary("ID del cliente a eliminar")] int id)

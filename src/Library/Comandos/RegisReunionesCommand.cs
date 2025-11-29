@@ -18,7 +18,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("registrar-reunion")]
+        [Command("registrar_reunion")]
         [Summary("Registra la reunion con el cliente seleccionado.")]
 
         public async Task ExecuteAsync(
