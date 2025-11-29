@@ -35,7 +35,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             }
             catch (Exception ex)
             {
-                // Este bloque captura cualquier error (FormatException de la Fachada, o errores de negocio).
+                // Este bloque captura cualquier error.
                 await ReplyAsync($"❌ **Error**: El comando no pudo completarse. **Detalle**: {ex.Message}");
             }
         }
