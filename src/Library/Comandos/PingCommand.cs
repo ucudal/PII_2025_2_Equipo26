@@ -16,8 +16,7 @@ namespace Ucu.Poo.DiscordBot.Commands
         /// Implementa el comando 'ping'.
         /// </summary>
         [Command("ping")]
-        [Summary(
-            "Devuelve 'pong'.")]
+        [Summary("Devuelve 'pong'.")]
         // ReSharper disable once UnusedMember.Global
         public async Task ExecuteAsync()
         {

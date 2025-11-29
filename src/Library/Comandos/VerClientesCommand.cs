@@ -19,8 +19,8 @@ namespace Ucu.Poo.DiscordBot.Commands
             _fachada = fachada;
         }
 
-        [Command("ver-clientes")]
-        [Alias("listar-clientes")]
+        [Command("ver_clientes")]
+        [Alias("listar_clientes")]
         [Summary("Muestra una lista de todos los clientes registrados.")]
         public async Task ExecuteAsync()
         {
