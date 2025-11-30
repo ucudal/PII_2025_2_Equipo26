@@ -280,31 +280,21 @@ namespace Library
         }
 
         // --- Métodos de Ventas y Reportes ---
-        
-        // 1. Método para el COMANDO (Venta a cliente con fecha específica)
         public void RegistrarVenta(int clienteId, string producto, float monto, DateTime fecha)
         {
             Cliente cliente = this._repoClientes.Buscar(clienteId);
+    
             if (cliente != null)
             {
                 Venta nuevaVenta = new Venta(this._proximoIdVenta++, producto, monto, fecha);
-                cliente.AgregarVenta(nuevaVenta); 
+                cliente.AgregarInteraccion(nuevaVenta); 
+                cliente.AgregarVenta(nuevaVenta);
                 this._repoVentas.Agregar(producto, monto, fecha);
             }
         }
 
-// 2. Sobrecarga para COMANDO SIMPLE (Venta a cliente, asume fecha de hoy)
-        public void RegistrarVenta(int clienteId, string producto, float monto)
-        {
-            this.RegistrarVenta(clienteId, producto, monto, DateTime.Now);
-        }
 
-// 3. Método para los TESTS ANTIGUOS (Venta anónima/global)
-// Este es el que te falta para que se arreglen los errores rojos.
-        public void RegistrarVenta(string producto, float monto, DateTime fecha)
-        {
-            this._repoVentas.Agregar(producto, monto, fecha);
-        }
+        
 
         public float CalcularTotalVentas(DateTime fechaInicio, DateTime fechaFin)
         {
@@ -321,13 +311,13 @@ namespace Library
             return total;
         }
 
-        public void RegistrarCotizacion(int clienteId, string tema, double monto, string detalle)
+        public void RegistrarCotizacion(int clienteId, string tema, double monto, DateTime fecha)
         {
-            Cliente clienteEncontrado = this._repoClientes.Buscar(clienteId); 
-            if (clienteEncontrado != null)
+            Cliente cliente = this._repoClientes.Buscar(clienteId);
+            if (cliente != null)
             {
-                Cotizacion nuevaCotizacion = new Cotizacion(tema, monto, detalle);
-                clienteEncontrado.AgregarInteraccion(nuevaCotizacion); 
+                Cotizacion nuevaCoti = new Cotizacion(fecha, tema, monto, tema);
+                cliente.AgregarInteraccion(nuevaCoti);
             }
         }
 

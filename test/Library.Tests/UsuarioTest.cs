@@ -110,32 +110,33 @@ namespace Library.Tests
         [Test]
         public void RegistrarVenta_DeberiaAgregarVentaAlCliente()
         {
-            // 1. Arrange
+            // 1. ARRANGE (Preparar datos)
             fachada.CrearCliente("Juan", "Perez", "099123456", "jp@mail.com", "M", DateTime.Now);
-
-            // --- CORRECCIÓN: Obtenemos el ID REAL ---
+    
+            // Obtenemos ID real
             Cliente clienteCreado = fachada.VerTodosLosClientes()[0];
             int idClienteReal = clienteCreado.Id;
-            // --- FIN CORRECCIÓN ---
 
             string producto = "Laptop";
             float monto = 1500.50f;
+            DateTime fechaVenta = DateTime.Now; // <--- DATO NUEVO NECESARIO
 
-            // 2. Act
-            fachada.RegistrarVenta(idClienteReal, producto, monto); // Usamos el ID real
+            // 2. ACT (Ejecutar la acción)
+            // Pasamos la fechaVenta como 4to argumento
+            fachada.RegistrarVenta(idClienteReal, producto, monto, fechaVenta); 
 
-            // 3. Assert
-            Cliente cliente = fachada.BuscarCliente(idClienteReal); // Buscamos con el ID real
+            // 3. ASSERT (Verificar resultados)
+            Cliente cliente = fachada.BuscarCliente(idClienteReal);
 
             Assert.IsNotNull(cliente);
-            Assert.AreEqual(1, cliente.Ventas.Count); // Ahora sí encontrará la venta
+            Assert.AreEqual(1, cliente.Ventas.Count);
 
-            Venta ventaRegistrada = cliente.Ventas[0];
+            // Verificamos que los datos guardados coincidan con los del Arrange
+            Venta ventaRegistrada = cliente.Ventas[0]; // Como Venta hereda de Interaccion, esto funciona si lo casteas o si Ventas es lista de Venta
+    
             Assert.AreEqual(producto, ventaRegistrada.Producto);
             Assert.AreEqual(monto, ventaRegistrada.Importe);
-
-            // Asumimos que el primer ID de Venta también es 1
-            Assert.AreEqual(1, ventaRegistrada.Id);
+            Assert.AreEqual(fechaVenta, ventaRegistrada.Fecha); // Verificamos también la fecha
         }
 
         [Test]

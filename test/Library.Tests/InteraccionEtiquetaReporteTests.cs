@@ -191,20 +191,29 @@ namespace Library.Tests
         [Test]
         public void TestRegistrarVentaGeneralYReporte()
         {
+            // 1. ARRANGE
+            // Definimos las fechas
             DateTime fecha1 = new DateTime(2025, 10, 5);
             DateTime fecha2 = new DateTime(2025, 10, 15);
             DateTime fecha3 = new DateTime(2025, 10, 25); // Esta venta queda fuera del rango
 
-            this.fachada.RegistrarVenta("Producto A", 100, fecha1);
-            this.fachada.RegistrarVenta("Producto B", 50, fecha2);
-            this.fachada.RegistrarVenta("Producto C", 200, fecha3); 
+            // 2. ACT
+            // CORRECCIÓN: Ahora le pasamos 'this.clienteId' (creado en el SetUp)
+            // para cumplir con la nueva firma del método RegistrarVenta(int, string, float, DateTime).
+            this.fachada.RegistrarVenta(this.clienteId, "Producto A", 100, fecha1);
+            this.fachada.RegistrarVenta(this.clienteId, "Producto B", 50, fecha2);
+            this.fachada.RegistrarVenta(this.clienteId, "Producto C", 200, fecha3); 
 
+            // 3. ASSERT
+            // Definimos el rango del reporte
             DateTime inicioReporte = new DateTime(2025, 10, 1);
             DateTime finReporte = new DateTime(2025, 10, 20);
-            
+    
+            // Calculamos el total
             float total = this.fachada.CalcularTotalVentas(inicioReporte, finReporte);
-            
-            Assert.AreEqual(150, total); // 100 + 50
+    
+            // Verificamos que sume solo las ventas dentro del rango (100 + 50 = 150)
+            Assert.AreEqual(150, total); 
         }
 
         /// <summary>
@@ -214,18 +223,29 @@ namespace Library.Tests
         [Test]
         public void TestRegistrarVentaAsignadaACliente()
         {
+            // 1. ARRANGE
             var cliente = this.fachada.BuscarCliente(this.clienteId);
-            Assert.AreEqual(0, cliente.Ventas.Count);
+            Assert.AreEqual(0, cliente.Ventas.Count); // Pre-condición
 
-            this.fachada.RegistrarVenta(this.clienteId, "Servicio Premium", 1500);
-            this.fachada.RegistrarVenta(this.clienteId, "Soporte", 500);
+            DateTime fechaVenta = DateTime.Now; // Definimos la fecha
 
+            // 2. ACT
+            // Agregamos la fecha como 4to parámetro en ambas llamadas
+            this.fachada.RegistrarVenta(this.clienteId, "Servicio Premium", 1500, fechaVenta);
+            this.fachada.RegistrarVenta(this.clienteId, "Soporte", 500, fechaVenta);
+
+            // 3. ASSERT
             var clienteActualizado = this.fachada.BuscarCliente(this.clienteId);
+    
             Assert.AreEqual(2, clienteActualizado.Ventas.Count);
+    
+            // Verificamos datos de la primera venta
             Assert.AreEqual(1500, clienteActualizado.Ventas[0].Importe);
+            Assert.AreEqual(fechaVenta, clienteActualizado.Ventas[0].Fecha); // Verificamos fecha
+    
+            // Verificamos datos de la segunda venta
             Assert.AreEqual("Soporte", clienteActualizado.Ventas[1].Producto);
         }
-
         /// <summary>
         /// Prueba la lógica del reporte de clientes inactivos.
         /// Un cliente es inactivo si no tiene interacciones o si su
