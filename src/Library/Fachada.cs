@@ -281,19 +281,29 @@ namespace Library
 
         // --- Métodos de Ventas y Reportes ---
         
-        public void RegistrarVenta(string producto, float importe, DateTime fecha)
+        // 1. Método para el COMANDO (Venta a cliente con fecha específica)
+        public void RegistrarVenta(int clienteId, string producto, float monto, DateTime fecha)
         {
-            this._repoVentas.Agregar(producto, importe, fecha);
+            Cliente cliente = this._repoClientes.Buscar(clienteId);
+            if (cliente != null)
+            {
+                Venta nuevaVenta = new Venta(this._proximoIdVenta++, producto, monto, fecha);
+                cliente.AgregarVenta(nuevaVenta); 
+                this._repoVentas.Agregar(producto, monto, fecha);
+            }
         }
 
+// 2. Sobrecarga para COMANDO SIMPLE (Venta a cliente, asume fecha de hoy)
         public void RegistrarVenta(int clienteId, string producto, float monto)
         {
-            Cliente clienteEncontrado = this._repoClientes.Buscar(clienteId);
-            if (clienteEncontrado != null)
-            {
-                Venta nuevaVenta = new Venta(this._proximoIdVenta++, producto, monto, DateTime.Now);
-                clienteEncontrado.AgregarVenta(nuevaVenta); 
-            }
+            this.RegistrarVenta(clienteId, producto, monto, DateTime.Now);
+        }
+
+// 3. Método para los TESTS ANTIGUOS (Venta anónima/global)
+// Este es el que te falta para que se arreglen los errores rojos.
+        public void RegistrarVenta(string producto, float monto, DateTime fecha)
+        {
+            this._repoVentas.Agregar(producto, monto, fecha);
         }
 
         public float CalcularTotalVentas(DateTime fechaInicio, DateTime fechaFin)
