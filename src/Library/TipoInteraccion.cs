@@ -28,6 +28,7 @@
         /// <summary>
         /// Interacción de tipo Cotización.
         /// </summary>
-        Cotizacion
+        Cotizacion,
+        Venta
     }
 }

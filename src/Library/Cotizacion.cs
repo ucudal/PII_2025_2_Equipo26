@@ -26,8 +26,8 @@ namespace Library
         /// Inicializa una nueva instancia de la clase <see cref="Cotizacion"/>.
         /// Asigna la fecha actual por defecto.
         /// </summary>
-        public Cotizacion(string tema, double monto, string detalle)
-            : base(DateTime.Now, tema) // Asume la fecha de creación.
+        public Cotizacion(DateTime fecha, string tema, double monto, string detalle)
+            : base(fecha, tema)
         {
             this.Monto = monto;
             this.Detalle = detalle;
