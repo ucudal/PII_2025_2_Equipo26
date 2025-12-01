@@ -201,6 +201,55 @@ namespace Library.Tests
             Assert.AreEqual(2, resultadoBusqueda.Count);
             Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juan"));
             Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juana"));
+        } 
+        /// <summary>
+        /// Verifica que el método ObtenerClientesInactivos funcione correctamente
+        /// al identificar clientes cuya última interacción es anterior al límite de días.
+        /// Este test comprueba la Delegación de la lógica de negocio desde la Fachada al Cliente.
+        /// </summary>
+        [Test]
+     public void TestObtenerClientesInactivos()
+        {
+         /// Arrange: Crear clientes con diferentes fechas de interacción.
+            
+            // --- PREPARACIÓN DE DATOS ---
+        
+            // Cliente Activo (Interacción reciente, hace 5 días)
+            this.fachada.CrearCliente("Activo", "Reciente", "1", "a@a.com", "Otro", DateTime.Now);
+            // Asume que RegistrarLlamada ya existe y crea una Interaccion con fecha.
+            this.fachada.RegistrarLlamada(1, DateTime.Now.AddDays(-5), "Reciente", "entrante"); 
+
+            // Cliente Inactivo (Interacción antigua, hace 20 días)
+            this.fachada.CrearCliente("Inactivo", "Antiguo", "2", "i@i.com", "Otro", DateTime.Now);
+            this.fachada.RegistrarLlamada(2, DateTime.Now.AddDays(-20), "Antigua", "saliente");
+
+            // Cliente Nuevo (Nunca tuvo interacción, su fecha es DateTime.MinValue)
+            this.fachada.CrearCliente("Nunca", "Visto", "3", "n@n.com", "Otro", DateTime.Now);
+
+            // Cliente de Límite (Interacción justo antes del límite de 15 días - NO DEBE APARECER)
+            // Usamos AddHours(1) para asegurarnos que está JUSTO fuera del rango de inactividad.
+            this.fachada.CrearCliente("Limite", "Exacto", "4", "l@l.com", "Otro", DateTime.Now);
+            this.fachada.RegistrarLlamada(4, DateTime.Now.AddDays(-15).AddHours(1), "Justo", "saliente");
+
+            // --- DEFINICIÓN DEL LÍMITE ---
+            // Establecemos el límite en 15 días.
+            int diasLimite = 15; 
+            
+            /// Act: Ejecutamos el método que queremos probar.
+            var inactivos = this.fachada.ObtenerClientesInactivos(diasLimite);
+
+            /// Assert: Verificamos los resultados.
+            
+            // Esperamos 2 clientes: Inactivo (20 días) y Nunca (DateTime.MinValue).
+            Assert.AreEqual(2, inactivos.Count, "Solo dos clientes deben ser clasificados como inactivos.");
+            
+            // Verificamos que los clientes correctos estén presentes.
+            Assert.IsTrue(inactivos.Any(c => c.Nombre == "Inactivo"), "El cliente con 20 días de antigüedad debe ser inactivo.");
+            Assert.IsTrue(inactivos.Any(c => c.Nombre == "Nunca"), "El cliente sin interacciones debe ser inactivo.");
+            
+            // Verificamos que los clientes activos NO estén presentes.
+            Assert.IsFalse(inactivos.Any(c => c.Nombre == "Activo"), "El cliente de 5 días no debe ser inactivo.");
+            Assert.IsFalse(inactivos.Any(c => c.Nombre == "Limite"), "El cliente justo en el límite no debe ser inactivo.");
         }
     }
 }

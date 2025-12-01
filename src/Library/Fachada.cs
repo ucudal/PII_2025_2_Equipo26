@@ -342,35 +342,30 @@ namespace Library
             }
         }
 
+        /// <summary>
+        /// Obtiene una lista de clientes que no han tenido ninguna interacción
+        /// en el número de días especificado.
+        /// La Fachada delega la lógica de encontrar la última fecha de interacción
+        /// al objeto Cliente (Patrón Expert).
+        /// </summary>
+        /// <param name="diasSinInteraccion">Número de días límite para considerar inactivo al cliente.</param>
+        /// <returns>Lista de clientes inactivos.</returns>
         public List<Cliente> ObtenerClientesInactivos(int diasSinInteraccion)
         {
             List<Cliente> clientesInactivos = new List<Cliente>();
-            // Calcula la fecha límite (ej. si hoy es 11/Nov y dias=30, fechaLimite es 12/Oct)
+            
+            // Calcula la fecha límite (e.g., hoy menos 30 días).
             DateTime fechaLimite = DateTime.Now.AddDays(-diasSinInteraccion);
 
             foreach (var cliente in this._repoClientes.ObtenerTodas())
             {
-                // 1. Si el cliente no tiene interacciones, es inactivo.
-                if (cliente.Interacciones.Count == 0)
-                {
-                    clientesInactivos.Add(cliente);
-                    continue; // Pasa al siguiente cliente
-                }
+                // 1. DELEGACIÓN AL EXPERT: El Cliente calcula la fecha de su última interacción.
+                DateTime fechaUltimaInteraccion = cliente.ObtenerFechaUltimaInteraccion(); 
 
-                // 2. Encontrar la interacción más reciente del cliente
-                DateTime fechaMasReciente = DateTime.MinValue;
-                foreach (var interaccion in cliente.Interacciones)
-                {
-                    if (interaccion.Fecha > fechaMasReciente)
-                    {
-                        fechaMasReciente = interaccion.Fecha;
-                    }
-                }
-
-                // --- ESTA ES LA LÓGICA CLAVE ---
-                // 3. El cliente es inactivo si su última interacción (fechaMasReciente)
-                //    es ANTERIOR (<) a la fechaLímite.
-                if (fechaMasReciente < fechaLimite)
+                // 2. REGLA DE NEGOCIO: El cliente se considera inactivo si su última interacción
+                //    es anterior (<) a la fecha límite.
+                //    Esto incluye clientes que tienen fecha de interacción DateTime.MinValue ("Nunca").
+                if (fechaUltimaInteraccion < fechaLimite)
                 {
                     clientesInactivos.Add(cliente);
                 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace Ucu.Poo.DiscordBot.Commands
 {
     /// <summary>
-    /// Comando para registrar el género y la fecha de nacimiento de un cliente.
+    /// Comando creado para cumplir con la historia de usuario:
+    /// "Como usuario quiero registrar otros datos de los clientes como género y fecha de nacimiento de los clientes..."
     /// </summary>
     public class RegistrarDatosAdicionalesCommand : ModuleBase<SocketCommandContext>
     {

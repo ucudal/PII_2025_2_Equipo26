@@ -253,5 +253,36 @@ namespace Library
 
             return false;
         }
+        /// <summary>
+        /// Obtiene la fecha de la interacción más reciente registrada para este cliente.
+        /// Aplica el patrón Expert: El cliente es responsable de calcular la fecha a partir
+        /// de su colección de interacciones (Agregación).
+        /// </summary>
+        /// <returns>La fecha y hora de la última interacción, o DateTime.MinValue si no hay interacciones.</returns>
+        public DateTime ObtenerFechaUltimaInteraccion()
+        {
+            // Verificamos si la colección está vacía.
+            if (this._interacciones.Count == 0)
+            {
+                // Si no hay interacciones, devolvemos la fecha mínima para que la Fachada
+                // pueda interpretarlo como "nunca tuvo interacción".
+                return DateTime.MinValue; 
+            }
+
+            DateTime fechaMasReciente = DateTime.MinValue;
+            
+            // Recorremos la colección IReadOnlyList<Interaccion> (propiedad Interacciones)
+            // o el campo privado _interacciones.
+            foreach (var interaccion in this._interacciones)
+            {
+                // La Interacción debe tener una propiedad pública 'Fecha'.
+                if (interaccion.Fecha > fechaMasReciente)
+                {
+                    fechaMasReciente = interaccion.Fecha;
+                }
+            }
+            
+            return fechaMasReciente;
+        }
     }
 }
