@@ -476,5 +476,76 @@ namespace Library.Tests
             Assert.AreEqual(GeneroCliente.Femenino, clienteActualizado.Genero, "El Género no se actualizó.");
             Assert.AreEqual(nuevaFecha, clienteActualizado.FechaNacimiento, "La Fecha de Nacimiento no se actualizó.");
         }
+        
+        /// <summary>
+        /// Verifica que la eliminación sea selectiva. 
+        /// Crea dos clientes, elimina uno y asegura que el otro permanezca intacto.
+        /// Esto garantiza que "mantener limpia la base de datos" no cause pérdida de datos válidos.
+        /// </summary>
+        [Test]
+        public void TestEliminarCliente_BorradoSelectivo()
+        {
+            // Arrange
+            // 1. Creamos dos clientes distintos
+            this._fachada.CrearCliente("Cliente", "A_Borrar", "099111111", "borrar@test.com", "Masculino", DateTime.Now);
+            this._fachada.CrearCliente("Cliente", "A_Quedar", "099222222", "quedar@test.com", "Femenino", DateTime.Now);
+
+            // Obtenemos sus IDs (sin usar LINQ, por índice)
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var clienteBorrar = listaClientes[0];
+            var clienteQuedar = listaClientes[1];
+
+            // Act
+            // Eliminamos SOLAMENTE al primero
+            this._fachada.EliminarCliente(clienteBorrar.Id);
+
+            // Assert
+            // 1. Verificamos que el cliente objetivo haya desaparecido
+            Assert.IsNull(this._fachada.BuscarCliente(clienteBorrar.Id), "El cliente eliminado no debería existir.");
+
+            // 2. Verificamos que el OTRO cliente siga existiendo y con sus datos correctos
+            var clienteSobreviviente = this._fachada.BuscarCliente(clienteQuedar.Id);
+            Assert.IsNotNull(clienteSobreviviente, "El cliente que no se eliminó debería seguir existiendo.");
+            Assert.AreEqual("A_Quedar", clienteSobreviviente.Apellido, "Los datos del cliente restante no deben alterarse.");
+
+            // 3. Verificamos el conteo total para asegurar que la limpieza fue exacta
+            Assert.AreEqual(1, this._fachada.VerTodosLosClientes().Count, "La base de datos debería tener exactamente 1 cliente restante.");
+        }
+        
+        /// <summary>
+        /// Verifica los criterios de búsqueda que faltaban en el test anterior:
+        /// Apellido, Teléfono y Correo Electrónico.
+        /// </summary>
+        [Test]
+        public void TestBuscarClientes_PorApellidoTelefonoCorreo()
+        {
+            // Arrange
+            // Creamos un cliente con datos únicos para probar específicamente estos campos.
+            string apellidoUnico = "Skywalker";
+            string telefonoUnico = "099555444";
+            string correoUnico = "luke@galaxy.com";
+            
+            this._fachada.CrearCliente("Luke", apellidoUnico, telefonoUnico, correoUnico, "Masculino", DateTime.Now);
+
+            // Act & Assert 1: Búsqueda por APELLIDO
+            // Verificamos que al buscar por apellido, el sistema lo encuentre.
+            var porApellido = this._fachada.BuscarClientes(apellidoUnico);
+            Assert.AreEqual(1, porApellido.Count, "Debería encontrar al cliente buscando por Apellido.");
+            Assert.AreEqual(apellidoUnico, porApellido[0].Apellido);
+
+            // Act & Assert 2: Búsqueda por TELÉFONO
+            // Verificamos que al buscar por el número de teléfono, lo encuentre.
+            var porTelefono = this._fachada.BuscarClientes(telefonoUnico);
+            Assert.AreEqual(1, porTelefono.Count, "Debería encontrar al cliente buscando por Teléfono.");
+            Assert.AreEqual(telefonoUnico, porTelefono[0].Telefono);
+
+            // Act & Assert 3: Búsqueda por CORREO
+            // Verificamos que al buscar por el email, lo encuentre.
+            var porCorreo = this._fachada.BuscarClientes(correoUnico);
+            Assert.AreEqual(1, porCorreo.Count, "Debería encontrar al cliente buscando por Correo.");
+            Assert.AreEqual(correoUnico, porCorreo[0].Correo);
+        }
+        
+        
     }
 }
