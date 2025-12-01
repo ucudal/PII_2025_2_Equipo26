@@ -42,7 +42,7 @@ namespace Library
         }
         public void CrearCliente(string nombre, string apellido, string telefono, string correo)
         {
-            string generoPorDefecto = "Sin definir";
+            string generoPorDefecto = "NoEspecificado";
             DateTime fechaPorDefecto = DateTime.MinValue;
             
             this.CrearCliente(nombre, apellido, telefono, correo, generoPorDefecto, fechaPorDefecto);
@@ -91,7 +91,8 @@ namespace Library
         }
 
         // --- Métodos de Coordinación ---
-
+        
+        
         /// <summary>
         /// Asigna un cliente existente a un nuevo vendedor (Usuario).
         /// Coordina la búsqueda de ambos objetos y delega la asignación al Cliente.
