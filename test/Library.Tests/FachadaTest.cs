@@ -572,5 +572,233 @@ namespace Library.Tests
             Assert.AreEqual("Cliente B", cartera[1].Nombre);
             Assert.AreEqual("Cliente C", cartera[2].Nombre);
         }
+        
+        /// <summary>
+        /// Verifica que se pueda registrar una llamada asociada a un cliente,
+        /// guardando correctamente la fecha, el tema tratado y el tipo de llamada.
+        /// </summary>
+        [Test]
+        public void TestRegistrarLlamada_GuardadoCorrecto()
+        {
+            // Arrange
+            // 1. Creamos un cliente para asociarle la llamada
+            this._fachada.CrearCliente("Laura", "Martinez", "091222333", "laura@call.com", "Femenino", DateTime.Now);
+            
+            // Obtenemos el ID del cliente (estará en la posición 0 tras el SetUp)
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var cliente = listaClientes[0];
+
+            // 2. Preparamos los datos de la llamada
+            DateTime fechaLlamada = new DateTime(2023, 11, 15, 10, 30, 0);
+            string temaTratado = "Consulta sobre renovación de contrato";
+            string tipoLlamada = "entrante"; // "entrante", "saliente" o "recibida" según tu lógica
+
+            // Act
+            // Registramos la llamada usando la fachada
+            this._fachada.RegistrarLlamada(cliente.Id, fechaLlamada, temaTratado, tipoLlamada);
+
+            // Assert
+            // 1. Recuperamos las interacciones del cliente
+            var clienteActualizado = this._fachada.BuscarCliente(cliente.Id);
+            var historial = clienteActualizado.Interacciones;
+
+            // 2. Verificamos que se haya agregado la interacción
+            Assert.IsTrue(historial.Count > 0, "El historial del cliente no debería estar vacío.");
+
+            // 3. Obtenemos la última interacción agregada (sin usar LINQ)
+            // Asumimos que es la última de la lista
+            var ultimaInteraccion = historial[historial.Count - 1];
+
+            // 4. Verificamos que sea del tipo correcto (Llamada)
+            Assert.IsInstanceOf<Llamada>(ultimaInteraccion, "La interacción registrada debería ser de tipo Llamada.");
+
+            // 5. Verificamos los datos específicos requeridos por la historia
+            Llamada llamadaRegistrada = (Llamada)ultimaInteraccion;
+            
+            Assert.AreEqual(fechaLlamada, llamadaRegistrada.Fecha, "La fecha y hora de la llamada deben coincidir.");
+            // CORREGIDO: Usamos .Tema en lugar de .Comentario
+            Assert.AreEqual(temaTratado, llamadaRegistrada.Tema, "El tema tratado debe coincidir.");
+            // CORREGIDO: Usamos .TipoLlamada en lugar de .Estado
+            Assert.AreEqual(tipoLlamada, llamadaRegistrada.TipoLlamada, "El tipo de llamada (entrante/saliente) debe coincidir."); 
+        }
+        
+        /// <summary>
+        /// Verifica que se pueda registrar una reunión, validando que se persistan 
+        /// correctamente la fecha, el tema y, fundamentalmente, el LUGAR de la reunión.
+        /// </summary>
+        [Test]
+        public void TestRegistrarReunion_GuardadoCorrecto()
+        {
+            // Arrange
+            // 1. Creamos un cliente para la reunión
+            this._fachada.CrearCliente("Sofia", "Reuniones", "098000111", "sofia@meet.com", "Femenino", DateTime.Now);
+            
+            // Recuperamos el cliente (índice 0 tras el SetUp)
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var cliente = listaClientes[0];
+
+            // 2. Preparamos los datos de la reunión
+            DateTime fechaReunion = new DateTime(2024, 5, 20, 14, 0, 0);
+            string tema = "Negociación de presupuesto anual";
+            string lugar = "Oficinas Centrales - Sala 4";
+
+            // Act
+            this._fachada.RegistrarReunion(cliente.Id, fechaReunion, tema, lugar);
+
+            // Assert
+            // 1. Recuperamos las interacciones
+            var clienteActualizado = this._fachada.BuscarCliente(cliente.Id);
+            var historial = clienteActualizado.Interacciones;
+
+            // 2. Verificamos que se haya guardado
+            Assert.IsTrue(historial.Count > 0, "Debería haber al menos una interacción registrada.");
+
+            // 3. Obtenemos la última interacción y verificamos su tipo
+            var ultimaInteraccion = historial[historial.Count - 1];
+            Assert.IsInstanceOf<Reunion>(ultimaInteraccion, "La interacción debería ser de tipo Reunion.");
+
+            // 4. Casteamos y verificamos los datos
+            Reunion reunionGuardada = (Reunion)ultimaInteraccion;
+
+            Assert.AreEqual(fechaReunion, reunionGuardada.Fecha, "La fecha de la reunión no coincide.");
+            Assert.AreEqual(tema, reunionGuardada.Tema, "El tema de la reunión no coincide.");
+            Assert.AreEqual(lugar, reunionGuardada.Lugar, "El lugar de la reunión no se guardó correctamente.");
+        }
+        
+        /// <summary>
+        /// Verifica que se pueda registrar un mensaje (SMS/WhatsApp, etc.) asociado al cliente.
+        /// Valida que se guarden la fecha, el tema, quién lo envió (Remitente) y quién lo recibió (Destinatario).
+        /// </summary>
+        [Test]
+        public void TestRegistrarMensaje_GuardadoCorrecto()
+        {
+            // Arrange
+            // 1. Creamos un cliente de prueba
+            this._fachada.CrearCliente("Lucas", "Mensajero", "099123123", "lucas@msg.com", "Masculino", DateTime.Now);
+            
+            // Obtenemos el cliente (posición 0)
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var cliente = listaClientes[0];
+
+            // 2. Preparamos los datos del mensaje
+            DateTime fechaMensaje = new DateTime(2024, 8, 10, 9, 15, 0);
+            string tema = "Consulta de stock";
+            string remitente = "099123123"; // El cliente envía el mensaje
+            string destinatario = "Ventas";    // Nosotros lo recibimos
+
+            // Act
+            this._fachada.RegistrarMensaje(cliente.Id, fechaMensaje, tema, remitente, destinatario);
+
+            // Assert
+            // 1. Recuperamos el cliente y su historial
+            var clienteActualizado = this._fachada.BuscarCliente(cliente.Id);
+            var historial = clienteActualizado.Interacciones;
+
+            // 2. Verificamos que exista la interacción
+            Assert.IsTrue(historial.Count > 0, "El historial debería tener al menos una interacción.");
+
+            // 3. Obtenemos la última interacción y verificamos el tipo
+            var ultimaInteraccion = historial[historial.Count - 1];
+            Assert.IsInstanceOf<Mensaje>(ultimaInteraccion, "La interacción debería ser de tipo Mensaje.");
+
+            // 4. Casteamos y verificamos los datos campo por campo
+            Mensaje mensajeGuardado = (Mensaje)ultimaInteraccion;
+
+            Assert.AreEqual(fechaMensaje, mensajeGuardado.Fecha, "La fecha del mensaje no coincide.");
+            Assert.AreEqual(tema, mensajeGuardado.Tema, "El tema del mensaje no coincide.");
+            Assert.AreEqual(remitente, mensajeGuardado.Remitente, "El remitente no se guardó correctamente.");
+            Assert.AreEqual(destinatario, mensajeGuardado.Destinatario, "El destinatario no se guardó correctamente.");
+        }
+        
+        /// <summary>
+        /// Verifica que se pueda registrar un Correo Electrónico asociado al cliente.
+        /// Valida la persistencia de fecha, tema, remitente, destinatario y ASUNTO.
+        /// </summary>
+        [Test]
+        public void TestRegistrarCorreo_GuardadoCorrecto()
+        {
+            // Arrange
+            // 1. Creamos un cliente para la prueba
+            this._fachada.CrearCliente("Daniela", "Email", "098777666", "daniela@email.com", "Femenino", DateTime.Now);
+            
+            // Recuperamos el cliente (índice 0)
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var cliente = listaClientes[0];
+
+            // 2. Preparamos los datos del correo
+            DateTime fechaCorreo = new DateTime(2024, 9, 20, 15, 45, 0);
+            string tema = "Envío de presupuesto";
+            string remitente = "ventas@miempresa.com";
+            string destinatario = "daniela@email.com";
+            string asunto = "Presupuesto Solicitado #4500";
+
+            // Act
+            this._fachada.RegistrarCorreo(cliente.Id, fechaCorreo, tema, remitente, destinatario, asunto);
+
+            // Assert
+            // 1. Recuperamos el historial del cliente
+            var clienteActualizado = this._fachada.BuscarCliente(cliente.Id);
+            var historial = clienteActualizado.Interacciones;
+
+            // 2. Verificamos que se haya agregado
+            Assert.IsTrue(historial.Count > 0, "El historial debería tener al menos una interacción.");
+
+            // 3. Obtenemos la última interacción y verificamos el tipo
+            var ultimaInteraccion = historial[historial.Count - 1];
+            Assert.IsInstanceOf<Correo>(ultimaInteraccion, "La interacción debería ser de tipo Correo.");
+
+            // 4. Casteamos y verificamos los datos
+            Correo correoGuardado = (Correo)ultimaInteraccion;
+
+            Assert.AreEqual(fechaCorreo, correoGuardado.Fecha, "La fecha del correo no coincide.");
+            Assert.AreEqual(tema, correoGuardado.Tema, "El tema general no coincide.");
+            Assert.AreEqual(remitente, correoGuardado.Remitente, "El remitente no se guardó correctamente.");
+            Assert.AreEqual(destinatario, correoGuardado.Destinatario, "El destinatario no se guardó correctamente.");
+            Assert.AreEqual(asunto, correoGuardado.Asunto, "El asunto del correo no se guardó correctamente.");
+        }
+        
+        /// <summary>
+        /// Verifica que se pueda agregar una nota (comentario) a una interacción existente.
+        /// Esto cubre la historia de "tener información adicional de mis interacciones"
+        /// validando que el texto se asocie correctamente a la interacción específica.
+        /// </summary>
+        [Test]
+        public void TestAgregarNotaAInteraccion_GuardaNotaCorrectamente()
+        {
+            // Arrange
+            // 1. Creamos el cliente
+            this._fachada.CrearCliente("Carlos", "Notas", "099123123", "carlos@nota.com", "Masculino", DateTime.Now);
+            
+            // Obtenemos el cliente (índice 0)
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var cliente = listaClientes[0];
+
+            // 2. Registramos una interacción (ej. una Llamada) para ponerle la nota
+            // Esta será la interacción en el índice 0 del historial del cliente.
+            this._fachada.RegistrarLlamada(cliente.Id, DateTime.Now, "Llamada inicial", "entrante");
+
+            // 3. Verificamos pre-condición: que la interacción no tenga nota aún
+            var historialInicial = this._fachada.VerInteraccionesCliente(cliente.Id);
+            var interaccionSinNota = historialInicial[0];
+            Assert.IsNull(interaccionSinNota.NotaAdicional, "La interacción no debería tener nota al inicio.");
+
+            // Act
+            string contenidoNota = "El cliente mencionó que prefiere ser contactado por la tarde.";
+            
+            // Agregamos la nota a la interacción con índice 0
+            this._fachada.AgregarNotaAInteraccion(cliente.Id, 0, contenidoNota);
+
+            // Assert
+            // Recuperamos la interacción nuevamente para verificar la persistencia
+            var historialActualizado = this._fachada.VerInteraccionesCliente(cliente.Id);
+            var interaccionConNota = historialActualizado[0];
+
+            // Verificamos que el objeto Nota se haya creado
+            Assert.IsNotNull(interaccionConNota.NotaAdicional, "La nota debería haber sido creada y asignada.");
+            
+            // Verificamos el contenido del texto
+            // Asumimos que la propiedad en la clase Nota es 'Texto' según convenciones comunes.
+            Assert.AreEqual(contenidoNota, interaccionConNota.NotaAdicional.Texto, "El contenido de la nota no coincide.");
+        }
     }
 }
