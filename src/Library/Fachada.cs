@@ -59,6 +59,27 @@ namespace Library
             this._repoClientes.Modificar(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
         }
 
+        /// <summary>
+        /// Registra el género y la fecha de nacimiento de un cliente existente.
+        /// Implementa Composición/Delegación: La Fachada delega la lógica de 
+        /// persistencia al Repositorio de Clientes.
+        /// </summary>
+        /// <param name="idCliente">El ID del cliente a modificar.</param>
+        /// <param name="generoTexto">El género del cliente (como string).</param>
+        /// <param name="fechaNacimiento">La fecha de nacimiento (como DateTime).</param>
+        public void RegistrarDatosAdicionalesCliente(int idCliente, string generoTexto, DateTime fechaNacimiento)
+        {
+            // La Fachada coordina la operación, delegando la acción de persistencia.
+            // Si el método lanza una excepción (por ID inválido o Género inválido),
+            // la Fachada simplemente la propaga al Comando de Discord (la capa superior).
+            
+            this._repoClientes.ActualizarDatosAdicionales(
+                idCliente, 
+                generoTexto, 
+                fechaNacimiento
+            );
+        }
+        
         public List<Cliente> BuscarClientes(string termino)
         {
             return this._repoClientes.BuscarPorTermino(termino);
@@ -71,13 +92,32 @@ namespace Library
 
         // --- Métodos de Coordinación ---
 
+        /// <summary>
+        /// Asigna un cliente existente a un nuevo vendedor (Usuario).
+        /// Coordina la búsqueda de ambos objetos y delega la asignación al Cliente.
+        /// </summary>
+        /// <param name="idCliente">El ID del cliente a reasignar.</param>
+        /// <param name="idNuevoVendedor">El ID del usuario que será el nuevo vendedor.</param>
+        /// <exception cref="KeyNotFoundException">Se lanza si el cliente o el nuevo vendedor no existen.</exception>
+        /// <exception cref="InvalidOperationException">Se lanza si el nuevo vendedor no tiene el rol Vendedor o está Suspendido (validación realizada por el objeto Cliente).</exception>
         public void AsignarClienteVendedor(int idCliente, int idNuevoVendedor)
         {
             Cliente cliente = this._repoClientes.Buscar(idCliente);
             Usuario nuevoVendedor = this._repoUsuarios.Buscar(idNuevoVendedor);
-            
-            if (cliente == null || nuevoVendedor == null) { return; }
-    
+
+            // Precondición 1: El Cliente debe existir.
+            if (cliente == null)
+            {
+                throw new KeyNotFoundException(String.Format("No se encontró el cliente con ID {0}.", idCliente));
+            }
+
+            // Precondición 2: El Nuevo Vendedor debe existir.
+            if (nuevoVendedor == null)
+            {
+                throw new KeyNotFoundException(String.Format("No se encontró el usuario vendedor con ID {0}.", idNuevoVendedor));
+            }
+
+            // DELEGACIÓN: El Cliente (Expert) valida las reglas de negocio (rol y estado) y realiza la asignación.
             cliente.AsignarVendedor(nuevoVendedor);
         }
 
@@ -321,35 +361,30 @@ namespace Library
             }
         }
 
+        /// <summary>
+        /// Obtiene una lista de clientes que no han tenido ninguna interacción
+        /// en el número de días especificado.
+        /// La Fachada delega la lógica de encontrar la última fecha de interacción
+        /// al objeto Cliente (Patrón Expert).
+        /// </summary>
+        /// <param name="diasSinInteraccion">Número de días límite para considerar inactivo al cliente.</param>
+        /// <returns>Lista de clientes inactivos.</returns>
         public List<Cliente> ObtenerClientesInactivos(int diasSinInteraccion)
         {
             List<Cliente> clientesInactivos = new List<Cliente>();
-            // Calcula la fecha límite (ej. si hoy es 11/Nov y dias=30, fechaLimite es 12/Oct)
+            
+            // Calcula la fecha límite (e.g., hoy menos 30 días).
             DateTime fechaLimite = DateTime.Now.AddDays(-diasSinInteraccion);
 
             foreach (var cliente in this._repoClientes.ObtenerTodas())
             {
-                // 1. Si el cliente no tiene interacciones, es inactivo.
-                if (cliente.Interacciones.Count == 0)
-                {
-                    clientesInactivos.Add(cliente);
-                    continue; // Pasa al siguiente cliente
-                }
+                // 1. DELEGACIÓN AL EXPERT: El Cliente calcula la fecha de su última interacción.
+                DateTime fechaUltimaInteraccion = cliente.ObtenerFechaUltimaInteraccion(); 
 
-                // 2. Encontrar la interacción más reciente del cliente
-                DateTime fechaMasReciente = DateTime.MinValue;
-                foreach (var interaccion in cliente.Interacciones)
-                {
-                    if (interaccion.Fecha > fechaMasReciente)
-                    {
-                        fechaMasReciente = interaccion.Fecha;
-                    }
-                }
-
-                // --- ESTA ES LA LÓGICA CLAVE ---
-                // 3. El cliente es inactivo si su última interacción (fechaMasReciente)
-                //    es ANTERIOR (<) a la fechaLímite.
-                if (fechaMasReciente < fechaLimite)
+                // 2. REGLA DE NEGOCIO: El cliente se considera inactivo si su última interacción
+                //    es anterior (<) a la fecha límite.
+                //    Esto incluye clientes que tienen fecha de interacción DateTime.MinValue ("Nunca").
+                if (fechaUltimaInteraccion < fechaLimite)
                 {
                     clientesInactivos.Add(cliente);
                 }

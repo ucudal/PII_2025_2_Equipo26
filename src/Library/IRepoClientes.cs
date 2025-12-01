@@ -15,14 +15,18 @@ namespace Library
         /// Crea y agrega un nuevo cliente.
         /// </summary>
         void Agregar(string nombre, string apellido, string telefono, string correo,
-                       string genero, DateTime fechaNacimiento);
+                       string generoTexto, DateTime fechaNacimiento);
 
         /// <summary>
         /// Actualiza los datos de un cliente existente.
         /// </summary>
         void Modificar(int id, string nombre, string apellido, string telefono,
-                         string correo, string genero, DateTime fechaNacimiento);
+                         string correo, string generoTexto, DateTime fechaNacimiento);
         
+        /// <summary>
+        /// Especificación para actualizar solamente los datos adicionales del cliente.
+        /// </summary>
+        void ActualizarDatosAdicionales(int id, string generoTexto, DateTime fechaNacimiento);
 
     }
 }

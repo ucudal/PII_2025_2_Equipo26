@@ -1,6 +1,7 @@
 using Discord.Commands;
 using Discord.WebSocket;
-
+// Existe únicamente para conocer un poco sobre la distribucion de los comandos,
+//tomado de la version original del repo del profesor Fernando Machado.
 namespace Ucu.Poo.DiscordBot.Commands
 {
     public static class CommandHelper
