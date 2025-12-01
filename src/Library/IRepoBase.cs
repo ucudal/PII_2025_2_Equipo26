@@ -27,5 +27,12 @@ namespace Library
         /// </summary>
         /// <param name="id">El ID de la entidad a eliminar.</param>
         void Eliminar(int id);
+
+        /// <summary>
+        /// Busca entidades que coincidan con un término de búsqueda.
+        /// </summary>
+        /// <param name="termino">El término a buscar.</param>
+        /// <returns>Una lista de entidades que coinciden.</returns>
+        List<T> BuscarPorTermino(string termino);
     }
 }

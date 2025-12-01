@@ -23,20 +23,20 @@ namespace Library
         /// Implementa el patrón Creator (GRASP): RepoClientes tiene la información necesaria
         /// para instanciar objetos Cliente y agregarlos a su colección.
         /// </summary>
-        public void Agregar(string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
+        public void Agregar(string nombre, string apellido, string telefono, string correo, string generoTexto, DateTime fechaNacimiento)
         {
             if (nombre == null || nombre == "") throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
             if (apellido == null || apellido == "") throw new ArgumentException("El apellido no puede ser nulo o vacío.", nameof(apellido));
             if (telefono == null || telefono == "") throw new ArgumentException("El teléfono no puede ser nulo o vacío.", nameof(telefono));
             if (correo == null || correo == "") throw new ArgumentException("El correo no puede ser nulo o vacío.", nameof(correo));
-            if (genero == null || genero == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(genero));
+            if (generoTexto == null || generoTexto == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(generoTexto));
 
             var nuevoCliente = new Cliente(
                 nombre, 
                 apellido, 
                 telefono, 
                 correo,
-                genero, 
+                generoTexto, 
                 fechaNacimiento 
             );
             
@@ -51,14 +51,20 @@ namespace Library
         /// <summary>
         /// Actualiza los datos de un cliente existente (Operación Update).
         /// </summary>
-        public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string genero, DateTime fechaNacimiento)
+        public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string generoTexto, DateTime fechaNacimiento)
         {
             if (nombre == null || nombre == "") throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
             if (apellido == null || apellido == "") throw new ArgumentException("El apellido no puede ser nulo o vacío.", nameof(apellido));
             if (telefono == null || telefono == "") throw new ArgumentException("El teléfono no puede ser nulo o vacío.", nameof(telefono));
             if (correo == null || correo == "") throw new ArgumentException("El correo no puede ser nulo o vacío.", nameof(correo));
-            if (genero == null || genero == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(genero));
-
+            if (generoTexto == null || generoTexto == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(generoTexto));
+            
+            // CONVERSIÓN DE TIPO para GENERO
+            GeneroCliente generoEnum;
+            if (!Enum.TryParse(generoTexto, true, out generoEnum))
+            {
+                throw new ArgumentException($"El valor '{generoTexto}' no es un género válido.", nameof(generoTexto));
+            }
             var cliente = this.Buscar(id); // Llama a Buscar() heredado
             
             if (cliente != null)
@@ -67,27 +73,42 @@ namespace Library
                 cliente.Apellido = apellido;
                 cliente.Telefono = telefono;
                 cliente.Correo = correo;
-                cliente.Genero = genero; 
+                cliente.Genero = generoEnum; 
                 cliente.FechaNacimiento = fechaNacimiento; 
             }
         }
-        
         /// <summary>
-        /// Busca clientes que coincidan con un término (Método específico de Cliente).
+        /// Actualiza solo el género y la fecha de nacimiento de un cliente.
+        /// Adhiere al SRP (Single Responsibility Principle) al tener un foco de cambio específico.
         /// </summary>
-        public List<Cliente> BuscarPorTermino(string termino)
+        /// <param name="id">ID del cliente.</param>
+        /// <param name="generoTexto">El género en formato string (ej: "Masculino").</param>
+        /// <param name="fechaNacimiento">La fecha de nacimiento ya parseada.</param>
+        public void ActualizarDatosAdicionales(int id, string generoTexto, DateTime fechaNacimiento)
         {
-            var resultados = new List<Cliente>();
+            if (generoTexto == null || generoTexto == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(generoTexto));
 
-            foreach (var cliente in this._items)
+            // CONVERSIÓN DE TIPO (Programación Contra Especificaciones)
+            GeneroCliente generoEnum;
+            if (!Enum.TryParse(generoTexto, true, out generoEnum))
             {
-                if (cliente.Coincide(termino))
-                {
-                    resultados.Add(cliente);
-                }
+                throw new ArgumentException($"El valor '{generoTexto}' no es un género válido.", nameof(generoTexto));
             }
-            return resultados;
+
+            var cliente = this.Buscar(id); // Buscar() es heredado del genérico RepoBase<T>
+            
+            if (cliente != null)
+            {
+                // El objeto Cliente (Expert) es quien recibe los mensajes de actualización.
+                cliente.Genero = generoEnum;
+                cliente.FechaNacimiento = fechaNacimiento;
+            }
+            else
+            {
+                throw new KeyNotFoundException($"No se encontró el cliente con ID {id} para actualizar.");
+            }
         }
+
     
     }
 }

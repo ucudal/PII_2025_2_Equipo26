@@ -18,7 +18,7 @@ namespace Library
         /// <summary>
         /// Agrega una nueva venta general.
         /// </summary>
-        Venta Agregar(string producto, float importe, DateTime fecha);
+        void Agregar(string producto, float importe, DateTime fecha);
         
     }
 }
