@@ -800,5 +800,41 @@ namespace Library.Tests
             // Asumimos que la propiedad en la clase Nota es 'Texto' según convenciones comunes.
             Assert.AreEqual(contenidoNota, interaccionConNota.NotaAdicional.Texto, "El contenido de la nota no coincide.");
         }
+        
+        /// <summary>
+        /// Verifica que se puedan registrar datos adicionales (Género y Fecha de Nacimiento)
+        /// en un cliente que fue creado inicialmente solo con información de contacto.
+        /// Esto cubre la historia de usuario sobre "realizar campañas y saludos de cumpleaños".
+        /// </summary>
+        [Test]
+        public void TestRegistrarDatosAdicionales_ParaCampañasYCumpleanos()
+        {
+            // Arrange
+            // 1. Creamos un cliente solo con datos básicos de contacto
+            this._fachada.CrearCliente("Usuario", "Campañas", "091888999", "campania@test.com", "NoEspecificado", DateTime.MinValue);
+            
+            // Recuperamos el cliente (índice 0)
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var cliente = listaClientes[0];
+
+            // 2. Definimos los datos que queremos agregar para la campaña/cumpleaños
+            string generoObjetivo = "Femenino";
+            DateTime fechaCumpleanos = new DateTime(1990, 12, 25); // Navidad
+
+            // Act
+            // Ejecutamos el método específico para completar estos datos
+            this._fachada.RegistrarDatosAdicionalesCliente(cliente.Id, generoObjetivo, fechaCumpleanos);
+
+            // Assert
+            // 1. Recuperamos el cliente actualizado
+            var clienteActualizado = this._fachada.BuscarCliente(cliente.Id);
+
+            // 2. Validamos que el género se haya actualizado correctamente
+            // CORRECCIÓN: Usamos 'GeneroCliente' que es el nombre real de tu enum
+            Assert.AreEqual(GeneroCliente.Femenino, clienteActualizado.Genero, "El género debería actualizarse para permitir la segmentación en campañas.");
+
+            // 3. Validamos que la fecha de nacimiento se haya registrado
+            Assert.AreEqual(fechaCumpleanos, clienteActualizado.FechaNacimiento, "La fecha de nacimiento debería registrarse correctamente para los saludos.");
+        }
     }
 }
