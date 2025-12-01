@@ -350,5 +350,48 @@ namespace Library.Tests
             // --- Assert: Verificación de la suma y el filtro ---
             Assert.AreEqual(totalEsperado, totalObtenido, 0.001f, "El total de ventas debe coincidir con la suma del período filtrado.");
         }
+        
+        /// <summary>
+        /// Verifica que el método ObtenerResumenDashboard compile correctamente
+        /// la información de clientes totales, reuniones futuras e interacciones pasadas.
+        /// </summary>
+        [Test]
+        public void TestObtenerResumenDashboard_AgregacionYFiltro()
+        {
+            // --- Arrange ---
+            
+            // 1. Clientes
+            this._fachada.CrearCliente("C1", "A", "1", "c1@c.com", "Otro", DateTime.Now); // ID 1
+            this._fachada.CrearCliente("C2", "B", "2", "c2@c.com", "Otro", DateTime.Now); // ID 2
+            
+            // 2. Interacciones
+            // Interacción Reciente (PASADA)
+            this._fachada.RegistrarLlamada(1, DateTime.Now.AddHours(-2), "Llamada Reciente", "entrante"); 
+            // Interacción Antigua (PASADA)
+            this._fachada.RegistrarLlamada(1, DateTime.Now.AddDays(-10), "Llamada Antigua", "entrante");
+            
+            // Reunión Próxima (FUTURA)
+            this._fachada.RegistrarReunion(2, DateTime.Now.AddDays(5), "Reunion Venta", "Oficina"); 
+            // Reunión Antigua (PASADA - NO DEBE APARECER)
+            this._fachada.RegistrarReunion(2, DateTime.Now.AddDays(-1), "Reunion Antigua", "Oficina"); 
+
+            // --- Act ---
+            ResumenDashboard resumen = this._fachada.ObtenerResumenDashboard();
+
+            // --- Assert ---
+            
+            // 1. Clientes Totales
+            Assert.AreEqual(2, resumen.TotalClientes, "El conteo de clientes debe ser 2.");
+            
+            // 2. Reuniones Próximas (Solo 1 reunión futura)
+            Assert.AreEqual(1, resumen.ReunionesProximas.Count, "Solo debe haber 1 reunión en la lista de próximas.");
+            Assert.AreEqual("Reunion Venta", resumen.ReunionesProximas[0].Tema, "La reunión debe ser la futura.");
+            
+            // 3. Interacciones Recientes (Solo 3 interacciones pasadas)
+            // C1 (Llamada Reciente) + C1 (Llamada Antigua) + C2 (Reunión Antigua) = 3 interacciones pasadas
+            // La más reciente debe ser la de hace 2 horas.
+            Assert.AreEqual(3, resumen.InteraccionesRecientes.Count, "Debe haber 3 interacciones pasadas.");
+            Assert.AreEqual("Llamada Reciente", resumen.InteraccionesRecientes[0].Tema, "La interacción más reciente debe aparecer primera.");
+        }
     }
 }
