@@ -405,32 +405,76 @@ namespace Library.Tests
         }
         
         /// <summary>
-        /// Verifica específicamente que los datos de contacto (teléfono y correo),
-        /// requeridos por la historia de usuario, se guarden correctamente.
+        /// Verifica específicamente que los datos de contacto (Teléfono y Correo),
+        /// los cuales son críticos para la historia de usuario, se guarden correctamente.
         /// </summary>
         [Test]
-        public void TestCrearCliente_VerificarDatosDeContacto()
+        public void TestCrearCliente_VerificaDatosDeContacto()
         {
             // Arrange
+            // Preparamos variables específicas para el contacto
             string nombre = "Maria";
-            string apellido = "Rodriguez";
-            string telefono = "099888777";
-            string correo = "maria.rod@correo.com";
-            string genero = "F";
-            DateTime fechaNac = new DateTime(1995, 10, 20);
+            string apellido = "Lopez";
+            string telefono = "098111222";          // Dato crítico para la historia
+            string correo = "maria.contact@mail.com"; // Dato crítico para la historia
+            string genero = "Femenino";
+            DateTime fecha = new DateTime(1995, 1, 1);
 
             // Act
-            this.fachada.CrearCliente(nombre, apellido, telefono, correo, genero, fechaNac);
+            this._fachada.CrearCliente(nombre, apellido, telefono, correo, genero, fecha);
 
             // Assert
-            var listaClientes = this.fachada.VerTodosLosClientes();
+            var listaClientes = this._fachada.VerTodosLosClientes();
             
-            // Obtenemos el cliente creado usando índice estándar (sin LINQ)
-            // Dado que el SetUp limpia el repo, debería estar en la posición 0.
+            // Como el SetUp reinicia todo, el cliente estará en la posición 0
             var clienteCreado = listaClientes[0];
 
-            Assert.AreEqual(telefono, clienteCreado.Telefono, "El teléfono debe coincidir con el ingresado.");
-            Assert.AreEqual(correo, clienteCreado.Correo, "El correo debe coincidir con el ingresado.");
+            // Validamos que los datos de contacto coincidan con lo enviado
+            Assert.AreEqual(telefono, clienteCreado.Telefono, "El teléfono no se guardó correctamente.");
+            Assert.AreEqual(correo, clienteCreado.Correo, "El correo no se guardó correctamente.");
+        }
+        
+        /// <summary>
+        /// Verifica que se pueda modificar TODA la información de un cliente (Nombre, Apellido, 
+        /// Teléfono, Correo, Género y Fecha). Esto asegura el cumplimiento completo de la 
+        /// historia de usuario de "mantener actualizada" la información.
+        /// </summary>
+        [Test]
+        public void TestModificarCliente_ActualizacionTotal()
+        {
+            // Arrange
+            // 1. Creamos el cliente original
+            this._fachada.CrearCliente("Original", "Viejo", "099000111", "viejo@test.com", "Masculino", new DateTime(1980, 1, 1));
+            
+            // Obtenemos el cliente para sacar su ID (estará en posición 0)
+            var lista = this._fachada.VerTodosLosClientes();
+            var idCliente = lista[0].Id;
+
+            // 2. Definimos los NUEVOS datos para cambiar absolutamente todo
+            string nuevoNombre = "Modificado";
+            string nuevoApellido = "Nuevo";
+            string nuevoTelefono = "098222333";
+            string nuevoCorreo = "nuevo@test.com";
+            string nuevoGenero = "Femenino";
+            DateTime nuevaFecha = new DateTime(1995, 5, 5);
+
+            // Act
+            // Ejecutamos la modificación pasando todos los nuevos valores
+            this._fachada.ModificarCliente(idCliente, nuevoNombre, nuevoApellido, nuevoTelefono, nuevoCorreo, nuevoGenero, nuevaFecha);
+
+            // Assert
+            // Recuperamos el cliente actualizado
+            var clienteActualizado = this._fachada.BuscarCliente(idCliente);
+
+            Assert.IsNotNull(clienteActualizado, "El cliente debería seguir existiendo.");
+
+            // Verificamos campo por campo
+            Assert.AreEqual(nuevoNombre, clienteActualizado.Nombre, "El Nombre no se actualizó.");
+            Assert.AreEqual(nuevoApellido, clienteActualizado.Apellido, "El Apellido no se actualizó.");
+            Assert.AreEqual(nuevoTelefono, clienteActualizado.Telefono, "El Teléfono no se actualizó.");
+            Assert.AreEqual(nuevoCorreo, clienteActualizado.Correo, "El Correo no se actualizó.");
+            Assert.AreEqual(GeneroCliente.Femenino, clienteActualizado.Genero, "El Género no se actualizó.");
+            Assert.AreEqual(nuevaFecha, clienteActualizado.FechaNacimiento, "La Fecha de Nacimiento no se actualizó.");
         }
     }
 }
