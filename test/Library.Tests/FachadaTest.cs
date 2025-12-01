@@ -546,6 +546,31 @@ namespace Library.Tests
             Assert.AreEqual(correoUnico, porCorreo[0].Correo);
         }
         
-        
+        /// <summary>
+        /// Verifica que se pueda recuperar la lista completa de clientes ("vista general de la cartera"),
+        /// asegurando que todos los registros creados estén presentes y accesibles.
+        /// </summary>
+        [Test]
+        public void TestVerTodosLosClientes_VistaGeneralDeCartera()
+        {
+            // Arrange
+            // Llenamos la cartera con varios clientes para simular un escenario real
+            this._fachada.CrearCliente("Cliente A", "Alpha", "100", "a@test.com", "Masculino", DateTime.Now);
+            this._fachada.CrearCliente("Cliente B", "Beta", "200", "b@test.com", "Femenino", DateTime.Now);
+            this._fachada.CrearCliente("Cliente C", "Gamma", "300", "c@test.com", "Otro", DateTime.Now);
+
+            // Act
+            var cartera = this._fachada.VerTodosLosClientes();
+
+            // Assert
+            // 1. Verificamos que la cantidad corresponda al total de clientes ingresados
+            Assert.AreEqual(3, cartera.Count, "La lista debe contener exactamente todos los clientes de la cartera.");
+
+            // 2. Verificamos que los datos correspondan a los ingresados (asumiendo orden de inserción)
+            // Esto confirma que la "vista" contiene la información correcta de cada uno.
+            Assert.AreEqual("Cliente A", cartera[0].Nombre);
+            Assert.AreEqual("Cliente B", cartera[1].Nombre);
+            Assert.AreEqual("Cliente C", cartera[2].Nombre);
+        }
     }
 }
