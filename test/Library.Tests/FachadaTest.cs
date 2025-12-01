@@ -170,5 +170,34 @@ namespace Library.Tests
             Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juan"));
             Assert.IsTrue(resultadoBusqueda.Any(c => c.Nombre == "Juana"));
         }
+        
+        /// <summary>
+        /// Verifica específicamente que los datos de contacto (teléfono y correo),
+        /// requeridos por la historia de usuario, se guarden correctamente.
+        /// </summary>
+        [Test]
+        public void TestCrearCliente_VerificarDatosDeContacto()
+        {
+            // Arrange
+            string nombre = "Maria";
+            string apellido = "Rodriguez";
+            string telefono = "099888777";
+            string correo = "maria.rod@correo.com";
+            string genero = "F";
+            DateTime fechaNac = new DateTime(1995, 10, 20);
+
+            // Act
+            this.fachada.CrearCliente(nombre, apellido, telefono, correo, genero, fechaNac);
+
+            // Assert
+            var listaClientes = this.fachada.VerTodosLosClientes();
+            
+            // Obtenemos el cliente creado usando índice estándar (sin LINQ)
+            // Dado que el SetUp limpia el repo, debería estar en la posición 0.
+            var clienteCreado = listaClientes[0];
+
+            Assert.AreEqual(telefono, clienteCreado.Telefono, "El teléfono debe coincidir con el ingresado.");
+            Assert.AreEqual(correo, clienteCreado.Correo, "El correo debe coincidir con el ingresado.");
+        }
     }
 }
