@@ -11,11 +11,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class RegisCorreosCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly FachadaUnit _fachadaUnit;
+        private readonly Fachada _fachada;
 
-        public RegisCorreosCommand(FachadaUnit fachada)
+        public RegisCorreosCommand(Fachada fachada)
         {
-            _fachadaUnit = fachada;
+            _fachada = fachada;
         }
 
         [Command("registrar_correo")]
@@ -39,7 +39,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             {
                 // Invocamos a la Fachada pasando todos los argumentos necesarios.
                 // Notar que el orden de los parámetros debe coincidir exactamente con el método en Fachada.cs
-                _fachadaUnit.RegistrarCorreo(idCliente, fecha, tema, remitente, destinatario, asunto);
+                _fachada.RegistrarCorreo(idCliente, fecha, tema, remitente, destinatario, asunto);
 
                 // Enviamos el feedback visual al canal de Discord
                 await ReplyAsync($"📧 **Correo Registrado Exitosamente**\n" +

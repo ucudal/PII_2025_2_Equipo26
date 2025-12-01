@@ -9,7 +9,7 @@ namespace Library
     /// Implementa el patrón "Fachada" (Facade) para ocultar la complejidad del sistema
     /// y el patrón "Controlador" (Controller) (GRASP) para coordinar las operaciones.
     /// </summary>
-    public class FachadaUnit
+    public class Fachada
     {
         // --- Repositorios Internos (Inyectados) ---
         
@@ -22,7 +22,7 @@ namespace Library
 
         // --- Constructor (DIP) ---
         
-        public FachadaUnit(IRepoClientes repoClientes, IRepoEtiquetas repoEtiquetas,
+        public Fachada(IRepoClientes repoClientes, IRepoEtiquetas repoEtiquetas,
                        IRepoUsuarios repoUsuarios, IRepoVentas repoVentas)
         {
             this._repoClientes = repoClientes;
@@ -92,13 +92,32 @@ namespace Library
 
         // --- Métodos de Coordinación ---
 
+        /// <summary>
+        /// Asigna un cliente existente a un nuevo vendedor (Usuario).
+        /// Coordina la búsqueda de ambos objetos y delega la asignación al Cliente.
+        /// </summary>
+        /// <param name="idCliente">El ID del cliente a reasignar.</param>
+        /// <param name="idNuevoVendedor">El ID del usuario que será el nuevo vendedor.</param>
+        /// <exception cref="KeyNotFoundException">Se lanza si el cliente o el nuevo vendedor no existen.</exception>
+        /// <exception cref="InvalidOperationException">Se lanza si el nuevo vendedor no tiene el rol Vendedor o está Suspendido (validación realizada por el objeto Cliente).</exception>
         public void AsignarClienteVendedor(int idCliente, int idNuevoVendedor)
         {
             Cliente cliente = this._repoClientes.Buscar(idCliente);
             Usuario nuevoVendedor = this._repoUsuarios.Buscar(idNuevoVendedor);
-            
-            if (cliente == null || nuevoVendedor == null) { return; }
-    
+
+            // Precondición 1: El Cliente debe existir.
+            if (cliente == null)
+            {
+                throw new KeyNotFoundException(String.Format("No se encontró el cliente con ID {0}.", idCliente));
+            }
+
+            // Precondición 2: El Nuevo Vendedor debe existir.
+            if (nuevoVendedor == null)
+            {
+                throw new KeyNotFoundException(String.Format("No se encontró el usuario vendedor con ID {0}.", idNuevoVendedor));
+            }
+
+            // DELEGACIÓN: El Cliente (Expert) valida las reglas de negocio (rol y estado) y realiza la asignación.
             cliente.AsignarVendedor(nuevoVendedor);
         }
 

@@ -11,11 +11,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class RegisMensajesCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly FachadaUnit _fachadaUnit;
+        private readonly Fachada _fachada;
 
-        public RegisMensajesCommand(FachadaUnit fachada)
+        public RegisMensajesCommand(Fachada fachada)
         {
-            _fachadaUnit = fachada;
+            _fachada = fachada;
         }
 
         [Command("registrar_mensaje")]
@@ -38,7 +38,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                 // Delegamos la creación del mensaje a la Fachada.
                 // Esto mantiene el principio de "Experto en Información": la fachada sabe cómo
                 // buscar al cliente y cómo crear la interacción interna.
-                _fachadaUnit.RegistrarMensaje(idCliente, fecha, tema, remitente, destinatario);
+                _fachada.RegistrarMensaje(idCliente, fecha, tema, remitente, destinatario);
 
                 // Confirmación al usuario
                 await ReplyAsync($"📨 **Mensaje Registrado**\n" +

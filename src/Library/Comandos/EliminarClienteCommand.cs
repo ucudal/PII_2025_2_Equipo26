@@ -11,11 +11,11 @@
         /// </summary>
         public class EliminarClienteCommand : ModuleBase<SocketCommandContext>
         {
-            private readonly FachadaUnit _fachadaUnit;
+            private readonly Fachada _fachada;
 
-            public EliminarClienteCommand(FachadaUnit fachada)
+            public EliminarClienteCommand(Fachada fachada)
             {
-                _fachadaUnit = fachada;
+                _fachada = fachada;
             }
 
             [Command("eliminar_cliente")]
@@ -27,7 +27,7 @@
                 {
                     // 1. Buscamos el cliente primero para poder mostrar su nombre en el mensaje de confirmación
                     // y verificar que exista antes de intentar borrarlo.
-                    var cliente = _fachadaUnit.BuscarCliente(id);
+                    var cliente = _fachada.BuscarCliente(id);
 
                     if (cliente == null)
                     {
@@ -36,7 +36,7 @@
                     }
 
                     // 2. Eliminamos
-                    _fachadaUnit.EliminarCliente(id);
+                    _fachada.EliminarCliente(id);
 
                     await ReplyAsync(
                         $"🗑️ **Cliente Eliminado**: Se ha eliminado a {cliente.Nombre} {cliente.Apellido} (ID: {id}) de la base de datos.");

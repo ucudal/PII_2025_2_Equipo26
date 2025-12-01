@@ -12,11 +12,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class BuscarClienteCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly FachadaUnit _fachadaUnit;
+        private readonly Fachada _fachada;
 
-        public BuscarClienteCommand(FachadaUnit fachada)
+        public BuscarClienteCommand(Fachada fachada)
         {
-            _fachadaUnit = fachada;
+            _fachada = fachada;
         }
 
         [Command("buscar_cliente")]
@@ -26,7 +26,7 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-                var resultados = _fachadaUnit.BuscarClientes(termino);
+                var resultados = _fachada.BuscarClientes(termino);
 
                 if (resultados.Count == 0)
                 {

@@ -11,11 +11,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class ModificarClienteCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly FachadaUnit _fachadaUnit;
+        private readonly Fachada _fachada;
 
-        public ModificarClienteCommand(FachadaUnit fachada)
+        public ModificarClienteCommand(Fachada fachada)
         {
-            _fachadaUnit = fachada;
+            _fachada = fachada;
         }
 
         [Command("modificar_cliente")]
@@ -31,14 +31,14 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-                var clienteExistente = _fachadaUnit.BuscarCliente(id);
+                var clienteExistente = _fachada.BuscarCliente(id);
                 if (clienteExistente == null)
                 {
                     await ReplyAsync($"❌ **Error**: No se encontró ningún cliente con el ID {id}.");
                     return;
                 }
                 
-                _fachadaUnit.ModificarCliente(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
+                _fachada.ModificarCliente(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
 
                 await ReplyAsync($"✅ **Datos Actualizados**: El cliente #{id} ({nombre} {apellido}) ha sido modificado correctamente.");
             }
