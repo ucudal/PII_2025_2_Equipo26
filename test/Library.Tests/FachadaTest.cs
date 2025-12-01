@@ -836,5 +836,35 @@ namespace Library.Tests
             // 3. Validamos que la fecha de nacimiento se haya registrado
             Assert.AreEqual(fechaCumpleanos, clienteActualizado.FechaNacimiento, "La fecha de nacimiento debería registrarse correctamente para los saludos.");
         }
+        
+        /// <summary>
+        /// Verifica que se pueda registrar una cotización enviada a un cliente.
+        /// Esto cubre la historia de usuario de "seguimiento de oportunidades de venta".
+        /// </summary>
+        [Test]
+        public void TestRegistrarCotizacion_GuardadoCorrecto()
+        {
+            // Arrange
+            this._fachada.CrearCliente("Empresa", "Cliente", "099555111", "compra@empresa.com", "Otro", DateTime.Now);
+            var cliente = this._fachada.VerTodosLosClientes()[0];
+
+            DateTime fecha = new DateTime(2025, 5, 20);
+            double monto = 5000.00;
+            string tema = "Renovación de servidores";
+
+            // Act
+            this._fachada.RegistrarCotizacion(cliente.Id, tema, monto, fecha);
+
+            // Assert
+            var clienteActualizado = this._fachada.BuscarCliente(cliente.Id);
+            var ultimaInteraccion = clienteActualizado.Interacciones.Last();
+
+            Assert.IsInstanceOf<Cotizacion>(ultimaInteraccion, "La interacción debería ser de tipo Cotizacion.");
+            
+            Cotizacion coti = (Cotizacion)ultimaInteraccion;
+            Assert.AreEqual(monto, coti.Monto, "El monto de la cotización no es correcto.");
+            Assert.AreEqual(tema, coti.Tema, "El tema de la cotización no es correcto.");
+            Assert.AreEqual(fecha, coti.Fecha, "La fecha no coincide.");
+        }
     }
 }
