@@ -315,5 +315,40 @@ namespace Library.Tests
                 this._fachada.AsignarClienteVendedor(99, vendedorActivoId);
             }, "Debe fallar porque el cliente no existe.");
         }
+        
+        /// <summary>
+        /// Verifica que el método CalcularTotalVentas sume correctamente solo las ventas
+        /// que caen dentro del rango de fechas especificado.
+        /// </summary>
+        [Test]
+        public void TestCalcularTotalVentas_FiltraYOperaCorrectamente()
+        {
+            // --- Arrange: Preparar el escenario ---
+        
+            // Ventas fuera del período:
+            this._fachada.RegistrarVenta("Venta Antigua", 1000.00f, new DateTime(2024, 1, 1)); // Fuera
+            this._fachada.RegistrarVenta("Venta Futura", 500.00f, new DateTime(2025, 6, 1)); // Fuera
+        
+            // Ventas dentro del período:
+            this._fachada.RegistrarVenta("Venta A", 200.00f, new DateTime(2025, 2, 1)); // Dentro
+            this._fachada.RegistrarVenta("Venta B", 300.00f, new DateTime(2025, 2, 15)); // Dentro
+        
+            // Ventas en el Límite:
+            this._fachada.RegistrarVenta("Venta Limite Inicio", 150.00f, new DateTime(2025, 2, 1).AddHours(1)); // Dentro
+            this._fachada.RegistrarVenta("Venta Limite Fin", 50.00f, new DateTime(2025, 2, 28).AddHours(-1)); // Dentro
+        
+            // Definición del Período: Febrero 2025 (inclusivo)
+            DateTime inicio = new DateTime(2025, 2, 1);
+            DateTime fin = new DateTime(2025, 2, 28);
+        
+            // Calculo manual esperado: 200 + 300 + 150 + 50 = 700.00
+            float totalEsperado = 700.00f;
+        
+            // --- Act: Ejecutar el método ---
+            float totalObtenido = this._fachada.CalcularTotalVentas(inicio, fin);
+        
+            // --- Assert: Verificación de la suma y el filtro ---
+            Assert.AreEqual(totalEsperado, totalObtenido, 0.001f, "El total de ventas debe coincidir con la suma del período filtrado.");
+        }
     }
 }

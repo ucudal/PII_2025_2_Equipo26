@@ -1,16 +1,16 @@
 ﻿using Discord.Commands;
-using Discord.WebSocket; // Necesario para acceder a Context.User como SocketGuildUser
+using Discord.WebSocket; 
 using Library;
 using System;
 using System.Collections.Generic;
-using System.Linq; // Necesario para usar .Any() en la colección de roles de Discord
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ucu.Poo.DiscordBot.Commands
 {
     /// <summary>
-    /// Comando para asignar un cliente a un vendedor diferente.
-    /// Valida que el usuario que ejecuta el comando tenga el rol de Discord "Vendedor".
+    /// Comando creado para cumplir la historia de usuario:
+    /// "Como vendedor, quiero poder asignar un cliente a otro vendedor para distribuir el trabajo en el equipo."
     /// </summary>
     public class AsignarVendedorCommand : ModuleBase<SocketCommandContext>
     {
