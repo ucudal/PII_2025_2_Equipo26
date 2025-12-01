@@ -9,7 +9,7 @@ namespace Library
     /// Implementa el patrón "Fachada" (Facade) para ocultar la complejidad del sistema
     /// y el patrón "Controlador" (Controller) (GRASP) para coordinar las operaciones.
     /// </summary>
-    public class Fachada
+    public class FachadaUnit
     {
         // --- Repositorios Internos (Inyectados) ---
         
@@ -22,7 +22,7 @@ namespace Library
 
         // --- Constructor (DIP) ---
         
-        public Fachada(IRepoClientes repoClientes, IRepoEtiquetas repoEtiquetas,
+        public FachadaUnit(IRepoClientes repoClientes, IRepoEtiquetas repoEtiquetas,
                        IRepoUsuarios repoUsuarios, IRepoVentas repoVentas)
         {
             this._repoClientes = repoClientes;

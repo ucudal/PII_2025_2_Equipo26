@@ -16,7 +16,7 @@ namespace Library.Tests
         /// <summary>
         /// La instancia de la fachada que se probará.
         /// </summary>
-        private Fachada fachada;
+        private FachadaUnit _fachadaUnit;
 
         /// <summary>
         /// Repositorios "mock" o "en memoria" que se inyectarán
@@ -42,7 +42,7 @@ namespace Library.Tests
             /// <summary>
             /// Inyectamos las dependencias en la fachada.
             /// </summary>
-            this.fachada = new Fachada(this.repoClientes, this.repoEtiquetas, this.repoUsuarios, this.repoVentas);
+            this._fachadaUnit = new FachadaUnit(this.repoClientes, this.repoEtiquetas, this.repoUsuarios, this.repoVentas);
         }
 
         /// <summary>
@@ -60,12 +60,12 @@ namespace Library.Tests
             /// <summary>
             /// Actuamos (Llamamos al método de la fachada)
             /// </summary>
-            this.fachada.CrearCliente(nombre, apellido, "099123456", "juan@perez.com", genero, fechaNac);
+            this._fachadaUnit.CrearCliente(nombre, apellido, "099123456", "juan@perez.com", genero, fechaNac);
 
             /// <summary>
             /// Verificamos 
             /// </summary>
-            var clientes = this.fachada.VerTodosLosClientes();
+            var clientes = this._fachadaUnit.VerTodosLosClientes();
             
             Assert.AreEqual(1, clientes.Count);
             Assert.AreEqual(nombre, clientes[0].Nombre);
@@ -86,8 +86,8 @@ namespace Library.Tests
             /// <summary>
             /// Arrange: Preparamos el escenario creando un cliente.
             /// </summary>
-            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now); // CORRECCIÓN
-            var cliente = this.fachada.VerTodosLosClientes()[0];
+            this._fachadaUnit.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now); // CORRECCIÓN
+            var cliente = this._fachadaUnit.VerTodosLosClientes()[0];
             
             string nuevoNombre = "Juan Modificado";
             string nuevoCorreo = "nuevo@correo.com";
@@ -97,13 +97,13 @@ namespace Library.Tests
             /// <summary>
             /// Act: Ejecutamos la lógica a probar.
             /// </summary>
-            this.fachada.ModificarCliente(cliente.Id, nuevoNombre, cliente.Apellido, cliente.Telefono, 
+            this._fachadaUnit.ModificarCliente(cliente.Id, nuevoNombre, cliente.Apellido, cliente.Telefono, 
                                           nuevoCorreo, nuevoGenero, nuevaFecha); 
 
             /// <summary>
             /// Assert: Verificamos que los cambios se hayan aplicado.
             /// </summary>
-            var clienteModificado = this.fachada.BuscarCliente(cliente.Id);
+            var clienteModificado = this._fachadaUnit.BuscarCliente(cliente.Id);
             Assert.IsNotNull(clienteModificado);
             Assert.AreEqual(nuevoNombre, clienteModificado.Nombre);
             Assert.AreEqual(nuevoCorreo, clienteModificado.Correo);
@@ -122,11 +122,11 @@ namespace Library.Tests
             /// Arrange: Creamos un cliente con datos iniciales (genero por defecto y fecha antigua).
             /// </summary>
             DateTime fechaInicial = new DateTime(2000, 1, 1);
-            this.fachada.CrearCliente("Ana", "Gomez", "999888777", "ana@test.com", "NoEspecificado", fechaInicial); 
-            var idCliente = this.fachada.VerTodosLosClientes()[0].Id;
+            this._fachadaUnit.CrearCliente("Ana", "Gomez", "999888777", "ana@test.com", "NoEspecificado", fechaInicial); 
+            var idCliente = this._fachadaUnit.VerTodosLosClientes()[0].Id;
             
             // Datos que no deberían cambiar
-            string nombreOriginal = this.fachada.BuscarCliente(idCliente).Nombre;
+            string nombreOriginal = this._fachadaUnit.BuscarCliente(idCliente).Nombre;
 
             // Nuevos datos a registrar
             string generoNuevoTexto = "Femenino";
@@ -135,12 +135,12 @@ namespace Library.Tests
             /// <summary>
             /// Act: Llamamos al método que solo actualiza los datos adicionales.
             /// </summary>
-            this.fachada.RegistrarDatosAdicionalesCliente(idCliente, generoNuevoTexto, fechaNueva);
+            this._fachadaUnit.RegistrarDatosAdicionalesCliente(idCliente, generoNuevoTexto, fechaNueva);
 
             /// <summary>
             /// Assert: Verificamos la actualización y que los otros datos sigan intactos.
             /// </summary>
-            var clienteActualizado = this.fachada.BuscarCliente(idCliente);
+            var clienteActualizado = this._fachadaUnit.BuscarCliente(idCliente);
             
             // 1. Verificamos que los datos nuevos se hayan actualizado correctamente
             Assert.AreEqual(GeneroCliente.Femenino, clienteActualizado.Genero);
@@ -161,20 +161,20 @@ namespace Library.Tests
             /// <summary>
             /// Arrange
             /// </summary>
-            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now); // CORRECCIÓN
-            Assert.AreEqual(1, this.fachada.VerTodosLosClientes().Count);
-            var clienteId = this.fachada.VerTodosLosClientes()[0].Id;
+            this._fachadaUnit.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now); // CORRECCIÓN
+            Assert.AreEqual(1, this._fachadaUnit.VerTodosLosClientes().Count);
+            var clienteId = this._fachadaUnit.VerTodosLosClientes()[0].Id;
 
             /// <summary>
             /// Act
             /// </summary>
-            this.fachada.EliminarCliente(clienteId);
+            this._fachadaUnit.EliminarCliente(clienteId);
 
             /// <summary>
             /// Assert
             /// </summary>
-            Assert.AreEqual(0, this.fachada.VerTodosLosClientes().Count);
-            Assert.IsNull(this.fachada.BuscarCliente(clienteId));
+            Assert.AreEqual(0, this._fachadaUnit.VerTodosLosClientes().Count);
+            Assert.IsNull(this._fachadaUnit.BuscarCliente(clienteId));
         }
 
         /// <summary>
@@ -186,14 +186,14 @@ namespace Library.Tests
             /// <summary>
             /// Arrange
             /// </summary>
-            this.fachada.CrearCliente("Juan", "Perez", "111111", "juan@mail.com", "Masculino", DateTime.Now); // CORRECCIÓN
-            this.fachada.CrearCliente("Juana", "Gonzalez", "222222", "juana@mail.com", "Femenino", DateTime.Now); // CORRECCIÓN
-            this.fachada.CrearCliente("Pedro", "Gomez", "333333", "pedro@mail.com", "Masculino", DateTime.Now); // CORRECCIÓN
+            this._fachadaUnit.CrearCliente("Juan", "Perez", "111111", "juan@mail.com", "Masculino", DateTime.Now); // CORRECCIÓN
+            this._fachadaUnit.CrearCliente("Juana", "Gonzalez", "222222", "juana@mail.com", "Femenino", DateTime.Now); // CORRECCIÓN
+            this._fachadaUnit.CrearCliente("Pedro", "Gomez", "333333", "pedro@mail.com", "Masculino", DateTime.Now); // CORRECCIÓN
 
             /// <summary>
             /// Act
             /// </summary>
-            var resultadoBusqueda = this.fachada.BuscarClientes("Juan");
+            var resultadoBusqueda = this._fachadaUnit.BuscarClientes("Juan");
 
             /// <summary>
             /// Assert
@@ -215,28 +215,28 @@ namespace Library.Tests
             // --- PREPARACIÓN DE DATOS ---
         
             // Cliente Activo (Interacción reciente, hace 5 días)
-            this.fachada.CrearCliente("Activo", "Reciente", "1", "a@a.com", "Otro", DateTime.Now);
+            this._fachadaUnit.CrearCliente("Activo", "Reciente", "1", "a@a.com", "Otro", DateTime.Now);
             // Asume que RegistrarLlamada ya existe y crea una Interaccion con fecha.
-            this.fachada.RegistrarLlamada(1, DateTime.Now.AddDays(-5), "Reciente", "entrante"); 
+            this._fachadaUnit.RegistrarLlamada(1, DateTime.Now.AddDays(-5), "Reciente", "entrante"); 
 
             // Cliente Inactivo (Interacción antigua, hace 20 días)
-            this.fachada.CrearCliente("Inactivo", "Antiguo", "2", "i@i.com", "Otro", DateTime.Now);
-            this.fachada.RegistrarLlamada(2, DateTime.Now.AddDays(-20), "Antigua", "saliente");
+            this._fachadaUnit.CrearCliente("Inactivo", "Antiguo", "2", "i@i.com", "Otro", DateTime.Now);
+            this._fachadaUnit.RegistrarLlamada(2, DateTime.Now.AddDays(-20), "Antigua", "saliente");
 
             // Cliente Nuevo (Nunca tuvo interacción, su fecha es DateTime.MinValue)
-            this.fachada.CrearCliente("Nunca", "Visto", "3", "n@n.com", "Otro", DateTime.Now);
+            this._fachadaUnit.CrearCliente("Nunca", "Visto", "3", "n@n.com", "Otro", DateTime.Now);
 
             // Cliente de Límite (Interacción justo antes del límite de 15 días - NO DEBE APARECER)
             // Usamos AddHours(1) para asegurarnos que está JUSTO fuera del rango de inactividad.
-            this.fachada.CrearCliente("Limite", "Exacto", "4", "l@l.com", "Otro", DateTime.Now);
-            this.fachada.RegistrarLlamada(4, DateTime.Now.AddDays(-15).AddHours(1), "Justo", "saliente");
+            this._fachadaUnit.CrearCliente("Limite", "Exacto", "4", "l@l.com", "Otro", DateTime.Now);
+            this._fachadaUnit.RegistrarLlamada(4, DateTime.Now.AddDays(-15).AddHours(1), "Justo", "saliente");
 
             // --- DEFINICIÓN DEL LÍMITE ---
             // Establecemos el límite en 15 días.
             int diasLimite = 15; 
             
             /// Act: Ejecutamos el método que queremos probar.
-            var inactivos = this.fachada.ObtenerClientesInactivos(diasLimite);
+            var inactivos = this._fachadaUnit.ObtenerClientesInactivos(diasLimite);
 
             /// Assert: Verificamos los resultados.
             

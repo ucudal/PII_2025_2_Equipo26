@@ -11,11 +11,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class RegisReunionesCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly Fachada _fachada;
+        private readonly FachadaUnit _fachadaUnit;
 
-        public RegisReunionesCommand(Fachada fachada)
+        public RegisReunionesCommand(FachadaUnit fachada)
         {
-            _fachada = fachada;
+            _fachadaUnit = fachada;
         }
 
         [Command("registrar_reunion")]
@@ -35,7 +35,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             {
                 // Delegamos la lógica a la Fachada
                 // La fachada se encargará de buscar al cliente y crear el objeto 'Reunion'
-                _fachada.RegistrarReunion(idCliente, fecha, tema, lugar);
+                _fachadaUnit.RegistrarReunion(idCliente, fecha, tema, lugar);
 
                 // Enviamos confirmación visual al usuario (Feedback)
                 await ReplyAsync($"📅 **Reunión Registrada Exitosamente**\n" +

@@ -11,11 +11,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class RegisLlamadasCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly Fachada _fachada;
+        private readonly FachadaUnit _fachadaUnit;
 
-        public RegisLlamadasCommand(Fachada fachada)
+        public RegisLlamadasCommand(FachadaUnit fachada)
         {
-            _fachada = fachada;
+            _fachadaUnit = fachada;
         }
 
         [Command("registrar_llamada")]
@@ -62,7 +62,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             {
                 // Delegación: El comando, tras pasar las validaciones de entrada,
                 // delega la responsabilidad a la Fachada.
-                _fachada.RegistrarLlamada(idCliente, fecha, tema, tipollamada);
+                _fachadaUnit.RegistrarLlamada(idCliente, fecha, tema, tipollamada);
 
                 // Feedback al usuario (Interacción UI)
                 await ReplyAsync($"📞 **Llamada Registrada**\n" +

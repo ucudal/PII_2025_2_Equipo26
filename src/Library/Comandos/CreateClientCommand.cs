@@ -11,11 +11,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class CrearClienteCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly Fachada _fachada;
+        private readonly FachadaUnit _fachadaUnit;
 
-        public CrearClienteCommand(Fachada fachada)
+        public CrearClienteCommand(FachadaUnit fachada)
         {
-            _fachada = fachada;
+            _fachadaUnit = fachada;
         }
 
         [Command("crear_cliente")]
@@ -29,7 +29,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             try
             {
                 // Esta es la lógica principal que se intenta ejecutar.
-                _fachada.CrearCliente(nombre, apellido, telefono, correo);
+                _fachadaUnit.CrearCliente(nombre, apellido, telefono, correo);
 
                 await ReplyAsync($"✅ **Cliente Creado**: {nombre} {apellido} ha sido registrado exitosamente.\n*Nota: Recuerde completar los datos faltantes (género, fecha nac.) posteriormente.*");
             }

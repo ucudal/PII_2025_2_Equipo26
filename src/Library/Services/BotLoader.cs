@@ -23,7 +23,7 @@ namespace Ucu.Poo.DiscordBot.Services
             IRepoEtiquetas repoEtiquetas = new RepoEtiquetas();
             IRepoUsuarios repoUsuarios = new RepoUsuarios();
             IRepoVentas repoVentas = new RepoVentas();
-            Fachada fachada = new Fachada(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
+            FachadaUnit fachada = new FachadaUnit(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
             var serviceProvider = new ServiceCollection()
                 .AddLogging(options =>
                 {

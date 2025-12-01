@@ -11,11 +11,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class RegistrarDatosAdicionalesCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly Fachada _fachada; 
+        private readonly FachadaUnit _fachadaUnit; 
 
-        public RegistrarDatosAdicionalesCommand(Fachada fachada)
+        public RegistrarDatosAdicionalesCommand(FachadaUnit fachada)
         {
-            _fachada = fachada;
+            _fachadaUnit = fachada;
         }
 
         // 1. Ayuda
@@ -41,7 +41,7 @@ namespace Ucu.Poo.DiscordBot.Commands
 
             try
             {
-                var cliente = _fachada.BuscarCliente(idCliente);
+                var cliente = _fachadaUnit.BuscarCliente(idCliente);
                 if (cliente == null)
                 {
                     await ReplyAsync("❌ **Error**: No existe el cliente con ese ID.");
@@ -56,7 +56,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                 }
 
                 // Envío del Mensaje: Se delega la lógica de negocio a la Fachada.
-                _fachada.RegistrarDatosAdicionalesCliente(idCliente, generoTexto, fechaNacimiento);
+                _fachadaUnit.RegistrarDatosAdicionalesCliente(idCliente, generoTexto, fechaNacimiento);
 
                 // Respuesta de éxito
                 await ReplyAsync("🎉 **Datos Adicionales Registrados**\n" +

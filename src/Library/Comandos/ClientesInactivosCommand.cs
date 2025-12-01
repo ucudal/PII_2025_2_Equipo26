@@ -13,12 +13,12 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class ClientesInactivosCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly Fachada _fachada;
+        private readonly FachadaUnit _fachadaUnit;
 
         // Inyección de Dependencia para la Fachada
-        public ClientesInactivosCommand(Fachada fachada)
+        public ClientesInactivosCommand(FachadaUnit fachada)
         {
-            _fachada = fachada;
+            _fachadaUnit = fachada;
         }
 
         // 1. Ayuda
@@ -46,7 +46,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                 }
 
                 // Envío del Mensaje: Delegación a la Fachada
-                List<Cliente> clientesInactivos = this._fachada.ObtenerClientesInactivos(dias);
+                List<Cliente> clientesInactivos = this._fachadaUnit.ObtenerClientesInactivos(dias);
                 
                 // Usamos StringBuilder para construir el mensaje eficientemente
                 StringBuilder sb = new StringBuilder();

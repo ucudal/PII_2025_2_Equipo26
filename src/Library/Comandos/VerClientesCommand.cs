@@ -12,11 +12,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     /// </summary>
     public class VerClientesCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly Fachada _fachada;
+        private readonly FachadaUnit _fachadaUnit;
 
-        public VerClientesCommand(Fachada fachada)
+        public VerClientesCommand(FachadaUnit fachada)
         {
-            _fachada = fachada;
+            _fachadaUnit = fachada;
         }
 
         [Command("ver_clientes")]
@@ -26,7 +26,7 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-                var clientes = _fachada.VerTodosLosClientes();
+                var clientes = _fachadaUnit.VerTodosLosClientes();
 
                 if (clientes.Count == 0)
                 {

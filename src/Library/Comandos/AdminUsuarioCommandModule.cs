@@ -12,11 +12,11 @@ namespace Ucu.Poo.DiscordBot.Commands
     [Group("admin")]
     public class AdminUsuarioCommandModule : ModuleBase<SocketCommandContext>
     {
-        private readonly Fachada _fachada;
+        private readonly FachadaUnit _fachadaUnit;
 
-        public AdminUsuarioCommandModule(Fachada fachada)
+        public AdminUsuarioCommandModule(FachadaUnit fachada)
         {
-            this._fachada = fachada;
+            this._fachadaUnit = fachada;
         }
 
         private bool TienePermiso()
@@ -27,7 +27,7 @@ namespace Ucu.Poo.DiscordBot.Commands
             }
 
             string nombreUsuarioDiscord = Context.User.Username;
-            var listaUsuarios = this._fachada.VerTodosLosUsuarios();
+            var listaUsuarios = this._fachadaUnit.VerTodosLosUsuarios();
             
             foreach (Usuario u in listaUsuarios)
             {
@@ -90,7 +90,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                 string nombreParaGuardar = usuarioDiscord.Username;
                 
                 // Verificar si existe y limpiar
-                var listaUsuarios = this._fachada.VerTodosLosUsuarios();
+                var listaUsuarios = this._fachadaUnit.VerTodosLosUsuarios();
                 Usuario usuarioExistente = null;
 
                 foreach (Usuario u in listaUsuarios)
@@ -104,16 +104,16 @@ namespace Ucu.Poo.DiscordBot.Commands
                 
                 if (usuarioExistente != null)
                 {
-                    this._fachada.EliminarUsuario(usuarioExistente.Id);
+                    this._fachadaUnit.EliminarUsuario(usuarioExistente.Id);
                 }
 
                 // Crear base
-                this._fachada.CrearUsuario(nombreParaGuardar, rol1);
+                this._fachadaUnit.CrearUsuario(nombreParaGuardar, rol1);
                 
                 // Agregar segundo rol
                 if (tieneSegundoRol)
                 {
-                    var usuariosActualizados = this._fachada.VerTodosLosUsuarios();
+                    var usuariosActualizados = this._fachadaUnit.VerTodosLosUsuarios();
                     Usuario nuevoUsuario = null;
                     
                     foreach(Usuario u in usuariosActualizados)
@@ -127,7 +127,7 @@ namespace Ucu.Poo.DiscordBot.Commands
 
                     if (nuevoUsuario != null)
                     {
-                        this._fachada.AgregarRolUsuario(nuevoUsuario.Id, rol2);
+                        this._fachadaUnit.AgregarRolUsuario(nuevoUsuario.Id, rol2);
                     }
                 }
 
@@ -163,7 +163,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                 return;
             }
 
-            var usuarios = this._fachada.VerTodosLosUsuarios();
+            var usuarios = this._fachadaUnit.VerTodosLosUsuarios();
 
             if (usuarios.Count == 0)
             {
@@ -199,7 +199,7 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
              if (!TienePermiso()) { await ReplyAsync("⛔ Sin permiso."); return; }
              try {
-                this._fachada.SuspenderUsuario(idUsuario);
+                this._fachadaUnit.SuspenderUsuario(idUsuario);
                 await ReplyAsync($"✅ Usuario {idUsuario} suspendido.");
              } catch(Exception e) { await ReplyAsync(e.Message); }
         }
@@ -209,7 +209,7 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
              if (!TienePermiso()) { await ReplyAsync("⛔ Sin permiso."); return; }
              try {
-                this._fachada.ActivarUsuario(idUsuario);
+                this._fachadaUnit.ActivarUsuario(idUsuario);
                 await ReplyAsync($"✅ Usuario {idUsuario} activado.");
              } catch(Exception e) { await ReplyAsync(e.Message); }
         }
@@ -219,7 +219,7 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
              if (!TienePermiso()) { await ReplyAsync("⛔ Sin permiso."); return; }
              try {
-                this._fachada.EliminarUsuario(idUsuario);
+                this._fachadaUnit.EliminarUsuario(idUsuario);
                 await ReplyAsync($"🗑️ Usuario {idUsuario} eliminado.");
              } catch(Exception e) { await ReplyAsync(e.Message); }
         }
