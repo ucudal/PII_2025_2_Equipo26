@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Linq;
+using Library;
 
 namespace Library.Tests
 {
@@ -25,40 +25,55 @@ namespace Library.Tests
         [Test]
         public void CrearUsuario_DeberiaAgregarUsuarioAlRepositorio()
         {
+            // Arrange
             string nombreUsuario = "testAdmin";
             Rol rol = Rol.Administrador;
 
+            // Act
             _fachada.CrearUsuario(nombreUsuario, rol);
 
+            // Assert
             var usuarios = _fachada.VerTodosLosUsuarios();
 
             Assert.AreEqual(1, usuarios.Count);
 
             Usuario usuarioCreado = usuarios[0];
 
-
             Assert.IsNotNull(usuarioCreado);
             Assert.AreEqual(nombreUsuario, usuarioCreado.NombreUsuario);
             Assert.AreEqual(Estado.Activo, usuarioCreado.Estado);
             Assert.AreEqual(1, usuarioCreado.Id);
-            Assert.AreEqual(1, usuarioCreado.Roles.Count,
-                "El usuario debe tener exactamente 1 rol asignado al crearse.");
-            Assert.IsTrue(usuarioCreado.Roles.Contains(rol),
-                "El rol asignado en la lista no coincide con el rol esperado.");
+            Assert.AreEqual(1, usuarioCreado.Roles.Count, "El usuario debe tener exactamente 1 rol asignado al crearse.");
+            
+            // Reemplazo de Contains con foreach
+            bool tieneRol = false;
+            foreach (var r in usuarioCreado.Roles)
+            {
+                if (r == rol)
+                {
+                    tieneRol = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(tieneRol, "El rol asignado en la lista no coincide con el rol esperado.");
         }
 
         [Test]
         public void SuspenderUsuario_DeberiaCambiarEstadoASuspendido()
         {
+            // Arrange
             _fachada.CrearUsuario("testUser", Rol.Vendedor);
+            
+            // Obtenemos el ID real sin LINQ
+            var usuarios = _fachada.VerTodosLosUsuarios();
+            int idUsuarioASuspender = usuarios[0].Id;
 
-            // Asumimos que es 1 porque [SetUp] limpia la BBDD
-            int idUsuarioASuspender = 1;
-
+            // Act
             _fachada.SuspenderUsuario(idUsuarioASuspender);
 
-            var usuarios = _fachada.VerTodosLosUsuarios();
-            Usuario usuarioSuspendido = usuarios[0];
+            // Assert
+            var usuariosDespues = _fachada.VerTodosLosUsuarios();
+            Usuario usuarioSuspendido = usuariosDespues[0];
 
             Assert.IsNotNull(usuarioSuspendido);
             Assert.AreEqual(idUsuarioASuspender, usuarioSuspendido.Id);
@@ -72,39 +87,41 @@ namespace Library.Tests
             Rol rolEsperado = Rol.Vendedor;
             _fachada.CrearUsuario("testUser", rolEsperado);
 
-            // OBTENER EL ID DEL USUARIO RECIÉN CREADO para garantizar que es el correcto.
-            // Usamos VerTodosLosUsuarios() para obtener el objeto Usuario y su ID real.
-            Usuario usuarioExistente = _fachada.VerTodosLosUsuarios()[0];
-            int idUsuario = usuarioExistente.Id; // Usamos el ID que asignó el repositorio
+            // OBTENER EL ID DEL USUARIO RECIÉN CREADO
+            var listaUsuarios = _fachada.VerTodosLosUsuarios();
+            Usuario usuarioExistente = listaUsuarios[0];
+            int idUsuario = usuarioExistente.Id;
 
-            // ACT: Suspender
+            // ACT 1: Suspender (Precondición)
             _fachada.SuspenderUsuario(idUsuario);
 
-            // VERIFICAR ESTADO SUSPENDIDO (Precondición)
+            // VERIFICAR ESTADO SUSPENDIDO
             Usuario usuarioSuspendido = _fachada.VerTodosLosUsuarios()[0];
-            Assert.AreEqual(Estado.Suspendido, usuarioSuspendido.Estado,
-                "Fallo: El usuario no se suspendió correctamente.");
+            Assert.AreEqual(Estado.Suspendido, usuarioSuspendido.Estado, "Fallo: El usuario no se suspendió correctamente.");
 
-            // ACT: Activar
-            // Usamos el método de la Fachada (Descomentar si agregaste el método)
+            // ACT 2: Activar
             _fachada.ActivarUsuario(idUsuario);
 
             // ASSERT: Verificar estado Activo y Roles
-            var usuarios = _fachada.VerTodosLosUsuarios();
-            Usuario usuarioActivado = usuarios[0];
+            var usuariosFinal = _fachada.VerTodosLosUsuarios();
+            Usuario usuarioActivado = usuariosFinal[0];
 
             // Chequeos de consistencia
             Assert.IsNotNull(usuarioActivado);
             Assert.AreEqual(idUsuario, usuarioActivado.Id);
 
             // Chequeo del estado final
-            Assert.AreEqual(Estado.Activo, usuarioActivado.Estado,
-                "El estado del usuario no es Activo después de la activación.");
+            Assert.AreEqual(Estado.Activo, usuarioActivado.Estado, "El estado del usuario no es Activo después de la activación.");
 
-            // Chequeo de Roles (Multi-Rol)
-            Assert.AreEqual(1, usuarioActivado.Roles.Count,
-                "El usuario debe tener un único rol después de la creación.");
-            Assert.IsTrue(usuarioActivado.Roles.Contains(rolEsperado), "El rol Vendedor debe persistir en la lista.");
+            // Chequeo de Roles (Multi-Rol) sin LINQ
+            Assert.AreEqual(1, usuarioActivado.Roles.Count, "El usuario debe tener un único rol después de la creación.");
+            
+            bool rolPersiste = false;
+            foreach (var r in usuarioActivado.Roles)
+            {
+                if (r == rolEsperado) { rolPersiste = true; break; }
+            }
+            Assert.IsTrue(rolPersiste, "El rol Vendedor debe persistir en la lista.");
         }
 
         [Test]
@@ -114,15 +131,15 @@ namespace Library.Tests
             _fachada.CrearCliente("Juan", "Perez", "099123456", "jp@mail.com", "M", DateTime.Now);
     
             // Obtenemos ID real
-            Cliente clienteCreado = _fachada.VerTodosLosClientes()[0];
+            var clientes = _fachada.VerTodosLosClientes();
+            Cliente clienteCreado = clientes[0];
             int idClienteReal = clienteCreado.Id;
 
             string producto = "Laptop";
             float monto = 1500.50f;
-            DateTime fechaVenta = DateTime.Now; // <--- DATO NUEVO NECESARIO
+            DateTime fechaVenta = DateTime.Now;
 
             // 2. ACT (Ejecutar la acción)
-            // Pasamos la fechaVenta como 4to argumento
             _fachada.RegistrarVenta(idClienteReal, producto, monto, fechaVenta); 
 
             // 3. ASSERT (Verificar resultados)
@@ -131,46 +148,46 @@ namespace Library.Tests
             Assert.IsNotNull(cliente);
             Assert.AreEqual(1, cliente.Ventas.Count);
 
-            // Verificamos que los datos guardados coincidan con los del Arrange
-            Venta ventaRegistrada = cliente.Ventas[0]; // Como Venta hereda de Interaccion, esto funciona si lo casteas o si Ventas es lista de Venta
+            Venta ventaRegistrada = cliente.Ventas[0];
     
             Assert.AreEqual(producto, ventaRegistrada.Producto);
             Assert.AreEqual(monto, ventaRegistrada.Importe);
-            Assert.AreEqual(fechaVenta, ventaRegistrada.Fecha); // Verificamos también la fecha
+            Assert.AreEqual(fechaVenta, ventaRegistrada.Fecha);
         }
 
         [Test]
         public void AsignarClienteVendedor_DeberiaAsociarVendedorAlCliente()
         {
             // --- ARRANGE ---
-
             // 1. Crear los objetos necesarios
             _fachada.CrearCliente("Ana", "Gomez", "091987654", "ag@mail.com", "F", DateTime.Now);
-
-            // (Asegúrate de que esta llamada coincide con tu firma en Fachada.cs)
             _fachada.CrearUsuario("vendedorEstrella", Rol.Vendedor);
 
-            // --- CORRECCIÓN: Obtenemos los IDs REALES ---
-
             // 2. Obtener el Cliente real
-            Cliente clienteCreado = _fachada.VerTodosLosClientes()[0];
+            var clientes = _fachada.VerTodosLosClientes();
+            Cliente clienteCreado = clientes[0];
             int idClienteReal = clienteCreado.Id;
 
-            // 3. Obtener el Vendedor real
-            Usuario vendedorCreado = _fachada.VerTodosLosUsuarios().First(u => u.NombreUsuario == "vendedorEstrella");
-            int idVendedorReal = vendedorCreado.Id;
+            // 3. Obtener el Vendedor real SIN LINQ
+            int idVendedorReal = -1;
+            var usuarios = _fachada.VerTodosLosUsuarios();
+            foreach (var u in usuarios)
+            {
+                if (u.NombreUsuario == "vendedorEstrella")
+                {
+                    idVendedorReal = u.Id;
+                    break;
+                }
+            }
+            
+            Assert.AreNotEqual(-1, idVendedorReal, "El vendedor debería existir.");
 
             // --- ACT ---
-
-            // 5. Ejecutar la lógica de negocio con los IDs reales
             _fachada.AsignarClienteVendedor(idClienteReal, idVendedorReal);
 
             // --- ASSERT ---
-
-            // 6. Buscar el cliente actualizado (usando el ID real)
             Cliente cliente = _fachada.BuscarCliente(idClienteReal);
 
-            // 7. Verificar los resultados
             Assert.IsNotNull(cliente);
             Assert.IsNotNull(cliente.VendedorAsignado);
             Assert.AreEqual(idVendedorReal, cliente.VendedorAsignado.Id);
@@ -179,14 +196,20 @@ namespace Library.Tests
         [Test]
         public void EliminarUsuario_DeberiaQuitarUsuarioDelRepositorio()
         {
+            // Arrange
             _fachada.CrearUsuario("userParaEliminar", Rol.Vendedor);
-            int idUsuarioAEliminar = 1; // Asumimos 1 por [SetUp]
+            
+            var usuarios = _fachada.VerTodosLosUsuarios();
+            int idUsuarioAEliminar = usuarios[0].Id;
 
-            Assert.AreEqual(1, _fachada.VerTodosLosUsuarios().Count);
+            Assert.AreEqual(1, usuarios.Count);
 
+            // Act
             _fachada.EliminarUsuario(idUsuarioAEliminar);
 
-            Assert.AreEqual(0, _fachada.VerTodosLosUsuarios().Count);
+            // Assert
+            var usuariosFinal = _fachada.VerTodosLosUsuarios();
+            Assert.AreEqual(0, usuariosFinal.Count);
 
             Usuario usuarioEliminado = _fachada.BuscarUsuario(idUsuarioAEliminar);
             Assert.IsNull(usuarioEliminado);
@@ -199,38 +222,39 @@ namespace Library.Tests
             _fachada.CrearCliente("Cliente", "Test", "123", "c@mail.com", "M", DateTime.Now);
             _fachada.CrearUsuario("vendedorSuspendido", Rol.Vendedor);
             
-            int idClienteReal = _fachada.VerTodosLosClientes()[0].Id;
+            var clientes = _fachada.VerTodosLosClientes();
+            int idClienteReal = clientes[0].Id;
 
-            Usuario vendedorCreado = null;
+            // Buscar ID vendedor sin LINQ
+            int idVendedorReal = -1;
             foreach(Usuario u in _fachada.VerTodosLosUsuarios())
             {
                 if (u.NombreUsuario == "vendedorSuspendido")
                 {
-                    vendedorCreado = u;
+                    idVendedorReal = u.Id;
                     break;
                 }
             }
-            int idVendedorReal = vendedorCreado.Id;
     
             _fachada.SuspenderUsuario(idVendedorReal); // Estado = Suspendido
 
             // --- ACT & ASSERT ---
-            // El test ahora espera que la nueva precondición lance una InvalidOperationException
             Assert.Throws<InvalidOperationException>(() =>
             {
                 _fachada.AsignarClienteVendedor(idClienteReal, idVendedorReal); 
             });
     
-            // Verificamos que no se haya asignado nada
             Cliente cliente = _fachada.BuscarCliente(idClienteReal);
             Assert.IsNull(cliente.VendedorAsignado);
         }
+
         [Test]
         public void AsignarClienteVendedor_DeberiaLanzarExcepcionSiUsuarioNoEsVendedor()
         {
             // --- ARRANGE ---
             _fachada.CrearCliente("Cliente", "Test", "123", "c@mail.com", "M", DateTime.Now);
-            int idClienteReal = _fachada.VerTodosLosClientes()[0].Id;
+            var clientes = _fachada.VerTodosLosClientes();
+            int idClienteReal = clientes[0].Id;
 
             // Crear un usuario que NO es vendedor
             _fachada.CrearUsuario("adminUser", Rol.Administrador);
@@ -246,16 +270,13 @@ namespace Library.Tests
                 }
             }
 
-            // --- ACT & ASSERT (La clave) ---
-            // Envolvemos la llamada en Assert.Throws<InvalidOperationException>
-            // Esto verifica que el CÓDIGO FALLA de forma controlada.
+            // --- ACT & ASSERT ---
             Assert.Throws<InvalidOperationException>(() =>
             {
                 _fachada.AsignarClienteVendedor(idClienteReal, idAdminReal);
             });
 
             // --- VERIFICACIÓN DE ESTADO ---
-            // OPCIONAL: Verificamos que el estado del cliente no cambió (sigue sin vendedor)
             Cliente cliente = _fachada.BuscarCliente(idClienteReal);
             Assert.IsNull(cliente.VendedorAsignado, "El vendedor no debió ser asignado.");
         }
