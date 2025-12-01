@@ -26,7 +26,7 @@ namespace Library.Tests
         [Test]
         public void CrearCliente_ShouldAddClienteToRepo()
         {
-            _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "M", DateTime.Now);
+            _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "Masculino", DateTime.Now);
             var clientes = _fachada.VerTodosLosClientes();
             Assert.That(clientes.Count, Is.EqualTo(1));
             Assert.That(clientes[0].Nombre, Is.EqualTo("Juan"));
@@ -75,7 +75,7 @@ namespace Library.Tests
         [Test]
         public void AgregarEtiquetaCliente_ShouldAddTag()
         {
-            _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "M", DateTime.Now);
+            _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "Masculino", DateTime.Now);
             _fachada.CrearEtiqueta("VIP");
             
             var cliente = _fachada.VerTodosLosClientes()[0];

@@ -59,6 +59,27 @@ namespace Library
             this._repoClientes.Modificar(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
         }
 
+        /// <summary>
+        /// Registra el género y la fecha de nacimiento de un cliente existente.
+        /// Implementa Composición/Delegación: La Fachada delega la lógica de 
+        /// persistencia al Repositorio de Clientes.
+        /// </summary>
+        /// <param name="idCliente">El ID del cliente a modificar.</param>
+        /// <param name="generoTexto">El género del cliente (como string).</param>
+        /// <param name="fechaNacimiento">La fecha de nacimiento (como DateTime).</param>
+        public void RegistrarDatosAdicionalesCliente(int idCliente, string generoTexto, DateTime fechaNacimiento)
+        {
+            // La Fachada coordina la operación, delegando la acción de persistencia.
+            // Si el método lanza una excepción (por ID inválido o Género inválido),
+            // la Fachada simplemente la propaga al Comando de Discord (la capa superior).
+            
+            this._repoClientes.ActualizarDatosAdicionales(
+                idCliente, 
+                generoTexto, 
+                fechaNacimiento
+            );
+        }
+        
         public List<Cliente> BuscarClientes(string termino)
         {
             return this._repoClientes.BuscarPorTermino(termino);

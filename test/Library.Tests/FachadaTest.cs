@@ -2,6 +2,7 @@ using NUnit.Framework;
 using Library;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Library.Tests
 {
@@ -26,24 +27,12 @@ namespace Library.Tests
         private IRepoUsuarios repoUsuarios;
         private IRepoVentas repoVentas;
 
-        /// <summary>
-        /// Prepara el entorno para CADA prueba unitaria.
-        /// Este método se ejecuta antes de cada [Test].
-        /// 
-        /// 1. Crea instancias "frescas" de los repositorios concretos.
-        /// 2. Crea una "nueva" instancia de Fachada, inyectando
-        ///    dichos repositorios en su constructor (Inyección de Dependencias).
-        /// 
-        /// Esto garantiza que cada prueba se ejecute en un estado aislado
-        /// y limpio, sin interferencia de pruebas anteriores.
-        /// </summary>
         [SetUp]
         public void SetUp()
         {
             /// <summary>
             /// Asumimos que las implementaciones concretas (RepoClientes, etc.)
-            /// tienen constructores públicos y ya no son Singletons,
-            /// para coincidir con el diseño DI de la Fachada.
+            /// están definidas en el proyecto Library.
             /// </summary>
             this.repoClientes = new RepoClientes();
             this.repoEtiquetas = new RepoEtiquetas();
@@ -58,24 +47,23 @@ namespace Library.Tests
 
         /// <summary>
         /// Verifica que se pueda crear un cliente correctamente.
-        /// Comprueba que el cliente se persiste en el repositorio
-        /// y que sus datos (nombre, apellido, ID) son correctos.
+        /// NOTA: Se usa "Masculino" como string para coincidir con el enum.
         /// </summary>
         [Test]
         public void TestCrearCliente()
         {
             string nombre = "Juan";
             string apellido = "Perez";
+            string genero = "Masculino"; // Usamos el nombre completo del enum.
             DateTime fechaNac = new DateTime(1990, 5, 15);
 
             /// <summary>
             /// Actuamos (Llamamos al método de la fachada)
             /// </summary>
-            this.fachada.CrearCliente(nombre, apellido, "099123456", "juan@perez.com", "M", fechaNac);
+            this.fachada.CrearCliente(nombre, apellido, "099123456", "juan@perez.com", genero, fechaNac);
 
             /// <summary>
-            /// Verificamos (Consultamos a la fachada, que a su vez
-            /// consultará al repositorio que le inyectamos).
+            /// Verificamos 
             /// </summary>
             var clientes = this.fachada.VerTodosLosClientes();
             
@@ -83,12 +71,14 @@ namespace Library.Tests
             Assert.AreEqual(nombre, clientes[0].Nombre);
             Assert.AreEqual(apellido, clientes[0].Apellido);
             Assert.AreEqual(fechaNac, clientes[0].FechaNacimiento);
-            Assert.AreEqual(1, clientes[0].Id); // El primer ID debe ser 1
+            Assert.AreEqual(GeneroCliente.Masculino, clientes[0].Genero); // Comprobamos el tipo enum
+            Assert.AreEqual(1, clientes[0].Id); 
         }
 
         /// <summary>
         /// Verifica que los datos de un cliente existente se puedan modificar
         /// correctamente.
+        /// NOTA: Se usa "Femenino" como string para la modificación.
         /// </summary>
         [Test]
         public void TestModificarCliente()
@@ -96,17 +86,19 @@ namespace Library.Tests
             /// <summary>
             /// Arrange: Preparamos el escenario creando un cliente.
             /// </summary>
-            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "M", DateTime.Now);
+            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now); // CORRECCIÓN
             var cliente = this.fachada.VerTodosLosClientes()[0];
             
             string nuevoNombre = "Juan Modificado";
             string nuevoCorreo = "nuevo@correo.com";
+            string nuevoGenero = "Femenino"; // Nuevo valor
+            DateTime nuevaFecha = new DateTime(1985, 10, 20); // Nuevo valor
 
             /// <summary>
             /// Act: Ejecutamos la lógica a probar.
             /// </summary>
             this.fachada.ModificarCliente(cliente.Id, nuevoNombre, cliente.Apellido, cliente.Telefono, 
-                                          nuevoCorreo, cliente.Genero, cliente.FechaNacimiento);
+                                          nuevoCorreo, nuevoGenero, nuevaFecha); 
 
             /// <summary>
             /// Assert: Verificamos que los cambios se hayan aplicado.
@@ -115,7 +107,49 @@ namespace Library.Tests
             Assert.IsNotNull(clienteModificado);
             Assert.AreEqual(nuevoNombre, clienteModificado.Nombre);
             Assert.AreEqual(nuevoCorreo, clienteModificado.Correo);
+            Assert.AreEqual(GeneroCliente.Femenino, clienteModificado.Genero); // Verificamos el enum
+            Assert.AreEqual(nuevaFecha, clienteModificado.FechaNacimiento);
         }
+
+        /// <summary>
+        /// Verifica el nuevo método de RegistrarDatosAdicionalesCliente.
+        /// Este test se enfoca en la nueva funcionalidad.
+        /// </summary>
+        [Test]
+        public void TestRegistrarDatosAdicionalesCliente_ActualizaSoloDatosEspecificos()
+        {
+            /// <summary>
+            /// Arrange: Creamos un cliente con datos iniciales (genero por defecto y fecha antigua).
+            /// </summary>
+            DateTime fechaInicial = new DateTime(2000, 1, 1);
+            this.fachada.CrearCliente("Ana", "Gomez", "999888777", "ana@test.com", "NoEspecificado", fechaInicial); 
+            var idCliente = this.fachada.VerTodosLosClientes()[0].Id;
+            
+            // Datos que no deberían cambiar
+            string nombreOriginal = this.fachada.BuscarCliente(idCliente).Nombre;
+
+            // Nuevos datos a registrar
+            string generoNuevoTexto = "Femenino";
+            DateTime fechaNueva = new DateTime(1995, 12, 25); 
+
+            /// <summary>
+            /// Act: Llamamos al método que solo actualiza los datos adicionales.
+            /// </summary>
+            this.fachada.RegistrarDatosAdicionalesCliente(idCliente, generoNuevoTexto, fechaNueva);
+
+            /// <summary>
+            /// Assert: Verificamos la actualización y que los otros datos sigan intactos.
+            /// </summary>
+            var clienteActualizado = this.fachada.BuscarCliente(idCliente);
+            
+            // 1. Verificamos que los datos nuevos se hayan actualizado correctamente
+            Assert.AreEqual(GeneroCliente.Femenino, clienteActualizado.Genero);
+            Assert.AreEqual(fechaNueva, clienteActualizado.FechaNacimiento);
+            
+            // 2. Verificamos que el nombre (u otro dato básico) no haya cambiado 
+            Assert.AreEqual(nombreOriginal, clienteActualizado.Nombre, "El nombre no debería haber cambiado.");
+        }
+
 
         /// <summary>
         /// Verifica que un cliente pueda ser eliminado del sistema
@@ -127,7 +161,7 @@ namespace Library.Tests
             /// <summary>
             /// Arrange
             /// </summary>
-            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "M", DateTime.Now);
+            this.fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now); // CORRECCIÓN
             Assert.AreEqual(1, this.fachada.VerTodosLosClientes().Count);
             var clienteId = this.fachada.VerTodosLosClientes()[0].Id;
 
@@ -145,8 +179,6 @@ namespace Library.Tests
 
         /// <summary>
         /// Prueba la funcionalidad de búsqueda de clientes.
-        /// Verifica que el método devuelva todos los clientes
-        /// que coincidan parcialmente con el término de búsqueda.
         /// </summary>
         [Test]
         public void TestBuscarClientes()
@@ -154,9 +186,9 @@ namespace Library.Tests
             /// <summary>
             /// Arrange
             /// </summary>
-            this.fachada.CrearCliente("Juan", "Perez", "111111", "juan@mail.com", "M", DateTime.Now);
-            this.fachada.CrearCliente("Juana", "Gonzalez", "222222", "juana@mail.com", "F", DateTime.Now);
-            this.fachada.CrearCliente("Pedro", "Gomez", "333333", "pedro@mail.com", "M", DateTime.Now);
+            this.fachada.CrearCliente("Juan", "Perez", "111111", "juan@mail.com", "Masculino", DateTime.Now); // CORRECCIÓN
+            this.fachada.CrearCliente("Juana", "Gonzalez", "222222", "juana@mail.com", "Femenino", DateTime.Now); // CORRECCIÓN
+            this.fachada.CrearCliente("Pedro", "Gomez", "333333", "pedro@mail.com", "Masculino", DateTime.Now); // CORRECCIÓN
 
             /// <summary>
             /// Act
