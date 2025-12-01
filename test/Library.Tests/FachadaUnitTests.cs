@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace Library.Tests
 {
-    public class FachadaTests
+    [TestFixture]
+    public class FachadaUnitTests
     {
         private Fachada _fachada;
         private IRepoClientes _repoClientes;
@@ -24,16 +25,17 @@ namespace Library.Tests
         }
 
         [Test]
-        public void CrearCliente_ShouldAddClienteToRepo()
+        public void TestCrearCliente_DeberiaAgregarClienteAlRepositorio()
         {
             _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "Masculino", DateTime.Now);
             var clientes = _fachada.VerTodosLosClientes();
-            Assert.That(clientes.Count, Is.EqualTo(1));
-            Assert.That(clientes[0].Nombre, Is.EqualTo("Juan"));
+            
+            Assert.AreEqual(1, clientes.Count);
+            Assert.AreEqual("Juan", clientes[0].Nombre);
         }
 
         [Test]
-        public void RegistrarInteraccion_ShouldAddInteraccionToCliente()
+        public void TestRegistrarInteraccion_DeberiaAgregarInteraccionAlCliente()
         {
             _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "M", DateTime.Now);
             var cliente = _fachada.VerTodosLosClientes()[0];
@@ -41,12 +43,13 @@ namespace Library.Tests
             _fachada.RegistrarLlamada(cliente.Id, DateTime.Now, "Consulta", "Entrante");
             
             var interacciones = _fachada.VerInteraccionesCliente(cliente.Id);
-            Assert.That(interacciones.Count, Is.EqualTo(1));
-            Assert.That(interacciones[0], Is.InstanceOf<Llamada>());
+            
+            Assert.AreEqual(1, interacciones.Count);
+            Assert.IsInstanceOf<Llamada>(interacciones[0]);
         }
 
         [Test]
-        public void ObtenerClientesSinRespuesta_ShouldReturnCorrectClients()
+        public void TestObtenerClientesSinRespuesta_DeberiaRetornarClientesCorrectos()
         {
             _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "M", DateTime.Now);
             var cliente = _fachada.VerTodosLosClientes()[0];
@@ -55,12 +58,13 @@ namespace Library.Tests
             _fachada.RegistrarLlamada(cliente.Id, DateTime.Now, "Perdida", "Recibida");
             
             var sinRespuesta = _fachada.ObtenerClientesSinRespuesta();
-            Assert.That(sinRespuesta.Count, Is.EqualTo(1));
-            Assert.That(sinRespuesta[0].Id, Is.EqualTo(cliente.Id));
+            
+            Assert.AreEqual(1, sinRespuesta.Count);
+            Assert.AreEqual(cliente.Id, sinRespuesta[0].Id);
         }
 
         [Test]
-        public void ObtenerClientesSinRespuesta_ShouldNotReturnClientsWithOutgoingCalls()
+        public void TestObtenerClientesSinRespuesta_NoDeberiaRetornarClientesConLlamadasSalientes()
         {
             _fachada.CrearCliente("Ana", "Gomez", "456", "ana@mail.com", "F", DateTime.Now);
             var cliente = _fachada.VerTodosLosClientes()[0];
@@ -69,11 +73,12 @@ namespace Library.Tests
             _fachada.RegistrarLlamada(cliente.Id, DateTime.Now, "Venta", "Saliente");
             
             var sinRespuesta = _fachada.ObtenerClientesSinRespuesta();
-            Assert.That(sinRespuesta.Count, Is.EqualTo(0));
+            
+            Assert.AreEqual(0, sinRespuesta.Count);
         }
 
         [Test]
-        public void AgregarEtiquetaCliente_ShouldAddTag()
+        public void TestAgregarEtiquetaCliente_DeberiaAgregarEtiqueta()
         {
             _fachada.CrearCliente("Juan", "Perez", "123", "juan@mail.com", "Masculino", DateTime.Now);
             _fachada.CrearEtiqueta("VIP");
@@ -83,8 +88,8 @@ namespace Library.Tests
             
             _fachada.AgregarEtiquetaCliente(cliente.Id, etiqueta.Id);
             
-            Assert.That(cliente.Etiquetas.Count, Is.EqualTo(1));
-            Assert.That(cliente.Etiquetas[0].Nombre, Is.EqualTo("VIP"));
+            Assert.AreEqual(1, cliente.Etiquetas.Count);
+            Assert.AreEqual("VIP", cliente.Etiquetas[0].Nombre);
         }
     }
 }
