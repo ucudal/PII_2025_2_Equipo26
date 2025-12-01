@@ -1,5 +1,4 @@
 # Universidad Católica del Uruguay
-<img src="https://ucu.edu.uy/sites/all/themes/univer/logo.png" alt="UCU Logo" width="200">
 
 ### Programación II - Proyecto CRM (2025)
 
