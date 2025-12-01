@@ -200,9 +200,9 @@ namespace Library.Tests
             // 2. ACT
             // CORRECCIÓN: Ahora le pasamos 'this.clienteId' (creado en el SetUp)
             // para cumplir con la nueva firma del método RegistrarVenta(int, string, float, DateTime).
-            this.fachada.RegistrarVenta(this.clienteId, "Producto A", 100, fecha1);
-            this.fachada.RegistrarVenta(this.clienteId, "Producto B", 50, fecha2);
-            this.fachada.RegistrarVenta(this.clienteId, "Producto C", 200, fecha3); 
+            this._fachada.RegistrarVenta(this.clienteId, "Producto A", 100, fecha1);
+            this._fachada.RegistrarVenta(this.clienteId, "Producto B", 50, fecha2);
+            this._fachada.RegistrarVenta(this.clienteId, "Producto C", 200, fecha3); 
 
             // 3. ASSERT
             // Definimos el rango del reporte
@@ -210,7 +210,7 @@ namespace Library.Tests
             DateTime finReporte = new DateTime(2025, 10, 20);
     
             // Calculamos el total
-            float total = this.fachada.CalcularTotalVentas(inicioReporte, finReporte);
+            float total = this._fachada.CalcularTotalVentas(inicioReporte, finReporte);
     
             // Verificamos que sume solo las ventas dentro del rango (100 + 50 = 150)
             Assert.AreEqual(150, total); 
@@ -224,18 +224,18 @@ namespace Library.Tests
         public void TestRegistrarVentaAsignadaACliente()
         {
             // 1. ARRANGE
-            var cliente = this.fachada.BuscarCliente(this.clienteId);
+            var cliente = this._fachada.BuscarCliente(this.clienteId);
             Assert.AreEqual(0, cliente.Ventas.Count); // Pre-condición
 
             DateTime fechaVenta = DateTime.Now; // Definimos la fecha
 
             // 2. ACT
             // Agregamos la fecha como 4to parámetro en ambas llamadas
-            this.fachada.RegistrarVenta(this.clienteId, "Servicio Premium", 1500, fechaVenta);
-            this.fachada.RegistrarVenta(this.clienteId, "Soporte", 500, fechaVenta);
+            this._fachada.RegistrarVenta(this.clienteId, "Servicio Premium", 1500, fechaVenta);
+            this._fachada.RegistrarVenta(this.clienteId, "Soporte", 500, fechaVenta);
 
             // 3. ASSERT
-            var clienteActualizado = this.fachada.BuscarCliente(this.clienteId);
+            var clienteActualizado = this._fachada.BuscarCliente(this.clienteId);
     
             Assert.AreEqual(2, clienteActualizado.Ventas.Count);
     

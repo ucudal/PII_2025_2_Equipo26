@@ -318,35 +318,45 @@ namespace Library.Tests
         
         /// <summary>
         /// Verifica que el método CalcularTotalVentas sume correctamente solo las ventas
-        /// que caen dentro del rango de fechas especificado.
+        /// que caen dentro del rango de fechas especificado (inclusivo).
         /// </summary>
         [Test]
         public void TestCalcularTotalVentas_FiltraYOperaCorrectamente()
         {
             // --- Arrange: Preparar el escenario ---
-        
+            
+            // 1. Crear un Cliente, ya que RegistrarVenta ahora requiere un clienteId.
+            // Esto asegura que el cliente ID 1 exista.
+            this._fachada.CrearCliente("Reporte", "User", "0", "r@r.com", "Otro", new DateTime(1990, 1, 1)); 
+            // Obtenemos el ID del cliente creado, que será 1.
+            var clienteId = this._fachada.VerTodosLosClientes()[0].Id; 
+            
+            // 2. Ventas con 4 parámetros: (clienteId, producto, monto, fecha)
+            
             // Ventas fuera del período:
-            this._fachada.RegistrarVenta("Venta Antigua", 1000.00f, new DateTime(2024, 1, 1)); // Fuera
-            this._fachada.RegistrarVenta("Venta Futura", 500.00f, new DateTime(2025, 6, 1)); // Fuera
-        
+            this._fachada.RegistrarVenta(clienteId, "Venta Antigua", 1000.00f, new DateTime(2024, 1, 1)); // Fuera
+            this._fachada.RegistrarVenta(clienteId, "Venta Futura", 500.00f, new DateTime(2025, 6, 1)); // Fuera
+            
             // Ventas dentro del período:
-            this._fachada.RegistrarVenta("Venta A", 200.00f, new DateTime(2025, 2, 1)); // Dentro
-            this._fachada.RegistrarVenta("Venta B", 300.00f, new DateTime(2025, 2, 15)); // Dentro
-        
+            this._fachada.RegistrarVenta(clienteId, "Venta A", 200.00f, new DateTime(2025, 2, 1)); // Dentro
+            this._fachada.RegistrarVenta(clienteId, "Venta B", 300.00f, new DateTime(2025, 2, 15)); // Dentro
+            
             // Ventas en el Límite:
-            this._fachada.RegistrarVenta("Venta Limite Inicio", 150.00f, new DateTime(2025, 2, 1).AddHours(1)); // Dentro
-            this._fachada.RegistrarVenta("Venta Limite Fin", 50.00f, new DateTime(2025, 2, 28).AddHours(-1)); // Dentro
-        
-            // Definición del Período: Febrero 2025 (inclusivo)
+            this._fachada.RegistrarVenta(clienteId, "Venta Limite Inicio", 150.00f, new DateTime(2025, 2, 1).AddHours(1)); // Dentro
+            
+            // Usamos el día 28.
+            this._fachada.RegistrarVenta(clienteId, "Venta Limite Fin", 50.00f, new DateTime(2025, 2, 28).AddHours(-1)); // Dentro
+            
+            // Definición del Período: Febrero 2025 (inclusive)
             DateTime inicio = new DateTime(2025, 2, 1);
-            DateTime fin = new DateTime(2025, 2, 28);
-        
+            DateTime fin = new DateTime(2025, 2, 28); 
+            
             // Calculo manual esperado: 200 + 300 + 150 + 50 = 700.00
             float totalEsperado = 700.00f;
-        
+            
             // --- Act: Ejecutar el método ---
             float totalObtenido = this._fachada.CalcularTotalVentas(inicio, fin);
-        
+            
             // --- Assert: Verificación de la suma y el filtro ---
             Assert.AreEqual(totalEsperado, totalObtenido, 0.001f, "El total de ventas debe coincidir con la suma del período filtrado.");
         }

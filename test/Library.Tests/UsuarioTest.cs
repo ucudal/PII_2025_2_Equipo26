@@ -111,10 +111,10 @@ namespace Library.Tests
         public void RegistrarVenta_DeberiaAgregarVentaAlCliente()
         {
             // 1. ARRANGE (Preparar datos)
-            fachada.CrearCliente("Juan", "Perez", "099123456", "jp@mail.com", "M", DateTime.Now);
+            _fachada.CrearCliente("Juan", "Perez", "099123456", "jp@mail.com", "M", DateTime.Now);
     
             // Obtenemos ID real
-            Cliente clienteCreado = fachada.VerTodosLosClientes()[0];
+            Cliente clienteCreado = _fachada.VerTodosLosClientes()[0];
             int idClienteReal = clienteCreado.Id;
 
             string producto = "Laptop";
@@ -123,10 +123,10 @@ namespace Library.Tests
 
             // 2. ACT (Ejecutar la acción)
             // Pasamos la fechaVenta como 4to argumento
-            fachada.RegistrarVenta(idClienteReal, producto, monto, fechaVenta); 
+            _fachada.RegistrarVenta(idClienteReal, producto, monto, fechaVenta); 
 
             // 3. ASSERT (Verificar resultados)
-            Cliente cliente = fachada.BuscarCliente(idClienteReal);
+            Cliente cliente = _fachada.BuscarCliente(idClienteReal);
 
             Assert.IsNotNull(cliente);
             Assert.AreEqual(1, cliente.Ventas.Count);
