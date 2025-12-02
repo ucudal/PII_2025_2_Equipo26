@@ -50,30 +50,72 @@ namespace Library
         /// <summary>
         /// Actualiza los datos de un cliente existente (Operación Update).
         /// </summary>
-        public void Modificar(int id, string nombre, string apellido, string telefono, string correo, string generoTexto, DateTime fechaNacimiento)
+        public void Modificar(int id, string campo, string valor)
         {
-            if (nombre == null || nombre == "") throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
-            if (apellido == null || apellido == "") throw new ArgumentException("El apellido no puede ser nulo o vacío.", nameof(apellido));
-            if (telefono == null || telefono == "") throw new ArgumentException("El teléfono no puede ser nulo o vacío.", nameof(telefono));
-            if (correo == null || correo == "") throw new ArgumentException("El correo no puede ser nulo o vacío.", nameof(correo));
-            if (generoTexto == null || generoTexto == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(generoTexto));
+            Cliente cliente = this.Buscar(id);
             
-            // CONVERSIÓN DE TIPO para GENERO
-            GeneroCliente generoEnum;
-            if (!Enum.TryParse(generoTexto, true, out generoEnum))
+            if (cliente == null)
             {
-                throw new ArgumentException($"El valor '{generoTexto}' no es un género válido.", nameof(generoTexto));
+                throw new KeyNotFoundException("No se encontró el cliente con ID " + id);
             }
-            var cliente = this.Buscar(id); // Llama a Buscar() heredado
-            
-            if (cliente != null)
+
+            // 2. Normalizamos el campo a minúsculas para comparar fácil
+            string campoNormalizado = campo.ToLower();
+
+            // 3. Switch clásico
+            switch (campoNormalizado)
             {
-                cliente.Nombre = nombre;
-                cliente.Apellido = apellido;
-                cliente.Telefono = telefono;
-                cliente.Correo = correo;
-                cliente.Genero = generoEnum; 
-                cliente.FechaNacimiento = fechaNacimiento; 
+                case "nombre":
+                if (valor == null || valor == "")
+                 {
+            throw new ArgumentException("El nombre no puede ser nulo.");
+                }
+                    cliente.Nombre = valor;
+                    break;
+
+                case "apellido":
+                    cliente.Apellido = valor;
+                    break;
+
+                case "telefono":
+                case "teléfono":
+                    cliente.Telefono = valor;
+                    break;
+
+                case "correo":
+                case "email":
+                    cliente.Correo = valor;
+                    break;
+
+                case "genero":
+                case "género":
+                    try
+                    {
+                        // SIN OUT: Usamos Enum.Parse. Si falla, va al catch.
+                        // El 'true' al final es para ignorar mayúsculas/minúsculas.
+                        cliente.Genero = (GeneroCliente)Enum.Parse(typeof(GeneroCliente), valor, true);
+                    }
+                    catch (Exception)
+                    {
+                        throw new ArgumentException("El género '" + valor + "' no es válido.");
+                    }
+                    break;
+
+                case "fecha":
+                case "nacimiento":
+                    try
+                    {
+                        // SIN OUT: Usamos DateTime.Parse.
+                        cliente.FechaNacimiento = DateTime.Parse(valor);
+                    }
+                    catch (Exception)
+                    {
+                        throw new ArgumentException("La fecha '" + valor + "' no es válida. Use dd/mm/aaaa.");
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentException("El campo '" + campo + "' no existe o no se puede editar.");
             }
         }
         /// <summary>

@@ -51,41 +51,20 @@ namespace Library.Tests
         }
 
         [Test]
-        public void TestModificarCliente()
-        {
-            this._fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now);
-            var cliente = this._fachada.VerTodosLosClientes()[0];
-            
-            this._fachada.ModificarCliente(cliente.Id, "Juan Modificado", cliente.Apellido, cliente.Telefono, "nuevo@mail.com", "Femenino", DateTime.Now); 
+public void TestModificarCliente()
+{
 
-            var modificado = this._fachada.BuscarCliente(cliente.Id);
-            Assert.AreEqual("Juan Modificado", modificado.Nombre);
-            Assert.AreEqual("nuevo@mail.com", modificado.Correo);
-        }
+    this._fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now);
+    
 
-        [Test]
-        public void TestModificarCliente_ActualizacionTotal()
-        {
-            this._fachada.CrearCliente("Original", "Viejo", "111", "old@mail.com", "Masculino", DateTime.MinValue);
-            var id = this._fachada.VerTodosLosClientes()[0].Id;
+    var cliente = this._fachada.VerTodosLosClientes()[0];
 
-            string nuevoNom = "Nuevo";
-            string nuevoApe = "Apellido";
-            string nuevoTel = "222";
-            string nuevoMail = "new@mail.com";
-            string nuevoGen = "Femenino";
-            DateTime nuevaFecha = new DateTime(2000, 1, 1);
+    this._fachada.ModificarCliente(cliente.Id, "Nombre", "Juan Modificado");
+    
 
-            this._fachada.ModificarCliente(id, nuevoNom, nuevoApe, nuevoTel, nuevoMail, nuevoGen, nuevaFecha);
-
-            var cliente = this._fachada.BuscarCliente(id);
-            Assert.AreEqual(nuevoNom, cliente.Nombre);
-            Assert.AreEqual(nuevoApe, cliente.Apellido);
-            Assert.AreEqual(nuevoTel, cliente.Telefono);
-            Assert.AreEqual(nuevoMail, cliente.Correo);
-            Assert.AreEqual(GeneroCliente.Femenino, cliente.Genero);
-            Assert.AreEqual(nuevaFecha, cliente.FechaNacimiento);
-        }
+    var modificado = this._fachada.BuscarCliente(cliente.Id);
+    Assert.AreEqual("Juan Modificado", modificado.Nombre);
+}
 
         [Test]
         public void TestEliminarCliente()

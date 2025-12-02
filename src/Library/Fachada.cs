@@ -51,21 +51,27 @@ namespace Library
         {
             return this._repoClientes.ObtenerTodas();
         }
-        
-        public void ModificarCliente(int id, string nombre, string apellido, string telefono, 
-                                   string correo, string genero, DateTime fechaNacimiento)
-        {
-            this._repoClientes.Modificar(id, nombre, apellido, telefono, correo, genero, fechaNacimiento);
-        }
+    
 
-        /// <summary>
-        /// Registra el género y la fecha de nacimiento de un cliente existente.
-        /// Implementa Composición/Delegación: La Fachada delega la lógica de 
-        /// persistencia al Repositorio de Clientes.
-        /// </summary>
-        /// <param name="idCliente">El ID del cliente a modificar.</param>
-        /// <param name="generoTexto">El género del cliente (como string).</param>
-        /// <param name="fechaNacimiento">La fecha de nacimiento (como DateTime).</param>
+// En src/Library/Fachada.cs
+
+    /// <summary>
+    /// Modifica un campo específico de un cliente.
+    /// </summary>
+    /// <param name="id">ID del cliente.</param>
+    /// <param name="campo">Nombre del campo a modificar (ej: "nombre", "genero").</param>
+    /// <param name="valor">Nuevo valor del campo.</param>
+    public void ModificarCliente(int id, string campo, string valor)
+    {
+    // Validamos que vengan datos básicos
+    if (campo == null || campo == "")
+    {
+        throw new ArgumentException("El nombre del campo no puede estar vacío.");
+    }
+    
+    // Delegamos al repositorio que tiene la lógica del switch
+    this._repoClientes.Modificar(id, campo, valor);
+    }
         public void RegistrarDatosAdicionalesCliente(int idCliente, string generoTexto, DateTime fechaNacimiento)
         {
             // La Fachada coordina la operación, delegando la acción de persistencia.
