@@ -37,49 +37,32 @@ El sistema ha sido construido bajo estrictos estándares de **Programación Orie
 
 A continuación se detallan los comandos disponibles para interactuar con el CRM.
 
-### 👥 Gestión de Clientes
-| Comando | Descripción | Ejemplo de Uso |
-| :--- | :--- | :--- |
-| `!crear_cliente` | Crea un nuevo cliente en el sistema. | `!crear_cliente "Juan" "Perez" "099123456" "juan@mail.com"` |
-| `!modificar_cliente` | Modifica los datos de un cliente existente. | `!modificar_cliente "1" "Juan Mod" "Perez" ...` |
-| `!actualizar_datos` | Agrega género y fecha de nacimiento. | `!actualizar_datos "1" "Masculino" "15/05/1990"` |
-| `!eliminar_cliente` | Elimina un cliente de la base de datos. | `!eliminar_cliente "1"` |
-| `!buscar_cliente` | Busca clientes por nombre, teléfono o mail. | `!buscar_cliente "Perez"` |
-| `!ver_clientes` | Muestra la lista de todos los clientes. | `!ver_clientes` |
-| `!reasignar_cliente` | Asigna un cliente a otro vendedor. | `!reasignar_cliente "1" "5"` (ID Cliente, ID Vendedor) |
+### 📋 Tabla de Historias de Usuario y Comandos
 
-### 📞 Interacciones y Notas
-| Comando | Descripción | Ejemplo de Uso |
+| 📖 Historia de Usuario | 🛠️ Comandos Necesarios | 💻 Ejemplo de Ejecución (Copiar y Pegar) |
 | :--- | :--- | :--- |
-| `!registrar_llamada` | Registra una llamada telefónica. | `!registrar_llamada "1" "10/11/2023" "Venta" "Entrante"` |
-| `!registrar_reunion` | Registra una reunión presencial o virtual. | `!registrar_reunion "1" "12/11/2023" "Presupuesto" "Oficina"` |
-| `!registrar_mensaje` | Registra un mensaje (WhatsApp/SMS). | `!registrar_mensaje "1" "12/11/2023" "Consulta" "Texto..."` |
-| `!registrar_correo` | Registra un correo electrónico. | `!registrar_correo "1" "12/11/2023" "Factura" "Asunto..."` |
-| `!agregar_nota` | Agrega una nota a una interacción pasada. | `!agregar_nota "1" "2" "Cliente muy interesado"` |
-| `!ver_interacciones` | Muestra el historial de un cliente. | `!ver_interacciones "1"` |
-
-### 🏷️ Etiquetas y Organización
-| Comando | Descripción | Ejemplo de Uso |
-| :--- | :--- | :--- |
-| `!crear_etiqueta` | Crea un nuevo tipo de etiqueta. | `!crear_etiqueta "VIP"` |
-| `!asignar_etiqueta` | Asigna una etiqueta a un cliente. | `!asignar_etiqueta "1" "VIP"` |
-
-### 💰 Ventas y Reportes
-| Comando | Descripción | Ejemplo de Uso |
-| :--- | :--- | :--- |
-| `!registrar_venta` | Registra una venta cerrada. | `!registrar_venta "1" "Laptop" "1500"` |
-| `!registrar_cotizacion`| Registra una cotización enviada. | `!registrar_cotizacion "1" "Servicios IT" "500"` |
-| `!reporte_ventas` | Calcula el total vendido en un rango de fechas.| `!reporte_ventas "01/01/2023" "31/12/2023"` |
-| `!clientes_inactivos` | Muestra clientes sin actividad reciente. | `!clientes_inactivos "30"` (Días sin contacto) |
-| `!dashboard` | Muestra un resumen general del CRM. | `!dashboard` |
-
-### ⚙️ Administración de Usuarios
-| Comando | Descripción | Ejemplo de Uso |
-| :--- | :--- | :--- |
-| `!crear_usuario` | Crea un nuevo usuario (Vendedor/Admin). | `!crear_usuario "vendedor1" "Vendedor"` |
-| `!suspender_usuario` | Suspende el acceso a un usuario. | `!suspender_usuario "2"` |
-| `!eliminar_usuario` | Elimina un usuario del sistema. | `!eliminar_usuario "2"` |
-| `!ping` | Verifica si el bot está activo. | `!ping` |
+| Como usuario quiero crear un nuevo cliente con su información básica: nombre, apellido, teléfono y correo electrónico... | `!crear_cliente` | `!crear_cliente "Juan" "Perez" "099123456" "juan@mail.com"` |
+| Como usuario quiero modificar la información de un cliente existente, para mantenerla actualizada. | `!crear_cliente`<br>`!modificar_cliente` | `!crear_cliente "Juan" "Perez" "099123456" "juan@mail.com"`<br>`!modificar_cliente 1 "Juan" "Lopez" "099888777" "nuevo@mail.com" "Masculino" "01/01/1990"` |
+| Como usuario quiero eliminar un cliente, para mantener limpia la base de datos. | `!crear_cliente`<br>`!eliminar_cliente` | `!crear_cliente "Borrar" "Este" "099000000" "borrar@mail.com"`<br>`!eliminar_cliente 1` |
+| Como usuario quiero buscar clientes por nombre, apellido, teléfono o correo electrónico... | `!crear_cliente`<br>`!buscar_cliente` | `!crear_cliente "Maria" "Busqueda" "098111222" "maria@mail.com"`<br>`!buscar_cliente "Maria"` |
+| Como usuario quiero ver una lista de todos mis clientes, para tener una vista general de mi cartera. | `!crear_cliente`<br>`!ver_clientes` | `!crear_cliente "Cliente1" "Test" "099111111" "c1@mail.com"`<br>`!ver_clientes` |
+| Como usuario quiero registrar llamadas enviadas o recibidas de clientes... | `!crear_cliente`<br>`!registrar_llamada` | `!crear_cliente "Ana" "Llamadas" "099222333" "ana@mail.com"`<br>`!registrar_llamada 1 "22/11/2023" "Consulta de precio" "Entrante"` |
+| Como usuario quiero registrar reuniones con los clientes... | `!crear_cliente`<br>`!registrar_reunion` | `!crear_cliente "Carlos" "Reunion" "099333444" "carlos@mail.com"`<br>`!registrar_reunion 1 "25/12/2023" "Oficina Central" "Firma contrato"` |
+| Como usuario quiero registrar mensajes enviados a o recibidos de los clientes... | `!crear_cliente`<br>`!registrar_mensaje` | `!crear_cliente "Sofia" "Mensaje" "099555666" "sofia@mail.com"`<br>`!registrar_mensaje 1 "23/11/2023" "Coordinar hora" "Hola, paso a las 5pm"` |
+| Como usuario quiero registrar correos electrónicos enviados a o recibidos de los clientes... | `!crear_cliente`<br>`!registrar_correo` | `!crear_cliente "Pedro" "Correo" "099777888" "pedro@mail.com"`<br>`!registrar_correo 1 "23/11/2023" "Presupuesto PDF" "Adjunto lo solicitado"` |
+| Como usuario quiero agregar notas o comentarios a las llamadas, reuniones, mensajes... | `!crear_cliente`<br>`!registrar_llamada`<br>`!ver_interacciones`<br>`!agregar_nota` | `!crear_cliente "Lucas" "Notas" "091000111" "lucas@mail.com"`<br>`!registrar_llamada 1 "24/11/2023" "Reclamo" "Entrante"`<br>`!ver_interacciones 1`<br>`!agregar_nota 1 "El cliente estaba molesto"` |
+| Como usuario quiero registrar otros datos de los clientes como género y fecha de nacimiento... | `!crear_cliente`<br>`!registrar_datos_cliente` | `!crear_cliente "Lucia" "Datos" "092222333" "lucia@mail.com"`<br>`!registrar_datos_cliente 1 "Femenino" "15/05/1995"` |
+| Como usuario quiero poder definir etiquetas para poder organizar y segmentar a mis clientes. | `!crear_etiqueta` | `!crear_etiqueta "VIP"` |
+| Como usuario quiero poder agregar una etiqueta a un cliente... | `!crear_cliente`<br>`!crear_etiqueta`<br>`!asignar_etiqueta` | `!crear_cliente "Marcos" "Etiqueta" "093333444" "marcos@mail.com"`<br>`!crear_etiqueta "Deudor"`<br>`!asignar_etiqueta 1 "Deudor"` |
+| Como usuario quiero poder registrar una venta a un cliente... | `!crear_cliente`<br>`!registrar_venta` | `!crear_cliente "Cliente" "Comprador" "094444555" "compra@mail.com"`<br>`!registrar_venta 1 "Laptop Gamer" 2500` |
+| Como usuario quiero poder registrar que le envié una cotización a un cliente... | `!crear_cliente`<br>`!registrar_cotizacion` | `!crear_cliente "Prospecto" "Nuevo" "095555666" "pros@mail.com"`<br>`!registrar_cotizacion 1 "Servicio Mensual" 500` |
+| Como usuario quiero ver todas las interacciones de un cliente... | `!crear_cliente`<br>`!registrar_llamada`<br>`!ver_interacciones` | `!crear_cliente "Historial" "Full" "096666777" "hist@mail.com"`<br>`!registrar_llamada 1 "20/11/2023" "Intro" "Saliente"`<br>`!ver_interacciones 1` |
+| Cómo usuario quiero saber los clientes que hace cierto tiempo que no tengo ninguna interacción... | `!crear_cliente`<br>`!clientes_inactivos` | `!crear_cliente "Inactivo" "Test" "097777888" "inactivo@mail.com"`<br>`!clientes_inactivos 30` |
+| Como usuario quiero saber los clientes que se pusieron en contacto conmigo y no les contesté... | `!crear_cliente`<br>`!registrar_mensaje`<br>`!ver_interacciones` | `!crear_cliente "Sin" "Respuesta" "098888999" "sinresp@mail.com"`<br>`!registrar_mensaje 1 "01/12/2023" "Ayuda" "Necesito soporte (Entrante)"`<br>`!ver_interacciones 1` |
+| Como administrador quiero crear, suspender o eliminar usuarios... | `!admin crear_usuario`<br>`!admin suspender_usuario`<br>`!admin eliminar_usuario` | `!admin crear_usuario @UsuarioDiscord "Vendedor"`<br>`!admin suspender_usuario 1`<br>`!admin eliminar_usuario 1` |
+| Como vendedor, quiero poder asignar un cliente a otro vendedor... | `!admin crear_usuario`<br>`!crear_cliente`<br>`!asignar_vendedor` | *(Requiere mencionar a otro usuario)*<br>`!admin crear_usuario @Compañero "Vendedor"`<br>`!crear_cliente "Cliente" "Transferible" "099999999" "transf@mail.com"`<br>`!asignar_vendedor 1 @Compañero` |
+| Como usuario quiero saber el total de ventas de un periodo dado... | `!crear_cliente`<br>`!registrar_venta`<br>`!total_ventas` | `!crear_cliente "Comprador" "Total" "091111222" "total@mail.com"`<br>`!registrar_venta 1 "Item 1" 1000`<br>`!registrar_venta 1 "Item 2" 2000`<br>`!total_ventas "01/01/2020" "31/12/2025"` |
+| Como usuario quiero ver un panel con clientes totales, interacciones recientes y reuniones próximas... | `!crear_cliente`<br>`!registrar_reunion`<br>`!dashboard` | `!crear_cliente "Demo" "Dashboard" "092222333" "dash@mail.com"`<br>`!registrar_reunion 1 "30/12/2025" "Zoom" "Cierre de año"`<br>`!dashboard` |
 
 ---
 
