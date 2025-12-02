@@ -20,8 +20,7 @@ namespace Library
         /// <summary>
         /// Actualiza los datos de un cliente existente.
         /// </summary>
-        void Modificar(int id, string nombre, string apellido, string telefono,
-                         string correo, string generoTexto, DateTime fechaNacimiento);
+        void Modificar(int id, string campo, string valor);
         
         /// <summary>
         /// Especificación para actualizar solamente los datos adicionales del cliente.

@@ -50,25 +50,35 @@ namespace Library.Tests
         }
 
         [Test]
-        public void RepoClientes_Modificar_DeberiaLanzarExcepcion_CuandoNombreEsNulo()
-        {
-            // Arrange
-            var repo = new RepoClientes();
-            bool excepcionLanzada = false;
+public void RepoClientes_Modificar_DeberiaLanzarExcepcion_CuandoNombreEsNulo()
+{
+    // Arrange
+    var repo = new RepoClientes();
+    // Creamos un cliente para tener un ID real
+    repo.Agregar("Juan", "Perez", "123", "mail", "M", DateTime.Now);
+    var cliente = repo.ObtenerTodas()[0];
 
-            // Act
-            try
-            {
-                repo.Modificar(1, null, "Apellido", "123", "mail", "M", DateTime.Now);
-            }
-            catch (ArgumentException)
-            {
-                excepcionLanzada = true;
-            }
 
-            // Assert
-            Assert.IsTrue(excepcionLanzada);
-        }
+    bool excepcionLanzada = false;
+
+    // Act
+    try
+    {
+        repo.Modificar(cliente.Id, "Nombre", null);
+    }
+    catch (ArgumentException)
+    {
+        excepcionLanzada = true;
+    }
+    catch (Exception)
+    {
+        // Ignoramos otras excepciones
+    }
+
+    // Assert
+    Assert.IsTrue(excepcionLanzada, "Debería lanzar excepción si el nombre es null.");
+}
+ 
 
         [Test]
         public void Usuario_Constructor_DeberiaLanzarExcepcion_CuandoNombreEsNulo()
