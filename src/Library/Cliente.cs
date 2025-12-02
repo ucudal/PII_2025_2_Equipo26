@@ -47,7 +47,8 @@ namespace Library
         /// <summary>
         /// Obtiene o establece el género del cliente.
         /// </summary>
-        public string Genero { get; set; }
+        public GeneroCliente Genero { get; set; }
+        
 
         /// <summary>
         /// Obtiene o establece la fecha de nacimiento del cliente.
@@ -102,21 +103,30 @@ namespace Library
         /// <param name="correo">El correo electrónico del cliente.</param>
         /// <param name="genero">El género del cliente.</param>
         /// <param name="fechaNacimiento">La fecha de nacimiento del cliente.</param>
-        public Cliente(string nombre, string apellido, string telefono, string correo, string genero,
+        public Cliente(string nombre, string apellido, string telefono, string correo, string generoTexto,
             DateTime fechaNacimiento)
         {
             if (nombre == null || nombre == "") throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
             if (apellido == null || apellido == "") throw new ArgumentException("El apellido no puede ser nulo o vacío.", nameof(apellido));
             if (telefono == null || telefono == "") throw new ArgumentException("El teléfono no puede ser nulo o vacío.", nameof(telefono));
             if (correo == null || correo == "") throw new ArgumentException("El correo no puede ser nulo o vacío.", nameof(correo));
-            if (genero == null || genero == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(genero));
+            if (generoTexto == null || generoTexto == "") throw new ArgumentException("El género no puede ser nulo o vacío.", nameof(generoTexto));
+            
+            GeneroCliente generoEnum;
 
+            // Enum.TryParse con el parámetro 'ignoreCase' (true) es compatible con C# 6.
+            if (!Enum.TryParse(generoTexto, true, out generoEnum))
+            {
+                // Si la conversión falla, se lanza una excepción con un mensaje útil.
+                throw new ArgumentException($"El valor '{generoTexto}' no es un género válido. Use: {String.Join(", ", Enum.GetNames(typeof(GeneroCliente)))}", nameof(generoTexto));
+            }
+            
             // Ya NO se asigna el 'Id' aquí.
             this.Nombre = nombre;
             this.Apellido = apellido;
             this.Telefono = telefono;
             this.Correo = correo;
-            this.Genero = genero;
+            this.Genero = generoEnum;
             this.FechaNacimiento = fechaNacimiento;
         }
 
@@ -242,6 +252,37 @@ namespace Library
             }
 
             return false;
+        }
+        /// <summary>
+        /// Obtiene la fecha de la interacción más reciente registrada para este cliente.
+        /// Aplica el patrón Expert: El cliente es responsable de calcular la fecha a partir
+        /// de su colección de interacciones (Agregación).
+        /// </summary>
+        /// <returns>La fecha y hora de la última interacción, o DateTime.MinValue si no hay interacciones.</returns>
+        public DateTime ObtenerFechaUltimaInteraccion()
+        {
+            // Verificamos si la colección está vacía.
+            if (this._interacciones.Count == 0)
+            {
+                // Si no hay interacciones, devolvemos la fecha mínima para que la Fachada
+                // pueda interpretarlo como "nunca tuvo interacción".
+                return DateTime.MinValue; 
+            }
+
+            DateTime fechaMasReciente = DateTime.MinValue;
+            
+            // Recorremos la colección IReadOnlyList<Interaccion> (propiedad Interacciones)
+            // o el campo privado _interacciones.
+            foreach (var interaccion in this._interacciones)
+            {
+                // La Interacción debe tener una propiedad pública 'Fecha'.
+                if (interaccion.Fecha > fechaMasReciente)
+                {
+                    fechaMasReciente = interaccion.Fecha;
+                }
+            }
+            
+            return fechaMasReciente;
         }
     }
 }
