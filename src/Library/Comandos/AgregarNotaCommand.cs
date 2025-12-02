@@ -31,7 +31,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                              "*(Esto agregará la nota a la última llamada registrada con el cliente 1)*");
         }
         
-        [Command("agregar-nota")]
+        [Command("agregar_nota")]
         [Summary("Agrega una nota a la última interacción encontrada del tipo especificado.")]
         public async Task ExecuteAsync(
             [Summary("ID del cliente")] int id, 
