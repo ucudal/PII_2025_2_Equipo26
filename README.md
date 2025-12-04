@@ -93,3 +93,8 @@ A continuación se detallan los comandos disponibles para interactuar con el CRM
 ---
 
 > **Aclaración:** Se usaron dos cuentas de Git a nombre de Facundo debido al uso de distintos dispositivos durante el desarrollo, por ende, hay commits en el historial provenientes de ambas cuentas.
+> 
+> Defensa
+> !crear_cliente "Comprador" "Total" 091111222 total@mail.com
+> !registrar_venta 1 "Item 1" 950
+> !defensa_cliente_conventas 900 1000

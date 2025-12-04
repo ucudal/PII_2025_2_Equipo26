@@ -30,9 +30,10 @@ namespace Library.Tests
         public void TestCrearCliente()
         {
             string nombre = "Juan";
-            this._fachada.CrearCliente(nombre, "Perez", "099123456", "juan@perez.com", "Masculino", new DateTime(1990, 5, 15));
+            this._fachada.CrearCliente(nombre, "Perez", "099123456", "juan@perez.com", "Masculino",
+                new DateTime(1990, 5, 15));
             var clientes = this._fachada.VerTodosLosClientes();
-            
+
             Assert.AreEqual(1, clientes.Count);
             Assert.AreEqual(nombre, clientes[0].Nombre);
             Assert.AreEqual(1, clientes[0].Id);
@@ -51,29 +52,29 @@ namespace Library.Tests
         }
 
         [Test]
-public void TestModificarCliente()
-{
+        public void TestModificarCliente()
+        {
 
-    this._fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now);
-    
+            this._fachada.CrearCliente("Juan", "Perez", "099123456", "juan@perez.com", "Masculino", DateTime.Now);
 
-    var cliente = this._fachada.VerTodosLosClientes()[0];
 
-    this._fachada.ModificarCliente(cliente.Id, "Nombre", "Juan Modificado");
-    
+            var cliente = this._fachada.VerTodosLosClientes()[0];
 
-    var modificado = this._fachada.BuscarCliente(cliente.Id);
-    Assert.AreEqual("Juan Modificado", modificado.Nombre);
-}
+            this._fachada.ModificarCliente(cliente.Id, "Nombre", "Juan Modificado");
+
+
+            var modificado = this._fachada.BuscarCliente(cliente.Id);
+            Assert.AreEqual("Juan Modificado", modificado.Nombre);
+        }
 
         [Test]
         public void TestEliminarCliente()
         {
             this._fachada.CrearCliente("Juan", "Perez", "123", "j@p.com", "M", DateTime.Now);
             var id = this._fachada.VerTodosLosClientes()[0].Id;
-            
+
             this._fachada.EliminarCliente(id);
-            
+
             Assert.AreEqual(0, this._fachada.VerTodosLosClientes().Count);
             Assert.IsNull(this._fachada.BuscarCliente(id));
         }
@@ -83,7 +84,7 @@ public void TestModificarCliente()
         {
             this._fachada.CrearCliente("A", "Borrar", "1", "1@1.com", "M", DateTime.Now);
             this._fachada.CrearCliente("B", "Quedar", "2", "2@2.com", "F", DateTime.Now);
-            
+
             var lista = this._fachada.VerTodosLosClientes();
             int idBorrar = lista[0].Id;
             int idQuedar = lista[1].Id;
@@ -118,15 +119,17 @@ public void TestModificarCliente()
             this._fachada.CrearCliente("Juana", "Diaz", "222", "jd@m.com", "F", DateTime.Now);
 
             var resultados = this._fachada.BuscarClientes("Juan");
-            
+
             Assert.AreEqual(2, resultados.Count);
-            
+
             bool estaJuan = false;
             bool estaJuana = false;
-            foreach(var c in resultados) {
+            foreach (var c in resultados)
+            {
                 if (c.Nombre == "Juan") estaJuan = true;
                 if (c.Nombre == "Juana") estaJuana = true;
             }
+
             Assert.IsTrue(estaJuan);
             Assert.IsTrue(estaJuana);
         }
@@ -157,7 +160,7 @@ public void TestModificarCliente()
         {
             this._fachada.CrearCliente("A", "A", "1", "a", "M", DateTime.Now);
             this._fachada.CrearCliente("B", "B", "2", "b", "F", DateTime.Now);
-            
+
             var cartera = this._fachada.VerTodosLosClientes();
             Assert.AreEqual(2, cartera.Count);
         }
@@ -176,7 +179,7 @@ public void TestModificarCliente()
             var interacciones = this._fachada.VerInteraccionesCliente(id);
             Assert.AreEqual(1, interacciones.Count);
             Assert.IsInstanceOf<Llamada>(interacciones[0]);
-            
+
             Llamada llamada = (Llamada)interacciones[0];
             Assert.AreEqual(fecha, llamada.Fecha);
             Assert.AreEqual("Venta", llamada.Tema);
@@ -193,7 +196,7 @@ public void TestModificarCliente()
 
             var interacciones = this._fachada.VerInteraccionesCliente(id);
             Assert.IsInstanceOf<Reunion>(interacciones[0]);
-            
+
             Reunion reunion = (Reunion)interacciones[0];
             Assert.AreEqual("Oficina", reunion.Lugar);
         }
@@ -208,7 +211,7 @@ public void TestModificarCliente()
 
             var interacciones = this._fachada.VerInteraccionesCliente(id);
             Assert.IsInstanceOf<Mensaje>(interacciones[0]);
-            
+
             Mensaje mensaje = (Mensaje)interacciones[0];
             Assert.AreEqual("789", mensaje.Remitente);
             Assert.AreEqual("Vendedor", mensaje.Destinatario);
@@ -224,7 +227,7 @@ public void TestModificarCliente()
 
             var interacciones = this._fachada.VerInteraccionesCliente(id);
             Assert.IsInstanceOf<Correo>(interacciones[0]);
-            
+
             Correo correo = (Correo)interacciones[0];
             Assert.AreEqual("Presupuesto", correo.Asunto);
         }
@@ -234,9 +237,9 @@ public void TestModificarCliente()
         {
             this._fachada.CrearCliente("Car", "Note", "111", "c@n.com", "M", DateTime.Now);
             var id = this._fachada.VerTodosLosClientes()[0].Id;
-            
+
             this._fachada.RegistrarLlamada(id, DateTime.Now, "Hola", "saliente");
-            
+
             // Verificamos antes
             Assert.IsNull(this._fachada.VerInteraccionesCliente(id)[0].NotaAdicional);
 
@@ -261,7 +264,7 @@ public void TestModificarCliente()
             // Buscamos la última interacción que sea Cotización
             Cotizacion coti = null;
             // Recorremos a la inversa para hallar la última
-            for(int i = interacciones.Count - 1; i >= 0; i--)
+            for (int i = interacciones.Count - 1; i >= 0; i--)
             {
                 if (interacciones[i] is Cotizacion)
                 {
@@ -316,7 +319,7 @@ public void TestModificarCliente()
             DateTime fin = new DateTime(2025, 2, 28);
 
             float total = this._fachada.CalcularTotalVentas(inicio, fin);
-            
+
             // 100 + 200 = 300 (la de 500 está fuera)
             Assert.AreEqual(300, total);
         }
@@ -337,7 +340,7 @@ public void TestModificarCliente()
             var resumen = this._fachada.ObtenerResumenDashboard();
 
             Assert.AreEqual(2, resumen.TotalClientes);
-            
+
             // Validar interacción reciente
             Assert.AreEqual(1, resumen.InteraccionesRecientes.Count);
             Assert.AreEqual("Llamada Ayer", resumen.InteraccionesRecientes[0].Tema);
@@ -356,16 +359,17 @@ public void TestModificarCliente()
             this._fachada.CrearUsuario("Vendedor1", Rol.Vendedor);
             this._fachada.CrearUsuario("Admin1", Rol.Administrador);
             this._fachada.CrearUsuario("Suspendido", Rol.Vendedor);
-            
+
             // Buscamos IDs de usuarios manualmente (sin LINQ First)
             int idVendedor = 0;
             int idAdmin = 0;
             int idSuspendido = 0;
 
-            foreach(var u in this._fachada.VerTodosLosUsuarios()) {
-                if(u.NombreUsuario == "Vendedor1") idVendedor = u.Id;
-                if(u.NombreUsuario == "Admin1") idAdmin = u.Id;
-                if(u.NombreUsuario == "Suspendido") idSuspendido = u.Id;
+            foreach (var u in this._fachada.VerTodosLosUsuarios())
+            {
+                if (u.NombreUsuario == "Vendedor1") idVendedor = u.Id;
+                if (u.NombreUsuario == "Admin1") idAdmin = u.Id;
+                if (u.NombreUsuario == "Suspendido") idSuspendido = u.Id;
             }
 
             this._fachada.SuspenderUsuario(idSuspendido);
@@ -376,14 +380,45 @@ public void TestModificarCliente()
             Assert.AreEqual(idVendedor, this._fachada.BuscarCliente(idCliente).VendedorAsignado.Id);
 
             // 2. Falla Admin (Excepción)
-            Assert.Throws<InvalidOperationException>(() => {
+            Assert.Throws<InvalidOperationException>(() =>
+            {
                 this._fachada.AsignarClienteVendedor(idCliente, idAdmin);
             });
 
             // 3. Falla Suspendido (Excepción)
-            Assert.Throws<InvalidOperationException>(() => {
+            Assert.Throws<InvalidOperationException>(() =>
+            {
                 this._fachada.AsignarClienteVendedor(idCliente, idSuspendido);
             });
+        }
+
+        [Test]
+        public void TestCalcularClientesVentasRango()
+        {
+            this._fachada.CrearCliente("Juan", "Comprador", "111", "j@m.com", "Masculino", DateTime.Now);
+            this._fachada.CrearCliente("Pedro", "Ahorrativo", "222", "p@m.com", "Masculino", DateTime.Now);
+
+
+            var listaClientes = this._fachada.VerTodosLosClientes();
+            var clienteJuan = listaClientes[0];
+            var clientePedro = listaClientes[1];
+
+
+            var ventaJuan = new Venta(1, "TV", 500, DateTime.Now);
+            var ventaPedro = new Venta(2, "Cable", 100, DateTime.Now);
+
+
+            clienteJuan.AgregarVenta(ventaJuan);
+            clientePedro.AgregarVenta(ventaPedro);
+
+
+            var resultado = this._fachada.CalcularClientesVentasRango(400, 600);
+
+
+            Assert.AreEqual(1, resultado.Count);
+
+
+            Assert.AreEqual("Juan", resultado[0].Nombre);
         }
     }
 }

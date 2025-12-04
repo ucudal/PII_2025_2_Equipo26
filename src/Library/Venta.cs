@@ -14,24 +14,24 @@ public class Venta : Interaccion, IEntidad, IBuscable
     /// Obtiene o establece el identificador único de la venta.
     /// </summary>
     public int Id { get; set; }
-    
+
     /// <summary>
     /// Obtiene o establece la descripción del producto o servicio vendido.
     /// </summary>
     public string Producto { get; set; }
-    
+
     /// <summary>
     /// Obtiene o establece el monto o valor total de la venta.
     /// </summary>
     public float Importe { get; set; }
-    
+
     /// <summary>
     /// Obtiene o establece la fecha y hora en que se registró la venta.
     /// </summary>
     public DateTime Fecha { get; set; }
 
     // --- Constructor ---
-    
+
     /// <summary>
     /// Inicializa una nueva instancia de la clase <see cref="Venta"/>.
     /// </summary>
@@ -39,16 +39,15 @@ public class Venta : Interaccion, IEntidad, IBuscable
     /// <param name="producto">Descripción del producto/servicio.</param>
     /// <param name="importe">Monto de la venta.</param>
     /// <param name="fecha">Fecha de la venta.</param>
-    public override TipoInteraccion Tipo 
-    { 
-        get 
-        { 
-            return TipoInteraccion.Venta; 
-        } 
-    }
-    public Venta(int id, string producto, float importe, DateTime fecha): base(fecha, $"Venta de: {producto}")
+    public override TipoInteraccion Tipo
     {
-        if (producto == null || producto == "") throw new ArgumentException("El producto no puede ser nulo o vacío.", nameof(producto));
+        get { return TipoInteraccion.Venta; }
+    }
+
+    public Venta(int id, string producto, float importe, DateTime fecha) : base(fecha, $"Venta de: {producto}")
+    {
+        if (producto == null || producto == "")
+            throw new ArgumentException("El producto no puede ser nulo o vacío.", nameof(producto));
         if (importe < 0) throw new ArgumentException("El importe no puede ser negativo.", nameof(importe));
 
         this.Id = id;
@@ -77,4 +76,8 @@ public class Venta : Interaccion, IEntidad, IBuscable
 
         return false;
     }
-}
+
+    
+
+
+    }

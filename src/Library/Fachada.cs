@@ -357,6 +357,51 @@ namespace Library
             return total;
         }
 
+ //       public static List<Cliente> CalcularClientesVentasRango(float montoInicio, float montoFin)
+   //     {
+     //       var todasLasVentas = this._repoVentas.ObtenerTodas();
+       //     float total = 0;
+            // var todosLosClientes = this.VerTodosLosClientes();
+         //   var resultadoFinal = new List<Cliente>();
+           // foreach (var cliente in this._repoClientes.ObtenerTodas())
+            //{
+              //  foreach (var venta in todasLasVentas)
+               // {
+                 //   if (venta.Id == cliente.Id && venta.Importe >= montoInicio && venta.Importe <= montoFin)
+                   // {
+                     //   resultadoFinal.Add(cliente);
+                    //}
+               // }
+           // }
+           // return resultadoFinal;
+        //}
+       
+
+        /// <summary>
+        /// Verifica si el rango de monto de venta del cliente esta en el rango
+        /// </summary>
+        /// <param name="montoInicio">El monto minimo</param>
+        /// <returns>retorna lista de clientes que coincide con el rango</returns>
+        public List<Cliente> CalcularClientesVentasRango(double montoInicio, double montoFin)
+        {
+            var todosLosClientes = this.VerTodosLosClientes(); 
+    
+            var resultadoFinal = new List<Cliente>();
+
+            foreach (var cliente in todosLosClientes)
+            {
+                foreach (var venta in cliente.Ventas) 
+                {
+                    if (cliente.TieneVentaEnRango(montoInicio, montoFin))
+                    {
+                        resultadoFinal.Add(cliente);
+                        break; 
+                    }
+                }
+            }
+            return resultadoFinal;
+        }
+
         public void RegistrarCotizacion(int clienteId, string tema, double monto, DateTime fecha)
         {
             Cliente cliente = this._repoClientes.Buscar(clienteId);

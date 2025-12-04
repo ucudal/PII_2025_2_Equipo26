@@ -284,5 +284,22 @@ namespace Library
             
             return fechaMasReciente;
         }
+
+
+        /// <summary>
+        /// Verifica que la venta este en rango del cliente
+        /// </summary>
+        /// <returns>Verdadero o Falso</returns>
+        public bool TieneVentaEnRango(double montoInicio, double montoFin)
+        {
+            foreach (Venta venta in this.Ventas)
+            {
+                if (venta.Importe >= montoInicio && venta.Importe <= montoFin)
+                {
+                    return true; 
+                }
+            }
+            return false; 
+        }
     }
 }
