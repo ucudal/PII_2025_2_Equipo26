@@ -353,20 +353,22 @@ namespace Library
 
         public List<Cliente> BuscarVentasProducto(string producto)
         {
-            var todoslosclientes = _repoClientes.ObtenerTodas();
-            List<Cliente> clients = new List<Cliente>();
-            foreach (var cliente in todoslosclientes)
+            var todosLosClientes = _repoClientes.ObtenerTodas(); 
+            List<Cliente> clientesConProducto = new List<Cliente>();
+
+            foreach (var cliente in todosLosClientes)
             {
                 foreach (var venta in cliente.Ventas)
                 {
-                    if (venta.Producto.ToLower() == producto.ToLower())
+                    if (venta.Producto != null && venta.Producto.ToLower().Contains(producto.ToLower()))
                     {
-                        clients.Add(cliente);
+                        clientesConProducto.Add(cliente);
+                        break;
                     }
                 }
             }
-            return clients;
-         }
+            return clientesConProducto;
+        }
 
         public void RegistrarCotizacion(int clienteId, string tema, double monto, DateTime fecha)
         {

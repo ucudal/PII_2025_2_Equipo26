@@ -17,32 +17,51 @@ namespace Ucu.Poo.DiscordBot.Commands
         }
 
         [Command("ver_ventas")]
-        [Summary("Comando utilizado para ver las ventas de cierto producto o servicio en el historial de clientes")]
-        public async Task ExecuteAsync(
-            [Summary("Nombre del producto o servicio a buscar")]
-            string producto)
+        [Summary("Muestra los clientes que han comprado un producto o servicio específico.")]
+        public async Task ExecuteAsync([Summary("Nombre del producto")] string producto)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(producto))
+                {
+                    await ReplyAsync("❌ Por favor, indica un nombre de producto. Ejemplo: `!ver_ventas Laptop`");
+                    return;
+                }
+
+                
                 List<Cliente> clients = _fachada.BuscarVentasProducto(producto);
+
+                
+                if (clients.Count == 0)
+                {
+                    await ReplyAsync($"⚠️ No se encontraron clientes que hayan comprado productos que contengan: **'{producto}'**.");
+                    return;
+                }
+                
                 StringBuilder mensaje = new StringBuilder();
-                mensaje.AppendLine("📋 **Clientes que han comprado este producto/servicio:**");
+                mensaje.AppendLine($"📋 **Clientes que han comprado '{producto}':**");
                 mensaje.AppendLine("```"); 
                 mensaje.AppendLine($"{"ID".PadRight(4)} | {"Nombre Completo".PadRight(25)}");
-                mensaje.AppendLine(new string('-', 50)); // Línea separadora
+                mensaje.AppendLine(new string('-', 35)); 
+
                 foreach (var client in clients)
                 {
                     string nombreCompleto = $"{client.Nombre} {client.Apellido}";
                     
-                    if (nombreCompleto.Length > 22) nombreCompleto = nombreCompleto.Substring(0, 22) + "...";
+                    if (nombreCompleto.Length > 22) 
+                        nombreCompleto = nombreCompleto.Substring(0, 19) + "...";
 
                     mensaje.AppendLine($"{client.Id.ToString().PadRight(4)} | {nombreCompleto.PadRight(25)}");
                 }
+                
+                mensaje.AppendLine("```"); 
+                
+                await ReplyAsync(mensaje.ToString());
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                await ReplyAsync("❌ Ocurrió un error al buscar las ventas.");
             }
         }
     }
