@@ -408,25 +408,23 @@ namespace Library.Tests
         }
 
         [Test]
+        // Test para probar Historia de usuario 3 de la defensa
         public void BuscarVentasProducto_DeberiaRetornarClientesQueCompraronProducto()
         {
+            //Crea tres clientes diferentes
             _fachada.CrearCliente("Ana", "Cliente", "111", "ana@mail.com", "F", DateTime.Now); // ID 1
             _fachada.CrearCliente("Beto", "Cliente", "222", "beto@mail.com", "M", DateTime.Now); // ID 2
             _fachada.CrearCliente("Carla", "Cliente", "333", "carla@mail.com", "F", DateTime.Now); // ID 3
-            
+            //Registra ventas para cada cliente
             _fachada.RegistrarVenta(1, "Laptop Gamer", 1500, DateTime.Today);
-            
-           
             _fachada.RegistrarVenta(2, "Mouse Óptico", 20,DateTime.Today);
-            
             _fachada.RegistrarVenta(3, "Mouse Óptico", 20, DateTime.Today);
             _fachada.RegistrarVenta(3, "Laptop Oficina", 800, DateTime.Today);
-            
+            //Llama al metodo para buscar por producto
             List<Cliente> resultado = _fachada.BuscarVentasProducto("Laptop");
 
-          
+            //Assert
             Assert.AreEqual(2, resultado.Count, "Debería encontrar exactamente 2 clientes que compraron Laptops.");
-
             
             bool contieneABeto = resultado.Exists(c => c.Nombre == "Beto");
             Assert.IsFalse(contieneABeto, "Beto no compró Laptop, no debería estar en la lista.");

@@ -351,18 +351,29 @@ namespace Library
             return total;
         }
 
+        /// <summary>
+        /// Metodo creado para cumplir la historia de usuario de la defensa, Crea una lista con todos ls clientes y analiza
+        /// las ventas por cada cliente para despues crear una lista con los clientes que hayan comprado ciertos productos especificados.
+        /// </summary>
+        /// <param name="producto">Nombre del producto a buscar</param>
+        /// <returns></returns>
         public List<Cliente> BuscarVentasProducto(string producto)
         {
+            //Crea una lista de todos los clientes
             var todosLosClientes = _repoClientes.ObtenerTodas(); 
+            //Crea la lista que retornara despues
             List<Cliente> clientesConProducto = new List<Cliente>();
-
+            //Pasa por todos los clientes
             foreach (var cliente in todosLosClientes)
             {
+                //Analiza todas las ventas registradas del cliente
                 foreach (var venta in cliente.Ventas)
                 {
-                    if (venta.Producto != null && venta.Producto.ToLower().Contains(producto.ToLower()))
+                    //Si el nombre del producto a bsucar es el mismo que el nombre del producto de la venta, guarda al cliente en una lista
+                    if (venta.Producto != null && venta.Producto == producto.ToLower())
                     {
                         clientesConProducto.Add(cliente);
+                        //Break utilizado para que no se repitan clientes si compra el producto mas de una vez
                         break;
                     }
                 }

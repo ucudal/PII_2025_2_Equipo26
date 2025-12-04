@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Ucu.Poo.DiscordBot.Commands
 {
+    /// <summary>
+    /// Comando creado para cumplir con la historia de usuario:
+    /// "Como usuario quiero ver los clientes con ventas de cierto producto o servicio"
+    /// </summary>
     public class VerVentasProdCommand : ModuleBase<SocketCommandContext>
     {
         private readonly Fachada _fachada;
@@ -22,19 +26,20 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
+                // Verifica que el comando no se pase sin argumentos
                 if (string.IsNullOrWhiteSpace(producto))
                 {
                     await ReplyAsync("❌ Por favor, indica un nombre de producto. Ejemplo: `!ver_ventas Laptop`");
                     return;
                 }
 
-                
+                //Llama al metodo para buscar las ventas por producto
                 List<Cliente> clients = _fachada.BuscarVentasProducto(producto);
 
-                
+                //Excepcion por si no hay clientes que hayan comprado tal producto/servicio
                 if (clients.Count == 0)
                 {
-                    await ReplyAsync($"⚠️ No se encontraron clientes que hayan comprado productos que contengan: **'{producto}'**.");
+                    await ReplyAsync($"⚠️ No se encontraron clientes que hayan comprado el producto/servicio: **'{producto}'**.");
                     return;
                 }
                 
@@ -43,7 +48,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                 mensaje.AppendLine("```"); 
                 mensaje.AppendLine($"{"ID".PadRight(4)} | {"Nombre Completo".PadRight(25)}");
                 mensaje.AppendLine(new string('-', 35)); 
-
+                //Con la lista brindada por el metodo, se toma el nombre e id de cada cliente
                 foreach (var client in clients)
                 {
                     string nombreCompleto = $"{client.Nombre} {client.Apellido}";
@@ -58,6 +63,7 @@ namespace Ucu.Poo.DiscordBot.Commands
                 
                 await ReplyAsync(mensaje.ToString());
             }
+            //Excepcion para errores
             catch (Exception e)
             {
                 Console.WriteLine(e);
