@@ -406,5 +406,14 @@ namespace Library.Tests
                 this._fachada.AsignarClienteVendedor(idCliente, idSuspendido);
             });
         }
+
+        [Test]
+        public void TestBuscarVentasProducto()
+        {
+            this._fachada.CrearCliente("Cliente", "Test", "0", "c@t.com");
+            this._fachada.RegistrarVenta(1, "tostadora", 500, DateTime.Now);
+            
+        }
+        
     }
 }

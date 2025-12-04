@@ -36,7 +36,6 @@ namespace Ucu.Poo.DiscordBot.Commands
         {
             try
             {
-
                 var cliente = _fachada.BuscarCliente(id);
                 if (cliente == null)
                 {

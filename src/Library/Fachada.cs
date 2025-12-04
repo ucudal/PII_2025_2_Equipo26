@@ -351,6 +351,23 @@ namespace Library
             return total;
         }
 
+        public List<Cliente> BuscarVentasProducto(string producto)
+        {
+            var todoslosclientes = _repoClientes.ObtenerTodas();
+            List<Cliente> clients = new List<Cliente>();
+            foreach (var cliente in todoslosclientes)
+            {
+                foreach (var venta in cliente.Ventas)
+                {
+                    if (venta.Producto.ToLower() == producto.ToLower())
+                    {
+                        clients.Add(cliente);
+                    }
+                }
+            }
+            return clients;
+         }
+
         public void RegistrarCotizacion(int clienteId, string tema, double monto, DateTime fecha)
         {
             Cliente cliente = this._repoClientes.Buscar(clienteId);
