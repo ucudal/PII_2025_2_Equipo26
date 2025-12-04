@@ -497,5 +497,41 @@ namespace Library
 
             return resumen;
         }
+
+        /// <summary>
+        /// Filtra los clientes basándose en el total de sus ventas.
+        /// </summary>
+        /// <param name="monto">El monto límite a comparar.</param>
+        /// <param name="buscarMayores">True para buscar ventas > monto, False para buscar ventas < monto.</param>
+        /// <returns>Lista de clientes que cumplen la condición.</returns>
+        public List<Cliente> ObtenerClientesPorMontoVentas(float monto, bool buscarMayores)
+        {
+            List<Cliente> clientesFiltrados = new List<Cliente>();
+            var todosLosClientes = this._repoClientes.ObtenerTodas();
+
+            foreach (var cliente in todosLosClientes)
+            {
+                // se delega al cliente el cálculo de su total
+                float totalVendido = cliente.CalcularTotalVentas();
+
+                if (buscarMayores)
+                {
+                    // POSIBLE CASO: Quiero clientes que hayan comprado MÁS que el monto
+                    if (totalVendido > monto)
+                    {
+                        clientesFiltrados.Add(cliente);
+                    }
+                }
+                else
+                {
+                    // POSIBLE CASO: Quiero clientes que hayan comprado MENOS que el monto
+                    if (totalVendido < monto)
+                    {
+                        clientesFiltrados.Add(cliente);
+                    }
+                }
+            }
+            return clientesFiltrados;
+        }
     }
 }

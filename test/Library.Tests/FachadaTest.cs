@@ -385,5 +385,64 @@ public void TestModificarCliente()
                 this._fachada.AsignarClienteVendedor(idCliente, idSuspendido);
             });
         }
+        
+        [Test]
+        public void ObtenerClientesPorMontoVentas_DeberiaFiltrarCorrectamente()
+        {
+            // ---------------------------------------------------------------
+            // 1. ARRANGE
+            // ---------------------------------------------------------------
+            // Creamos los repositorios necesarios para la fachada
+            RepoClientes repoClientes = new RepoClientes();
+            RepoEtiquetas repoEtiquetas = new RepoEtiquetas();
+            RepoUsuarios repoUsuarios = new RepoUsuarios();
+            RepoVentas repoVentas = new RepoVentas();
+            
+            Fachada fachada = new Fachada(repoClientes, repoEtiquetas, repoUsuarios, repoVentas);
+
+            // Creamos dos clientes
+            fachada.CrearCliente("Cliente Rico", "Perez", "099111", "rico@test.com");
+            fachada.CrearCliente("Cliente Pobre", "Garcia", "099222", "pobre@test.com");
+
+            // Obtenemos los clientes para agregarles ventas (simulando IDs)
+            // Asumimos que son los dos primeros en la lista
+            var clientes = fachada.VerTodosLosClientes();
+            Cliente clienteRico = null;
+            Cliente clientePobre = null;
+
+            foreach(var c in clientes)
+            {
+                if(c.Nombre == "Cliente Rico") clienteRico = c;
+                if(c.Nombre == "Cliente Pobre") clientePobre = c;
+            }
+
+            // Agregamos ventas:
+            // el cliente Rico compra 1000 en total
+            fachada.RegistrarVenta(clienteRico.Id, "TV 4K", 1000, DateTime.Now);
+            
+            // el cliente Pobre compra 100 en total
+            fachada.RegistrarVenta(clientePobre.Id, "Mouse", 100, DateTime.Now);
+
+            // ---------------------------------------------------------------
+            // 2. ACT
+            // ---------------------------------------------------------------
+            // Buscamos clientes con ventas MAYORES a 500
+            List<Cliente> resultadoMayores = fachada.ObtenerClientesPorMontoVentas(500, true);
+            
+            // Buscamos clientes con ventas MENORES a 500
+            List<Cliente> resultadoMenores = fachada.ObtenerClientesPorMontoVentas(500, false);
+
+            // ---------------------------------------------------------------
+            // 3. ASSERT
+            // ---------------------------------------------------------------
+            
+            // Verificamos lista de MAYORES (debería estar solo Cliente Rico)
+            Assert.That(resultadoMayores.Count, Is.EqualTo(1));
+            Assert.That(resultadoMayores[0].Nombre, Is.EqualTo("Cliente Rico"));
+
+            // Verificamos lista de MENORES (debería estar solo Cliente Pobre)
+            Assert.That(resultadoMenores.Count, Is.EqualTo(1));
+            Assert.That(resultadoMenores[0].Nombre, Is.EqualTo("Cliente Pobre"));
+        }
     }
 }

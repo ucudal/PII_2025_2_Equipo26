@@ -284,5 +284,27 @@ namespace Library
             
             return fechaMasReciente;
         }
+        
+        /// <summary>
+        /// Calcula el monto total acumulado de todas las ventas asociadas al cliente.
+        /// Recorre la lista de ventas y suma los importes, ignorando valores nulos o negativos.
+        /// </summary>
+        /// <returns>La suma total de los importes de las ventas.</returns>
+        public float CalcularTotalVentas()
+        {
+            float total = 0;
+            if (this.Ventas != null)
+            {
+                foreach (var venta in this.Ventas)
+                {
+                    // aseguramos que sume valores positivos
+                    if (venta != null && venta.Importe > 0)
+                    {
+                        total += venta.Importe;
+                    }
+                }
+            }
+            return total;
+        }
     }
 }

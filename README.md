@@ -63,6 +63,7 @@ A continuación se detallan los comandos disponibles para interactuar con el CRM
 | Como vendedor, quiero poder asignar un cliente a otro vendedor... | `!admin crear_usuario`<br>`!crear_cliente`<br>`!asignar_vendedor` | *(Requiere mencionar a otro usuario)*<br>`!admin crear_usuario @Compañero Vendedor Administrador`<br>`!crear_cliente "Cliente" "Transferible" 099999999 transf@mail.com`<br>`!asignar_vendedor 1 @Compañero` |
 | Como usuario quiero saber el total de ventas de un periodo dado... | `!crear_cliente`<br>`!registrar_venta`<br>`!total_ventas` | `!crear_cliente "Comprador" "Total" 091111222 total@mail.com`<br>`!registrar_venta 1 "Item 1" 1000`<br>`!registrar_venta 1 "Item 2" 2000`<br>`!total_ventas 01/01/2020 31/12/2025`                           |
 | Como usuario quiero ver un panel con clientes totales, interacciones recientes y reuniones próximas... | `!crear_cliente`<br>`!registrar_reunion`<br>`!dashboard` | `!crear_cliente "Demo" "Dashboard" 092222333 dash@mail.com`<br>`!registrar_reunion 1 31/12/2025 "Zoom" "Cierre de año"`<br>`!dashboard`                                                                      |
+| Como usuario quiero ver los clientes con ventas mayores o menores a cierto monto... | `!crear_cliente` <br> `registrar_venta` <br> `!clientes_ventas` <br> | `!crear_cliente "Jose" "Dolores" 092562333 josedolores@mail.com` <br> `!registrar_venta 1 playstation 300` <br> `!clientes_ventas menor 500` <br> `!clientes_ventas mayor 200` <br> `!clientes_ventas menor 100` <br> `!clientes_ventas mayor 1000` <br> |
 
 ---
 
