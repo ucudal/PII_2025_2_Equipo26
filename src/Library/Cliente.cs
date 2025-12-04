@@ -287,7 +287,7 @@ namespace Library
 
 
         /// <summary>
-        /// Verifica que la venta este en rango del cliente
+        /// Verifica que la venta este en rango del cliente PATRON: EXPERT, el cliente es el que sabe la ventas asociadas a el
         /// </summary>
         /// <returns>Verdadero o Falso</returns>
         public bool TieneVentaEnRango(double montoInicio, double montoFin)
